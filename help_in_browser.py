@@ -6,8 +6,7 @@ class HelpInBrowser:
         return self.context.driver.find_element_by_id(style)
 
     def find_button_with_text(self, text):
-        s = self.context.driver.find_element_by_xpath(f"//button[text()='{text}']")
-        # print(s)
-        # return s
+        return self.context.driver.find_element_by_xpath(f"//button[text()='{text}']")
+
     def find_something_with_text(self, text):
-        s = self.context.driver.find_element_by_xpath(f"//*[contains(text()=, {text})]")
+        return self.context.driver.find_element_by_xpath(f"//*[contains(text()=, {text})]")

@@ -11,5 +11,6 @@ def before_feature(context, feature):
     # context.driver.implicitly_wait(2)
     # context.driver.get("https://google.com")
 
+
 def after_feature(context, feature):
     context.driver.quit()

@@ -1,0 +1,22 @@
+#!/usr/bin/env python
+import os
+import sys
+
+if(len(sys.argv) == 2):
+    path = sys.argv[1]
+else:
+
+    exit(0)
+
+paths = [f'{path}/pb_testing/features', f'{path}/pb_testing/steps', f'{path}/pb_testing/pages']
+
+# Check whether the specified path exists or not
+for path in paths:
+    print(os.getcwd())
+    isExist = os.path.exists(path)
+    if not isExist:
+        # Create a new directory because it does not exist
+        os.makedirs(path)
+        print(f"The directory {path} is created!")
+    else:
+        print(f"The directory {path} already exists!")

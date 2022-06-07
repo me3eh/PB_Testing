@@ -1,0 +1,15 @@
+LICENSE
+MANIFEST.in
+README.md
+makefile
+pyproject.toml
+setup.cfg
+setup.py
+bin/create-dirs
+src/pb_testing/__init__.py
+src/pb_testing/my_functions.py
+src/pb_testing.egg-info/PKG-INFO
+src/pb_testing.egg-info/SOURCES.txt
+src/pb_testing.egg-info/dependency_links.txt
+src/pb_testing.egg-info/requires.txt
+src/pb_testing.egg-info/top_level.txt

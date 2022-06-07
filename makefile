@@ -1,2 +1,2 @@
-# prepare:
-#     cp geckodriver /usr/local
+testowy:
+	echo "testowy"

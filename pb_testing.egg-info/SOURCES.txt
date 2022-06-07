@@ -1,0 +1,8 @@
+README.md
+setup.py
+pom_bididi/__init__.py
+pom_bididi/my_functions.py
+pom_bididi.egg-info/PKG-INFO
+pom_bididi.egg-info/SOURCES.txt
+pom_bididi.egg-info/dependency_links.txt
+pom_bididi.egg-info/top_level.txt

@@ -1,5 +1,5 @@
 from behave import *
-from core import adding
+from src.pb_testing import my_functions
 
 
 @given('Number {first_number} and Number {second_number}')
@@ -8,6 +8,11 @@ def step(context, first_number, second_number):
     context.second_number = int(second_number)
 
 
-@then('We will have Number {final_output}')
-def step(context, final_output):
-    assert int(final_output) == adding.adding_2(context.first_number, context.second_number)
+@when('we add them')
+def step(context):
+    context.output = my_functions.adding_two_numbers(context.first_number, context.second_number)
+
+
+@then('We will receive Number {expected_output}')
+def step(context, expected_output):
+    assert int(expected_output) == context.output
