@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.1.4a0
+Version: 0.1.2b0
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -18,6 +18,7 @@ License-File: LICENSE
 
 Library for BDD testing. Work in Progress. Have fun using this library.
 This command will initialize needed directories for testing with our project
+Pushing to repo
 
 ```bash
 create-dirs
@@ -26,4 +27,32 @@ create-dirs
 In order to effectively use this library, you need
 ```terminal
 
+```
+
+Little tips:
+creating fixtures
+
+```bash
+python3 manage.py dumpdata auth.User --indent 4 > users.json
+```
+
+and after that to run server with date from fixtures
+
+```bash
+python3 ./manage.py testserver users.json --addrport 7000 & PID=$
+```
+<div style="background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); text-align: center; color: black;">
+<h1 style="margin-bottom: 20px">Little tips for me</h1>
+</div>
+Building dist files for python pypi
+
+```bash
+python3 -m build
+```
+<br/>
+
+Pushing files for python pypi
+
+```bash
+python3 -m twine upload --repository testpypi dist/*
 ```
