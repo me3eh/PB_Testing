@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='pb_testing',
     packages=find_packages(include=['pb_testing']),
-    version='0.1.2',
+    version='0.1.2.1a',
     scripts=['bin/create-dirs', 'bin/new-scenario'],
     description='Library for bdd testing',
     author='Me',

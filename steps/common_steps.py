@@ -5,17 +5,6 @@ from behave import *
 def step(context, page_url):
     context.driver.get(f'https://{page_url}')
 
-
-@when("in input {id} {text_written}")
-def step(context, id, text_written):
-    skip()
-
-@when("Submitted Credentials")
-def step(context, id, text_written):
-    skip()
-
-
-
 @then('it should have a title {text}')
 def step(context, text):
     assert context.driver.title == text
@@ -23,3 +12,11 @@ def step(context, text):
 @then("{page} Should Be Open")
 def step(context, page):
     assert context.title == page
+
+
+@given("logged as admin")
+def step_impl(context):
+    context.driver.get(context.url)
+    LoginPage().username_input(context).send_keys("jar")
+    LoginPage().password_input(context).send_keys("jarjarjar")
+    LoginPage().login_submit_button(context).click()

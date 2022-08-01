@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.2b0
+Version: 0.1.2.1a0
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -15,7 +15,6 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 
 
-
 Library for BDD testing. Work in Progress. Have fun using this library.
 This command will initialize needed directories for testing with our project
 Pushing to repo
@@ -24,10 +23,15 @@ Pushing to repo
 create-dirs
 ```
 
-In order to effectively use this library, you need
+To create script file, you will need to type command below
 ```terminal
-
+new-scenario --name <name_of_file>
 ```
+
+Required arguments:
+- --name <name_of_file>
+    - set the name of created scenario
+
 
 Little tips:
 creating fixtures

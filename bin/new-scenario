@@ -1,8 +1,61 @@
 #!/usr/bin/env python
 import sys
-name = "default variable"
+
+def tabs(amount_of_tabs):
+    return amount_of_tabs * " "
+
+string_for_feature = ""
+print("--NAME FOR FILE--")
+name_of_file = input("Pick a name for your file: ")
+
+print("\n--FEATURE DESCRIPTION--")
+feature_description = input("Pick a feature description for this: ")
+string_for_feature = string_for_feature + "Feature: " + feature_description + "\n"
+
+print("\n--SCENARIO DESCRIPTION--")
+scenario_description = input("Pick a scenario description for this: ")
+string_for_feature = string_for_feature + "Scenario: " + f"{scenario_description}\n"
+
+print("\n--OPTIONS FOR GIVEN--")
+while True:
+    option = input("Choose one from options for GIVEN action:\n"
+                   "1. Given logged as admin\n"
+                   "2. Given visited page <page_name>\n"
+                   "P: Do not use Given\n")
+    if int(option) == 1:
+        string_for_feature = string_for_feature + f"{tabs(2)}Given logged as admin\n"
+        print("Option first")
+        break
+    elif int(option) == 2:
+        page_link = input("Page link:")
+        string_for_feature = string_for_feature + f"{tabs(2)}Given visited page {page_link}\n"
+        print("Option second")
+        break
+print("\n--OPTIONS FOR WHEN--")
+while True:
+    option = input("Choose one from options for WHEN action:\n"
+                   "1. When Clicking on button\n"
+                   "2. When Hovering on div\n")
+    if int(option) == 1:
+        string_for_feature = string_for_feature + f"{tabs(2)}When we press the button with id=<id>\n"
+        break
+    elif int(option) == 2:
+        string_for_feature = string_for_feature + f"{tabs(2)}When we press button with text <text>\n"
+        break
+
+print("\n--OPTIONS FOR THEN--")
+
+while True:
+    option = input("Choose one from options for THEN action:\n"
+                   "1. Then <title> Should Be In Title")
+
+    if int(option) == 1:
+        string_for_feature = string_for_feature + f"{tabs(2)}Then <title> Page Should Be In Title\n"
+        break
+
 try:
-    with open('features/hi.feature', 'w') as f:
-        f.write(f'Feature: something weird will be going on with {name}')
+    with open(f'features/{name_of_file}.feature', 'w') as f:
+        f.write(string_for_feature)
 except FileNotFoundError:
-    print("The 'docs' directory does not exist")
+    print("The 'docs' directory does not exist. Try using command 'create-dirs' before that")
+
