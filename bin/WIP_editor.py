@@ -94,40 +94,44 @@
 
 #!/usr/bin/env python3
 
-from simple_term_menu import TerminalMenu
-from scenario import Scenario
-import menu_helper
+import __init__
 import os
-from autocompleter import CustomCompleter
+import time
 
+from scenario_helper.file_helper import read_from_file
+from scenario_helper.menu_helper import MenuHelper, GivenMenu
+from scenario_helper.scenario import Scenario
 
 def cls():
-    os.system('cls' if os.name=='nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def main():
-    urls = []
-    with open("urls.txt", "r") as file:
-        for readline in file:
-            line_strip = readline.strip()
-            urls.append(line_strip)
-    main_menu_exit = False
-    scenario = Scenario()
-    feature_name = "After clicking 1, this could be edited"
-    filename = "new_test"
+    # urls = read_from_file("resources_for_testing/urls.txt")
 
+    main_menu_exit = False
+    side_menu_exit = False
+    # given_menu_exit = False
+
+    scenario = Scenario()
+    feature_name = "something about this feature"
+    filename = "new_test"
+    menu_helper = MenuHelper()
+    given_menu = GivenMenu()
     while not main_menu_exit:
         cls()
         main_menu_list = [f"File name: {filename}.feature", "",
                           f"Feature: {feature_name}",
-                          f"  Scenario: {scenario.get_scenario_name()}",
+                          f"  {scenario.get_scenario_name()}",
                           f"    {scenario.get_given()}",
                           f"    {scenario.get_when()}",
                           f"    {scenario.get_then()}"]
-        main_menu_text = '\n'.join(str(x) for x in main_menu_list) + "\n\n"
+        file_text = '\n'.join(str(x) for x in main_menu_list[1:]) + "\n\n"
+        main_menu_text = main_menu_list[0] + "\n\n" + file_text
+
         print(main_menu_text)
 
-        menu_entry_index = menu_helper.main_menu()
+        menu_entry_index = menu_helper.main_menu_selection()
 
         if menu_entry_index == 0:
             filename = input("Change filename:")
@@ -136,22 +140,35 @@ def main():
         elif menu_entry_index == 2:
             scenario.set_scenario_name(input("Change scenario:"))
         elif menu_entry_index == 3:
-            side_menu = menu_helper.side_menu()
-            if side_menu == 0:
-                option_given = input("Write given")
-                scenario.set_given(option_given)
-            elif side_menu == 1:
-                give_menu = menu_helper.menu_for_given()
-                if give_menu == 0:
-                    prefix = 'visiting '
-                    url = CustomCompleter(collection=urls).input(prefix)
-                    scenario.set_given(prefix + url)
-                # side_terminal_menu = TerminalMenu(side_options)
-                # side_menu = side_terminal_menu.show()
+            while not side_menu_exit:
+                side_menu = menu_helper.side_menu_selection()
+                if menu_helper.is_last_side_menu(side_menu):
+                    side_menu_exit = True
+                if side_menu == 0:
+                    option_given = input("Write given: ")
+                    scenario.set_given(option_given)
+                    side_menu_exit = True
+                if side_menu == 1:
+                    choice = given_menu.selection()
+                    if not given_menu.is_last(choice):
+                        output = given_menu.get_choice(choice).output()
+                        scenario.set_given(output)
+                        side_menu_exit = True
+                    else:
+                        side_menu_exit = False
+            side_menu_exit = False
+        elif menu_helper.get_value_from_main_menu(index=menu_entry_index) == "Save file":
+            with open(f'features/{filename}.feature', 'w') as f:
+                f.write(file_text)
+            cls()
+            print("Succesfully saved")
+            time.sleep(1)
 
-        elif menu_entry_index == 6:
+        elif menu_helper.is_last_main_menu(index=menu_entry_index):
             main_menu_exit = True
 
 
 if __name__ == "__main__":
     main()
+    cls()
+    print("Bye bye")

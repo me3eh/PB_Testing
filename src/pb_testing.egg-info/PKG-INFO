@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.2.1a0
+Version: 0.1.2.17
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -25,13 +25,9 @@ create-dirs
 
 To create script file, you will need to type command below
 ```terminal
-new-scenario --name <name_of_file>
+new-scenario
 ```
-
-Required arguments:
-- --name <name_of_file>
-    - set the name of created scenario
-
+After that the menu will apear. Hopefully everything will be understandable from this point
 
 Little tips:
 creating fixtures
@@ -46,7 +42,7 @@ and after that to run server with date from fixtures
 python3 ./manage.py testserver users.json --addrport 7000 & PID=$
 ```
 <div style="background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); text-align: center; color: black;">
-<h1 style="margin-bottom: 20px">Little tips for me</h1>
+<h1 style="margin-bottom: 20px">Little tips for building python package<br/>( probably only me)</h1>
 </div>
 Building dist files for python pypi
 

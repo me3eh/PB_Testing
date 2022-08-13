@@ -16,7 +16,7 @@ class CustomCompleter(Completer):
     def get_completions(self, document, complete_event):
         matches = [name for name in self.data_dict.keys() if document.text.lower() in name.lower()]
         for m in matches:
-            yield Completion(self.data_dict[m], start_position=-len(document.text_before_cursor), display = m)
+            yield Completion(self.data_dict[m], start_position=-len(document.text_before_cursor), display=m)
 
     def input(self, prefix):
-        return prompt(f'>{prefix}', completer=self)
+        return prompt(f'{prefix}: ', completer=self)

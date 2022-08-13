@@ -6,7 +6,9 @@ pyproject.toml
 setup.cfg
 setup.py
 bin/create-dirs
+bin/create-scenario
 bin/new-scenario
+bin/scan_for_urls
 src/pb_testing/__init__.py
 src/pb_testing/my_functions.py
 src/pb_testing.egg-info/PKG-INFO
@@ -14,3 +16,11 @@ src/pb_testing.egg-info/SOURCES.txt
 src/pb_testing.egg-info/dependency_links.txt
 src/pb_testing.egg-info/requires.txt
 src/pb_testing.egg-info/top_level.txt
+src/scenario_helper/__init__.py
+src/scenario_helper/actions.py
+src/scenario_helper/autocompleter.py
+src/scenario_helper/file_helper.py
+src/scenario_helper/menu_helper.py
+src/scenario_helper/scenario.py
+src/url_importer/__init__.py
+src/url_importer/django_importer.py
