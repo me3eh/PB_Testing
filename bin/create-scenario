@@ -1,0 +1,84 @@
+#!/usr/bin/env python
+
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
+
+import os
+import time
+from scenario_helper.file_helper import read_from_file, write_to_file
+from scenario_helper.menu_helper import MenuHelper, GivenMenu
+from scenario_helper.scenario import Scenario
+import readline
+
+def cls():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+
+def main():
+
+    main_menu_exit = False
+    side_menu_exit = False
+    # given_menu_exit = False
+
+    scenario = Scenario()
+    feature_name = "something about this feature"
+    filename = "new_test"
+    menu_helper = MenuHelper()
+    given_menu = GivenMenu()
+    while not main_menu_exit:
+        cls()
+        main_menu_list = [f"File name: {filename}.feature", "",
+                          f"Feature: {feature_name}",
+                          f"  {scenario.get_scenario_name()}",
+                          f"    {scenario.get_given()}",
+                          f"    {scenario.get_when()}",
+                          f"    {scenario.get_then()}"]
+        file_text = '\n'.join(str(x) for x in main_menu_list[1:]) + "\n\n"
+        main_menu_text = main_menu_list[0] + "\n\n" + file_text
+
+        print(main_menu_text)
+
+        menu_entry_index = menu_helper.main_menu_selection()
+
+        if menu_entry_index == 0:
+            filename = input("Change filename:")
+        elif menu_entry_index == 1:
+            feature_name = input("Change feature:")
+        elif menu_entry_index == 2:
+            scenario.set_scenario_name(input("Change scenario:"))
+        elif menu_entry_index == 3:
+            while not side_menu_exit:
+                side_menu = menu_helper.side_menu_selection()
+                if menu_helper.is_last_side_menu(side_menu):
+                    side_menu_exit = True
+                if side_menu == 0:
+                    option_given = input("Write given: ")
+                    scenario.set_given(option_given)
+                    side_menu_exit = True
+                if side_menu == 1:
+                    choice = given_menu.selection()
+                    if not given_menu.is_last(choice):
+                        output = given_menu.get_choice(choice).output()
+                        scenario.set_given(output)
+                        side_menu_exit = True
+                    else:
+                        side_menu_exit = False
+            side_menu_exit = False
+        elif menu_helper.get_value_from_main_menu(index=menu_entry_index) == "Save file":
+            # with open(f'features/{filename}.feature', 'w') as f:
+            #     f.write(file_text)
+            write_to_file(filename, file_text)
+            cls()
+            print("Succesfully saved")
+            time.sleep(1)
+
+        elif menu_helper.is_last_main_menu(index=menu_entry_index):
+            main_menu_exit = True
+
+
+if __name__ == "__main__":
+    main()
+    cls()
+    print("Bye bye")
+

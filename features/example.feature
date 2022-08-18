@@ -5,3 +5,4 @@ Feature: Valid login
     And in input password mode
     And Submitted Credentials
     Then Welcome Page Should Be Open
+  Scenario:
