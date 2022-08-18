@@ -1,5 +1,6 @@
 import os
 
+
 def create_dir(paths):
     # Check whether the specified path exists or not
     for path in paths:

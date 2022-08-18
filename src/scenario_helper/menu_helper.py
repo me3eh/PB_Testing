@@ -2,6 +2,7 @@ from simple_term_menu import TerminalMenu
 from actions import Actions
 from file_helper import read_from_file
 
+
 def terminal_menu(choices):
     return TerminalMenu(choices).show()
 
@@ -31,16 +32,15 @@ class MenuHelper:
     def get_value_from_main_menu(self, index):
         return self.main_menu[index]
 
+
 class GivenMenu:
     def __init__(self):
-        urls = read_from_file("resources_for_testing/urls.txt")
-        if urls is None:
-            urls = ['/']
 
-        self.choices = [Actions('visiting ', 'url', urls),
+        self.choices = [Actions('visiting url ', 'url'),
                         Actions('logged as admin'),
                         Actions('logged as user'),
                         Actions('logged as user'),
+                        Actions('click on button with id ', 'id'),
                         'Abort']
 
     def selection(self):

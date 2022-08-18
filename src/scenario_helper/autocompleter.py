@@ -18,5 +18,5 @@ class CustomCompleter(Completer):
         for m in matches:
             yield Completion(self.data_dict[m], start_position=-len(document.text_before_cursor), display=m)
 
-    def input(self, prefix):
-        return prompt(f'{prefix}: ', completer=self)
+    def input(self, prefix, info_text):
+        return prompt(f'{info_text} \n{prefix}: ', completer=self)

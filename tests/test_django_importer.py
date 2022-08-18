@@ -1,6 +1,6 @@
-from url_importer import django_importer
+from url_importer import django
 import sys
 import io
 
 def test_call():
-    assert django_importer.call() == False
+    assert django.import_urls() == False

@@ -1,13 +1,22 @@
 from behave import *
 
 
-@given("visited page {page_url}")
-def step(context, page_url):
-    context.driver.get(f'https://{page_url}')
+# @given("visited page {page_url}")
+# def step(context, page_url):
+#     context.driver.get(f'https://{page_url}')
+@given('visiting url {url}')
+def step(context, url):
+    context.driver.get(f'https://{url}')
+
+
+@given("click on button with id {id}")
+def step(context, id):
+
 
 @then('it should have a title {text}')
 def step(context, text):
     assert context.driver.title == text
+
 
 @then("{page} Should Be Open")
 def step(context, page):

@@ -3,8 +3,8 @@ from setuptools import find_packages, setup
 setup(
     name='pb_testing',
     packages=find_packages(include=['pb_testing']),
-    version='0.1.2.17',
-    scripts=['bin/create-dirs', 'bin/new-scenario', 'bin/scan_for_urls', 'bin/create-scenario'],
+    version='0.1.2.20',
+    scripts=['bin/prepare', 'bin/new-scenario', 'bin/scan_for_urls', 'bin/create-scenario'],
     description='Library for bdd testing',
     author='Me',
     license='MIT',

@@ -3,6 +3,9 @@ import sys
 import os
 sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 
-from url_importer import django_importer
+from url_importer import django, rails
+ide_environments = [django, rails]
 
-django_importer.call()
+for ide in ide_environments:
+    if ide.import_urls():
+        break

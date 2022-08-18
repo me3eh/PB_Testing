@@ -8,3 +8,8 @@ def read_from_file(file_name):
         return file_inside
     except:
         return None
+
+
+def write_to_file(file_name, file_inside):
+    with open(f'features/{file_name}.feature', 'w') as f:
+        f.write(file_inside)

@@ -1,5 +1,5 @@
 import os
-from directories_preparation.create_directory import create_dir
+from preparation.create_directory import create_dir
 import pytest
 
 def delete_dirs(dirs):

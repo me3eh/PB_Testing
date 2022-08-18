@@ -1,4 +1,5 @@
 from url_parameter_parser import django
+
 def test_find_parameters_in_url_when_parameters_in_url():
     parameter = "<pp>"
     assert django.find_parameters_in_url(f"/lel/{parameter}") == [parameter]

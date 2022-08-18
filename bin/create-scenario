@@ -6,9 +6,10 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
 
 import os
 import time
-from scenario_helper.file_helper import read_from_file
+from scenario_helper.file_helper import read_from_file, write_to_file
 from scenario_helper.menu_helper import MenuHelper, GivenMenu
 from scenario_helper.scenario import Scenario
+import readline
 
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -65,8 +66,9 @@ def main():
                         side_menu_exit = False
             side_menu_exit = False
         elif menu_helper.get_value_from_main_menu(index=menu_entry_index) == "Save file":
-            with open(f'features/{filename}.feature', 'w') as f:
-                f.write(file_text)
+            # with open(f'features/{filename}.feature', 'w') as f:
+            #     f.write(file_text)
+            write_to_file(filename, file_text)
             cls()
             print("Succesfully saved")
             time.sleep(1)

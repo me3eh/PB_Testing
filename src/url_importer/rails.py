@@ -2,7 +2,7 @@
 import os
 import subprocess
 
-def call():
+def import_urls():
     url_check_command = 'python3 manage.py show_urls'
 
     process = subprocess.Popen(url_check_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
