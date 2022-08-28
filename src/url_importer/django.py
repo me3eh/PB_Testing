@@ -12,5 +12,4 @@ def import_urls():
 
     sc.execute_command_and_put_into_file(command, column_read=0)
 
-
     return True

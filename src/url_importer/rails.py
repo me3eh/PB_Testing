@@ -3,22 +3,13 @@ import os
 import subprocess
 
 def import_urls():
-    url_check_command = 'python3 manage.py show_urls'
+    command = 'rails routes'
+    project_name = 'Rails'
 
-    process = subprocess.Popen(url_check_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    process.wait()
-
-    if process.returncode != 0:
-        print("Django Project? No")
+    if not sc.validity_command(command=command, project_name=project_name):
         return False
+    print(f"{project_name} Project? Yes")
 
-    stream = os.popen(url_check_command)
-
-    with open("resources_for_testing/urls.txt", 'w') as file:
-        for word in stream.readlines():
-            urls = word.split()[0]
-            file.write(urls)
-            file.write("\n")
-    print("Django Project? Yes")
+    sc.execute_command_and_put_into_file_rails(command, column_read=0)
 
     return True

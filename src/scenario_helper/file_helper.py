@@ -11,5 +11,5 @@ def read_from_file(file_name):
 
 
 def write_to_file(file_name, file_inside):
-    with open(f'features/{file_name}.feature', 'w') as f:
+    with open(f'features/{file_name}', 'w') as f:
         f.write(file_inside)
