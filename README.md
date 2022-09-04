@@ -8,8 +8,8 @@ create-dirs
 ```
 
 To create script file, you will need to type command below
-```terminal
-new-scenario
+```bash
+create-scenario
 ```
 After that the menu will apear. Hopefully everything will be understandable from this point
 

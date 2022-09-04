@@ -1,6 +1,6 @@
 
 import os
-import subprocess
+import url_importer.shell_command as sc
 
 def import_urls():
     command = 'rails routes'
