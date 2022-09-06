@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-from configparser import ConfigParser
 
 
 def create_dictionaries(attributes):
@@ -33,13 +32,10 @@ def get_browser_attributes(site):
     return array_with_attributes
 
 
-config = ConfigParser()
-config.read('resources_for_testing/config.ini')
+if __name__ == "__main__":
 
-domain = config.get('main', 'domain')
+    url = 'http://yoush.co' + '/products/yoush'
 
-url = domain + '/person/Magdalena+Wo%C5%BAniak-426878'
-
-x = get_browser_attributes(url)
-print(list(x))
-print(x)
+    x = get_browser_attributes(url)
+    print(list(x))
+    print(x)

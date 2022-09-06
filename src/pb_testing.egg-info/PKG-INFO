@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.2.20
+Version: 0.1.2.22
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -24,8 +24,8 @@ create-dirs
 ```
 
 To create script file, you will need to type command below
-```terminal
-new-scenario
+```bash
+create-scenario
 ```
 After that the menu will apear. Hopefully everything will be understandable from this point
 
@@ -57,15 +57,7 @@ Pushing files for python pypi
 python3 -m twine upload --repository testpypi dist/*
 ```
 
-if you want to test input
-```python
-def test_something_that_involves_user_input(monkeypatch):
-
-    # monkeypatch the "input" function, so that it returns "Mark".
-    # This simulates the user entering "Mark" in the terminal:
-    monkeypatch.setattr('builtins.input', lambda _: "Mark")
-
-    # go about using input() like you normally would:
-    i = input("What is your name?")
-    assert i == "Mark"
-```
+Points to do:
+- [ ] add class and id into file resources_for_testing
+- [ ] decide if project need TUI (terminal interface) or GUI (graphical interface)
+- [ ] think about urls with parameters (what to do with them and how to extract classes and ids from them after picking attributes)

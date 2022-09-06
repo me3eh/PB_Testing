@@ -1,5 +1,3 @@
-
-import os
 import url_importer.shell_command as sc
 
 def import_urls():
