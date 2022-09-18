@@ -1,4 +1,6 @@
 import PySimpleGUI as sg
+import re
+
 scenario = "lel"
 givens = ['when visiting site <url>', 'logged as']
 whens = ['visiting site <url>', 'bgi']
@@ -11,6 +13,7 @@ completions = {
 specials = ['-GIVENS-', '-WHENS-', '-THENS-']
 choices = ['di', 'da']
 
+attributes_index = 0
 
 def get_string():
     whole_text = f"Scenario: {scenario}\n"
@@ -27,14 +30,47 @@ def add_new():
     return [[sg.Button(f'key up', key=f"")]]
 
 
-def ddd():
+def get_values_from_listbox(listbox):
+    array = listbox.get_values()
+
+
+def attribute_inputs_refresh(window, text):
+    global attributes_index
+    x = re.findall("(?<=:)(.*?)(?= )", text)
+    attributes_length = len(x)
+
+    subtraction = attributes_length - attributes_index
+    if subtraction > 0:
+        for index in range(subtraction):
+            if attributes_index <= 1:
+                window[f'-ATTRIBUTE-{attributes_index}-'].update(visible=True)
+                attributes_index = attributes_index + 1
+    elif subtraction < 0:
+        for index in range(-1 * subtraction):
+            attributes_index = attributes_index - 1
+            window[f'-ATTRIBUTE-{attributes_index}-'].update(visible=False)
+
+    for index in range(attributes_index):
+        window[f'-LABEL-{index}-'].update(f'Attribute: {x[index]}')
+
+
+def new_column(index):
+    return [sg.Column([[sg.Text(f"Attribute: {index}", key=f'-LABEL-{index}-')],
+                [sg.Input("", key=f"-INPUT-ATTRIBUTE-{index}-", size=(20, 4)),
+                 sg.Button("Insert", key=f'-INSERT-ATTRIBUTE-{index}-')]], visible=False, key=f'-ATTRIBUTE-{index}-')]
+
+
+def new_attribute_input():
+    return [new_column(index) for index in range(2)]
+
+
+def gui_for_scenarios():
     layout = [
         [sg.Text('FileName'), sg.Column([[]], k='layout_principal', expand_x=True), sg.Text("Feature name")],
-        [sg.Input('dad', enable_events=True, key='-Filename-') ,sg.Column([[]], k='layout_principal', expand_x=True),  sg.Input('mom', enable_events=True, key='Feature name')],
-        # [[sg.Column(add_new(0, "given"), key='-Column-given-')]],
-        # [[sg.Column(add_new(1, "when"), key='-Column-when-')]],
-        # [[sg.Column(add_new(2, "then"), key='-Column-then-')]],
-        # [sg.Multiline(get_string(), size=(60, 20), disabled=True, key="test_text"), sg.Column([[]], key='functional')],
+        [
+            sg.Input('dad', enable_events=True, key='-Filename-'), sg.Column([[]], k='layout_principal', expand_x=True),
+            sg.Input('mom', enable_events=True, key='Feature name')
+        ],
         [
             sg.Column(
                 [
@@ -52,8 +88,13 @@ def ddd():
             ),
             sg.Column(
                 [
-                    [sg.Text("All Special Commands Will Go Here")],
-                    [sg.Input("Here", key="-INPUT-HERE-", size=(20, 4), enable_events=True), sg.Button("Save", key='-SAVE-')],
+                    [
+                        sg.Text("All Special Commands Will Go Here")
+                    ],
+                    [
+                        sg.Input("Here", key="-INPUT-HERE-", size=(20, 4), enable_events=True),
+                        sg.Button("Save", key='-SAVE-')
+                    ],
                     [sg.pin(sg.Col([[sg.Listbox(values=[], size=(20, 4), enable_events=True, key='-BOX-',
                                     select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
                        key='-BOX-CONTAINER-', pad=(0, 0), visible=False))]
@@ -66,15 +107,19 @@ def ddd():
                     [sg.Text("All THENs in scenario")],
                     [sg.Listbox(values=thens, size=(60, 7), key='-THENS-', enable_events=True)]
                 ]
+            ),
+            sg.Column(
+                new_attribute_input(), key='-ATTRIBUTES-'
             )
         ],
 
         [sg.Button("Add new given", key="-ADD-GIVENS-"),
          sg.Button("Add new when", key="-ADD-WHENS-"),
          sg.Button("Add new then", key="-ADD-THENS-")],
-        [sg.Button("Add new given", key="save-to-file"),
-         sg.Button("Add new then", key="Exit")]
+        [sg.Button("Save to file", key="-SAVE-TO-FILE-"),
+         sg.Button("Exit", key="Exit")]
     ]
+
     window = sg.Window("Creating scenario",
                        layout,
                        resizable=True,
@@ -83,7 +128,8 @@ def ddd():
     list_element: sg.Listbox = window.Element('-BOX-')
     sel_item, prediction_list = 0, []
     global choices
-    while True:             # Event Loop
+    global attributes_index
+    while True:
         event, values = window.read()
         print(event)
         print(values)
@@ -101,10 +147,10 @@ def ddd():
             for listbox in ar:
                 window[listbox].set_value([])
             choices = completions[event]
-        # elif event.startswith('Right'):
-        #     if len(values['-BOX-']) > 0:
-        #         window['-INPUT-HERE-'].update(value=values['-BOX-'])
-        #         window['-BOX-CONTAINER-'].update(visible=False)
+            text = values[event][0]
+            window['-INPUT-HERE-'].update(text)
+            attribute_inputs_refresh(window, text)
+
         elif event.startswith('Down') and len(prediction_list):
             sel_item = (sel_item + 1) % len(prediction_list)
             list_element.update(set_to_index=sel_item, scroll_to_index=sel_item)
@@ -112,7 +158,6 @@ def ddd():
             sel_item = (sel_item + (len(prediction_list) - 1)) % len(prediction_list)
             list_element.update(set_to_index=sel_item, scroll_to_index=sel_item)
         elif event == '-BOX-':
-            print(values['-BOX-'])
             window['-INPUT-HERE-'].update(value=values['-BOX-'][0])
             window['-BOX-CONTAINER-'].update(visible=False)
         elif event == "-INPUT-HERE-":
@@ -128,16 +173,33 @@ def ddd():
                 window['-BOX-CONTAINER-'].update(visible=True)
             else:
                 window['-BOX-CONTAINER-'].update(visible=False)
+
+            attribute_inputs_refresh(window, text)
+
         elif event == '-SAVE-':
+            text_in_input = values['-INPUT-HERE-']
             for s in specials:
                 if window[s].get():
                     c = window[s].get_list_values()
-                    c[window[s].get_indexes()[0]] = values['-INPUT-HERE-']
-                    print(c)
+                    c[window[s].get_indexes()[0]] = text_in_input
                     window[s].update(values=c)
                     window['-INPUT-HERE-'].update("")
+
+            attribute_inputs_refresh(window, text_in_input)
+        elif '-INSERT-ATTRIBUTE-' in event:
+            index = re.findall("(?<=-)(\d+)(?=-)", event)[0]
+            input_string = values['-INPUT-HERE-']
+            attribute_replacement = values[f'-INPUT-ATTRIBUTE-{index}-']
+            attribute = re.findall("(?<=:)(.*?)(?= )", input_string)[0]
+            new_input_string = input_string.replace(f':{attribute}', attribute_replacement)
+            window['-INPUT-HERE-'].update(new_input_string)
+            attribute_inputs_refresh(window, new_input_string)
+
+        elif event == '-SAVE-TO-FILE-':
+            save_to_file()
+
     window.close()
 
 
 if __name__ == "__main__":
-    ddd()
+    gui_for_scenarios()
