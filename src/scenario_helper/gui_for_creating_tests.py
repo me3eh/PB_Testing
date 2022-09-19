@@ -1,12 +1,13 @@
 import PySimpleGUI as sg
 import re
+from file_helper import write_to_file
 
 scenario = "lel"
-givens = ['when visiting site <url>', 'logged as']
+givens = ['visiting site <url>', 'logged as']
 whens = ['visiting site <url>', 'bgi']
 thens = ['yikes', 'anormous']
 completions = {
-    '-GIVENS-': ['when visiting site <url>', 'logged as'],
+    '-GIVENS-': ['visiting site <url>', 'logged as'],
     '-WHENS-': ['visiting site <url>', 'bgi'],
     '-THENS-': ['yikes', 'anormous']
 }
@@ -64,12 +65,31 @@ def new_attribute_input():
     return [new_column(index) for index in range(2)]
 
 
+def array_into_string_join(array, prefix):
+    return '\n'.join(f'\t\t{prefix} {x}' for x in array) + "\n"
+
+
+def save_to_file(window):
+    givens_to_file = window['-GIVENS-'].get_list_values()
+    whens_to_file = window['-WHENS-'].get_list_values()
+    thens_to_file = window['-THENS-'].get_list_values()
+    feature_name = window['-FEATURE-NAME-'].get()
+    filename = window['-FILENAME-'].get()
+    whole_text = f'Feature: {feature_name}'
+    whole_text += "\n\tScenario: yep yep\n"
+    whole_text += array_into_string_join(array=givens_to_file, prefix='Given')
+    whole_text += array_into_string_join(array=whens_to_file, prefix='When')
+    whole_text += array_into_string_join(array=thens_to_file, prefix='Then')
+    write_to_file(f'features/{filename}.feature', whole_text)
+    sg.popup("Yas")
+
+
 def gui_for_scenarios():
     layout = [
         [sg.Text('FileName'), sg.Column([[]], k='layout_principal', expand_x=True), sg.Text("Feature name")],
         [
-            sg.Input('dad', enable_events=True, key='-Filename-'), sg.Column([[]], k='layout_principal', expand_x=True),
-            sg.Input('mom', enable_events=True, key='Feature name')
+            sg.Input('dad', enable_events=True, key='-FILENAME-'), sg.Column([[]], k='layout_principal', expand_x=True),
+            sg.Input('mom', enable_events=True, key='-FEATURE-NAME-')
         ],
         [
             sg.Column(
@@ -196,7 +216,7 @@ def gui_for_scenarios():
             attribute_inputs_refresh(window, new_input_string)
 
         elif event == '-SAVE-TO-FILE-':
-            save_to_file()
+            save_to_file(window)
 
     window.close()
 
