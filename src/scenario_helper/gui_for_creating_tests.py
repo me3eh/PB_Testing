@@ -13,27 +13,22 @@ completions = {
 }
 specials = ['-GIVENS-', '-WHENS-', '-THENS-']
 choices = ['di', 'da']
-
+ids = ['maciek', 'mateusz', 'lukasz', 'dawid']
 attributes_index = 0
 
-def get_string():
-    whole_text = f"Scenario: {scenario}\n"
-    for given in givens:
-        whole_text += f"\tGiven {given}\n"
-    for when in whens:
-        whole_text += f"\tWhen {when}\n"
-    for then in thens:
-        whole_text += f"\tThen {then}\n"
-    return whole_text
 
+def autocomplete(text, choices_array, list_element, window, name_of_container):
+    prediction_list = []
+    if text:
+        prediction_list = [item for item in choices_array if item.startswith(text)]
 
-def add_new():
-    return [[sg.Button(f'key up', key=f"")]]
+    list_element.update(values=prediction_list)
+    list_element.update(set_to_index=0)
 
-
-def get_values_from_listbox(listbox):
-    array = listbox.get_values()
-
+    if len(prediction_list) > 0:
+        window[name_of_container].update(visible=True)
+    else:
+        window[name_of_container].update(visible=False)
 
 def attribute_inputs_refresh(window, text):
     global attributes_index
@@ -56,9 +51,29 @@ def attribute_inputs_refresh(window, text):
 
 
 def new_column(index):
-    return [sg.Column([[sg.Text(f"Attribute: {index}", key=f'-LABEL-{index}-')],
-                [sg.Input("", key=f"-INPUT-ATTRIBUTE-{index}-", size=(20, 4)),
-                 sg.Button("Insert", key=f'-INSERT-ATTRIBUTE-{index}-')]], visible=False, key=f'-ATTRIBUTE-{index}-')]
+    return [
+        sg.Column(
+            [
+                [
+                    sg.Text(f"Attribute: {index}", key=f'-LABEL-{index}-')
+                ],
+                [
+                    sg.Input("", key=f"-INPUT-ATTRIBUTE-{index}-", size=(20, 4), enable_events=True),
+                    sg.Button("Insert", key=f'-INSERT-ATTRIBUTE-{index}-')
+                ],
+                [
+                    sg.pin(
+                        sg.Col(
+                            [
+                                [
+                                    sg.Listbox([], size=(20, 4), enable_events=True, key=f'-BOX-ATTRIBUTE-{index}',
+                                               select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)
+                                ]
+                            ], key=f'-BOX-ATTRIBUTE-CONTAINER-{index}-', pad=(0, 0), visible=False
+                        )
+                    )
+                ]
+            ], visible=False, key=f'-ATTRIBUTE-{index}-')]
 
 
 def new_attribute_input():
@@ -152,7 +167,7 @@ def gui_for_scenarios():
     while True:
         event, values = window.read()
         print(event)
-        print(values)
+        # print(values)
 
         if event == sg.WIN_CLOSED or event == "Exit":
             break
@@ -182,17 +197,22 @@ def gui_for_scenarios():
             window['-BOX-CONTAINER-'].update(visible=False)
         elif event == "-INPUT-HERE-":
             text = values[event]
-            if text:
-                prediction_list = [item for item in choices if item.startswith(text)]
 
-            list_element.update(values=prediction_list)
-            sel_item = 0
-            list_element.update(set_to_index=sel_item)
+            autocomplete(text=text, choices_array=choices, list_element=list_element,
+                         window=window, name_of_container='-BOX-CONTAINER-')
 
-            if len(prediction_list) > 0:
-                window['-BOX-CONTAINER-'].update(visible=True)
-            else:
-                window['-BOX-CONTAINER-'].update(visible=False)
+            # if text:
+            #     prediction_list = [item for item in choices if item.startswith(text)]
+            #
+            # list_element.update(values=prediction_list)
+            # sel_item = 0
+            # list_element.update(set_to_index=sel_item)
+            #
+            #
+            # if len(prediction_list) > 0:
+            #     window['-BOX-CONTAINER-'].update(visible=True)
+            # else:
+            #     window['-BOX-CONTAINER-'].update(visible=False)
 
             attribute_inputs_refresh(window, text)
 
@@ -214,10 +234,16 @@ def gui_for_scenarios():
             new_input_string = input_string.replace(f':{attribute}', attribute_replacement)
             window['-INPUT-HERE-'].update(new_input_string)
             attribute_inputs_refresh(window, new_input_string)
+        elif '-INPUT-ATTRIBUTE-' in event:
+            print('jestem \n\n\n\n')
+            index = re.findall("(?<=-)(\d+)(?=-)", event)[0]
+            text = values[event]
+            autocomplete(text=text, choices_array=ids, list_element=window.Element(f'-BOX-ATTRIBUTE-{index}'),
+                         window=window, name_of_container=f'-BOX-ATTRIBUTE-CONTAINER-{index}-')
 
         elif event == '-SAVE-TO-FILE-':
             save_to_file(window)
-
+        print(event)
     window.close()
 
 
