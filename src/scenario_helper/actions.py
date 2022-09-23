@@ -1,6 +1,7 @@
 from autocompleter import CustomCompleter
 from file_helper import read_from_file
 
+
 class Actions:
     def __init__(self, text, parameter=None, collection_for_completer=None):
         self.text = text
@@ -17,7 +18,7 @@ class Actions:
 
     def get_collection(self):
         if self.collection_for_completer is None:
-            return read_from_file("resources_for_testing/"+self.parameter+"s.txt")
+            return read_from_file("resources_for_testing/"+self.parameter+".txt")
         else:
             return self.collection_for_completer
 

@@ -7,11 +7,13 @@ setup.cfg
 setup.py
 bin/create-dirs
 bin/create-scenario
-bin/new-scenario
+bin/extra_modules_for_pb_testing.py
 bin/prepare
 bin/scan_for_urls
 src/browser_scraper/__init__.py
 src/browser_scraper/test.py
+src/interface/__init__.py
+src/interface/menu.py
 src/pb_testing/__init__.py
 src/pb_testing/my_functions.py
 src/pb_testing.egg-info/PKG-INFO
@@ -25,7 +27,9 @@ src/preparation/create_directory.py
 src/scenario_helper/__init__.py
 src/scenario_helper/actions.py
 src/scenario_helper/autocompleter.py
+src/scenario_helper/feature.py
 src/scenario_helper/file_helper.py
+src/scenario_helper/gui_test.py
 src/scenario_helper/menu_helper.py
 src/scenario_helper/scenario.py
 src/url_importer/__init__.py
