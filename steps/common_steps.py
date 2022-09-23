@@ -11,13 +11,12 @@ def step(context, url):
 
 @given("click on button with id {id}")
 def step(context, id):
+    context.driver.
 
-
+# @when('click on button with')
 @then('it should have a title {text}')
 def step(context, text):
     assert context.driver.title == text
-
-
 @then("{page} Should Be Open")
 def step(context, page):
     assert context.title == page
