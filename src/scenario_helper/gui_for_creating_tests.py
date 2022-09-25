@@ -1,11 +1,18 @@
 import PySimpleGUI as sg
 import re
 from file_helper import write_to_file
+from scenario import Scenario
 
-scenario = "lel"
+scenarios = [
+    Scenario(scenario_name='scenario1'),
+    Scenario(scenario_name='scenario2')
+]
+
+scenario = ["scenarios1", 'scenarios2']
 givens = ['visiting site <url>', 'logged as']
 whens = ['visiting site <url>', 'bgi']
 thens = ['yikes', 'anormous']
+
 completions = {
     '-GIVENS-': ['visiting site <url>', 'logged as'],
     '-WHENS-': ['visiting site <url>', 'bgi'],
@@ -16,6 +23,9 @@ choices = ['di', 'da']
 ids = ['maciek', 'mateusz', 'lukasz', 'dawid']
 attributes_index = 0
 
+
+def scenario_name(scenario):
+    return scenario.get_scenario_name()
 
 def autocomplete(text, choices_array, list_element, window, name_of_container):
     prediction_list = []
@@ -29,6 +39,7 @@ def autocomplete(text, choices_array, list_element, window, name_of_container):
         window[name_of_container].update(visible=True)
     else:
         window[name_of_container].update(visible=False)
+
 
 def attribute_inputs_refresh(window, text):
     global attributes_index
@@ -85,32 +96,41 @@ def array_into_string_join(array, prefix):
 
 
 def save_to_file(window):
-    givens_to_file = window['-GIVENS-'].get_list_values()
-    whens_to_file = window['-WHENS-'].get_list_values()
-    thens_to_file = window['-THENS-'].get_list_values()
     feature_name = window['-FEATURE-NAME-'].get()
     filename = window['-FILENAME-'].get()
-    whole_text = f'Feature: {feature_name}'
-    whole_text += "\n\tScenario: yep yep\n"
-    whole_text += array_into_string_join(array=givens_to_file, prefix='Given')
-    whole_text += array_into_string_join(array=whens_to_file, prefix='When')
-    whole_text += array_into_string_join(array=thens_to_file, prefix='Then')
+    whole_text = f'Feature: {feature_name}\n'
+    for scenario in scenarios:
+        whole_text += scenario.get_as_string()
     write_to_file(f'features/{filename}.feature', whole_text)
     sg.popup("Yas")
 
 
 def gui_for_scenarios():
     layout = [
-        [sg.Text('FileName'), sg.Column([[]], k='layout_principal', expand_x=True), sg.Text("Feature name")],
         [
-            sg.Input('dad', enable_events=True, key='-FILENAME-'), sg.Column([[]], k='layout_principal', expand_x=True),
+            sg.Text('FileName'),
+            sg.Column([[]], k='layout_principal', expand_x=True),
+            sg.Text("Scenarios"),
+            sg.Column([[]], k='layout_principal', expand_x=True),
+            sg.Text("Feature name")],
+        [
+            sg.Input('dad', enable_events=True, key='-FILENAME-'),
+            sg.Column(
+                [
+                    [
+                        sg.Listbox(values=list(map(scenario_name, scenarios)),
+                                   default_values=scenario_name(scenarios[0]),
+                                   size=(60, 7), key='-SCENARIOS-', enable_events=True)
+                    ]
+                ],
+                k='layout_principal', expand_x=True),
             sg.Input('mom', enable_events=True, key='-FEATURE-NAME-')
         ],
         [
             sg.Column(
                 [
                     [sg.Text("All GIVENs in scenario")],
-                    [sg.Listbox(values=givens, size=(60, 7), key='-GIVENS-', enable_events=True)]
+                    [sg.Listbox(values=scenarios[0].get_givens(), size=(60, 7), key='-GIVENS-', enable_events=True)]
                 ]
             )
         ],
@@ -118,7 +138,7 @@ def gui_for_scenarios():
             sg.Column(
                 [
                     [sg.Text("All WHENs in scenario")],
-                    [sg.Listbox(values=whens, size=(60, 7), key='-WHENS-', enable_events=True)]
+                    [sg.Listbox(values=scenarios[0].get_whens(), size=(60, 7), key='-WHENS-', enable_events=True)]
                 ]
             ),
             sg.Column(
@@ -130,9 +150,19 @@ def gui_for_scenarios():
                         sg.Input("Here", key="-INPUT-HERE-", size=(20, 4), enable_events=True),
                         sg.Button("Save", key='-SAVE-')
                     ],
-                    [sg.pin(sg.Col([[sg.Listbox(values=[], size=(20, 4), enable_events=True, key='-BOX-',
-                                    select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)]],
-                       key='-BOX-CONTAINER-', pad=(0, 0), visible=False))]
+                    [
+                        sg.pin(
+                            sg.Col(
+                                [
+                                    [
+                                        sg.Listbox(values=[], size=(20, 4), enable_events=True, key='-BOX-',
+                                                   select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)
+                                    ]
+                                ],
+                                key='-BOX-CONTAINER-', pad=(0, 0), visible=False
+                            )
+                        )
+                    ]
                 ]
             )
         ],
@@ -140,7 +170,7 @@ def gui_for_scenarios():
             sg.Column(
                 [
                     [sg.Text("All THENs in scenario")],
-                    [sg.Listbox(values=thens, size=(60, 7), key='-THENS-', enable_events=True)]
+                    [sg.Listbox(values=scenarios[0].get_thens(), size=(60, 7), key='-THENS-', enable_events=True)]
                 ]
             ),
             sg.Column(
@@ -167,15 +197,24 @@ def gui_for_scenarios():
     while True:
         event, values = window.read()
         print(event)
-        # print(values)
 
         if event == sg.WIN_CLOSED or event == "Exit":
             break
         if "-ADD-" in event:
             c = event.replace("-ADD", "")
-            list_of_elements = window[c].get_list_values()
-            list_of_elements.append("yeppers")
-            window[c].update(values=list_of_elements)
+            actual_scenario_title = window['-SCENARIOS-'].get()[0]
+            actual_scenario = scenarios[0]
+            if scenario_name(actual_scenario) != actual_scenario_title:
+                for scenario in scenarios[1:]:
+                    if scenario_name(scenario) == actual_scenario_title:
+                        actual_scenario = scenario
+                    break
+            type = c.replace("-", "")
+            type = type.lower()[:-1]
+            eval(f"actual_scenario.add_{type}()")
+            array_with_selected_type_values = eval(f"actual_scenario.get_{type}s()")
+
+            window[c].update(values=array_with_selected_type_values)
         if event in specials:
             ar = specials.copy()
             ar.remove(event)
@@ -235,11 +274,22 @@ def gui_for_scenarios():
             window['-INPUT-HERE-'].update(new_input_string)
             attribute_inputs_refresh(window, new_input_string)
         elif '-INPUT-ATTRIBUTE-' in event:
-            print('jestem \n\n\n\n')
             index = re.findall("(?<=-)(\d+)(?=-)", event)[0]
             text = values[event]
             autocomplete(text=text, choices_array=ids, list_element=window.Element(f'-BOX-ATTRIBUTE-{index}'),
                          window=window, name_of_container=f'-BOX-ATTRIBUTE-CONTAINER-{index}-')
+        elif '-SCENARIOS-' == event:
+            actual_scenario_title = window['-SCENARIOS-'].get()[0]
+            actual_scenario = scenarios[0]
+            if scenario_name(actual_scenario) != actual_scenario_title:
+                for scenario in scenarios[1:]:
+                    if scenario_name(scenario) == actual_scenario_title:
+                        actual_scenario = scenario
+                    break
+            window['-GIVENS-'].update(values=actual_scenario.get_givens())
+            window['-WHENS-'].update(values=actual_scenario.get_whens())
+            window['-THENS-'].update(values=actual_scenario.get_thens())
+
 
         elif event == '-SAVE-TO-FILE-':
             save_to_file(window)

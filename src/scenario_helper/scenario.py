@@ -1,9 +1,21 @@
 class Scenario:
-    def __init__(self):
-        self.scenario_name = "something"
-        self.givens = ["some action"]
-        self.whens = ["something happening"]
-        self.thens = ["something will be triggered"]
+    def __init__(self,
+                 scenario_name="something",
+                 givens=None,
+                 whens=None,
+                 thens=None):
+
+        self.scenario_name = scenario_name
+        if givens is None:
+            givens = ["some action"]
+        if whens is None:
+            whens = ["something happening"]
+        if thens is None:
+            thens = ["something will be triggered"]
+
+        self.givens = givens
+        self.whens = whens
+        self.thens = thens
 
     def set_scenario_name(self, scenario_name):
         self.scenario_name = scenario_name
@@ -28,6 +40,15 @@ class Scenario:
 
     def get_given(self, index):
         return self.givens[index]
+
+    def get_whens(self):
+        return self.whens
+
+    def get_thens(self):
+        return self.thens
+
+    def get_givens(self):
+        return self.givens
 
     def add_given(self):
         self.givens.append("some action")
