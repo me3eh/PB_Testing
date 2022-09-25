@@ -107,7 +107,7 @@ def cls():
 
 
 def main():
-    # urls = read_from_file("resources_for_testing/urls.txt")
+    # urls = read_from_file("resources_for_testing/url.txt")
 
     main_menu_exit = False
     side_menu_exit = False

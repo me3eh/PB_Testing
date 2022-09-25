@@ -1,9 +1,7 @@
 #!/usr/bin/env python
-import sys
-import os
-sys.path.append(os.path.dirname(os.path.realpath(__file__)) + "/../src")
-
+import extra_modules_for_pb_testing
 from url_importer import django, rails
+
 ide_environments = [django, rails]
 
 for ide in ide_environments:

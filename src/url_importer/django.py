@@ -1,5 +1,3 @@
-
-import os
 import url_importer.shell_command as sc
 
 def import_urls():
@@ -11,6 +9,5 @@ def import_urls():
     print(f"{project_name} Project? Yes")
 
     sc.execute_command_and_put_into_file(command, column_read=0)
-
 
     return True

@@ -1,0 +1,5 @@
+#!/usr/bin/env python
+import extra_modules_for_pb_testing
+from preparation.site_attributes import scrap_attributes_from_site
+
+scrap_attributes_from_site()

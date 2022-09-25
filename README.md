@@ -2,16 +2,25 @@
 Library for BDD testing. Work in Progress. Have fun using this library.
 This command will initialize needed directories for testing with our project
 Pushing to repo
-
+To prepare your project with directories
 ```bash
-create-dirs
+prepare
+```
+Change localhost port if your project is by default using something different than port 3000
+
+To scan for urls in your project (you must be in your project directory).
+Available frameworks: rails, django
+```bash
+scan_for_urls
 ```
 
-To create script file, you will need to type command below
-```terminal
-new-scenario
+To get all attributes located at your site with url in your project, type 
+```bash
+attributes_in_sites
 ```
-After that the menu will apear. Hopefully everything will be understandable from this point
+It will drop directories into your resources_for_testing directory
+
+
 
 Little tips:
 creating fixtures
@@ -41,15 +50,7 @@ Pushing files for python pypi
 python3 -m twine upload --repository testpypi dist/*
 ```
 
-if you want to test input
-```python
-def test_something_that_involves_user_input(monkeypatch):
-
-    # monkeypatch the "input" function, so that it returns "Mark".
-    # This simulates the user entering "Mark" in the terminal:
-    monkeypatch.setattr('builtins.input', lambda _: "Mark")
-
-    # go about using input() like you normally would:
-    i = input("What is your name?")
-    assert i == "Mark"
-```
+Points to do:
+- [x] add class and id into file resources_for_testing
+- [ ] decide if project need TUI (terminal interface) or GUI (graphical interface) - probably GUI - more handy
+- [ ] think about urls with parameters (what to do with them and how to extract classes and ids from them after picking attributes)
