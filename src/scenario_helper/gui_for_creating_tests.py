@@ -3,6 +3,11 @@ import re
 from file_helper import write_to_file
 from scenario import Scenario
 
+GIVEN_COLOR = 'red'
+WHEN_COLOR = 'blue'
+THEN_COLOR = ('yellow', "black")
+SCENARIO_COLOR = 'purple'
+
 scenarios = [
     Scenario(scenario_name='scenario1'),
     Scenario(scenario_name='scenario2')
@@ -43,7 +48,7 @@ def autocomplete(text, choices_array, list_element, window, name_of_container):
 
 def attribute_inputs_refresh(window, text):
     global attributes_index
-    x = re.findall("(?<=:)(.*?)(?= )", text)
+    x = re.findall("(?<={)(.*?)(?=})", text)
     attributes_length = len(x)
 
     subtraction = attributes_length - attributes_index
@@ -87,6 +92,22 @@ def new_column(index):
             ], visible=False, key=f'-ATTRIBUTE-{index}-')]
 
 
+def update_values_in_listbox_and_retrieve_selection(listbox, new_text):
+    all_values = listbox.get_list_values()
+    old_value_index = listbox_get_selection(listbox)
+    all_values[old_value_index] = new_text
+    listbox.update(values=all_values)
+    listbox_set_selection(listbox, old_value_index)
+
+
+def listbox_get_selection(listbox):
+    return listbox.get_indexes()[0]
+
+
+def listbox_set_selection(listbox, index):
+    listbox.widget.selection_set(index)
+
+
 def new_attribute_input():
     return [new_column(index) for index in range(2)]
 
@@ -115,6 +136,7 @@ def gui_for_scenarios():
             sg.Text("Feature name")],
         [
             sg.Input('dad', enable_events=True, key='-FILENAME-'),
+            sg.Column([[]], k='layout_principal', expand_x=True),
             sg.Column(
                 [
                     [
@@ -124,13 +146,15 @@ def gui_for_scenarios():
                     ]
                 ],
                 k='layout_principal', expand_x=True),
+            sg.Column([[]], k='layout_principal', expand_x=True),
             sg.Input('mom', enable_events=True, key='-FEATURE-NAME-')
         ],
         [
             sg.Column(
                 [
                     [sg.Text("All GIVENs in scenario")],
-                    [sg.Listbox(values=scenarios[0].get_givens(), size=(60, 7), key='-GIVENS-', enable_events=True)]
+                    [sg.Listbox(values=scenarios[0].get_givens(), size=(60, 7), key='-GIVENS-',
+                                enable_events=True, background_color=GIVEN_COLOR)]
                 ]
             )
         ],
@@ -138,7 +162,8 @@ def gui_for_scenarios():
             sg.Column(
                 [
                     [sg.Text("All WHENs in scenario")],
-                    [sg.Listbox(values=scenarios[0].get_whens(), size=(60, 7), key='-WHENS-', enable_events=True)]
+                    [sg.Listbox(values=scenarios[0].get_whens(), size=(60, 7), key='-WHENS-',
+                                enable_events=True, background_color=WHEN_COLOR)]
                 ]
             ),
             sg.Column(
@@ -170,7 +195,8 @@ def gui_for_scenarios():
             sg.Column(
                 [
                     [sg.Text("All THENs in scenario")],
-                    [sg.Listbox(values=scenarios[0].get_thens(), size=(60, 7), key='-THENS-', enable_events=True)]
+                    [sg.Listbox(values=scenarios[0].get_thens(), size=(60, 7), key='-THENS-',
+                                enable_events=True, background_color='yellow', text_color='black')]
                 ]
             ),
             sg.Column(
@@ -178,9 +204,10 @@ def gui_for_scenarios():
             )
         ],
 
-        [sg.Button("Add new given", key="-ADD-GIVENS-"),
-         sg.Button("Add new when", key="-ADD-WHENS-"),
-         sg.Button("Add new then", key="-ADD-THENS-")],
+        [sg.Button("Add new given", key="-ADD-GIVENS-", button_color=GIVEN_COLOR),
+         sg.Button("Add new when", key="-ADD-WHENS-", button_color=WHEN_COLOR),
+         sg.Button("Add new then", key="-ADD-THENS-", button_color=THEN_COLOR),
+         sg.Button("Add new scenario", key="-ADD-SCENARIO-", button_color=SCENARIO_COLOR)],
         [sg.Button("Save to file", key="-SAVE-TO-FILE-"),
          sg.Button("Exit", key="Exit")]
     ]
@@ -202,20 +229,24 @@ def gui_for_scenarios():
             break
         if "-ADD-" in event:
             c = event.replace("-ADD", "")
-            actual_scenario_title = window['-SCENARIOS-'].get()[0]
-            actual_scenario = scenarios[0]
-            if scenario_name(actual_scenario) != actual_scenario_title:
-                for scenario in scenarios[1:]:
-                    if scenario_name(scenario) == actual_scenario_title:
-                        actual_scenario = scenario
-                    break
-            type = c.replace("-", "")
-            type = type.lower()[:-1]
-            eval(f"actual_scenario.add_{type}()")
-            array_with_selected_type_values = eval(f"actual_scenario.get_{type}s()")
 
-            window[c].update(values=array_with_selected_type_values)
-        if event in specials:
+            index = listbox_get_selection(window['-SCENARIOS-'])
+
+            actual_scenario = scenarios[index]
+
+            type = c.replace("-", "")
+            if type == 'SCENARIO':
+                listbox = window['-SCENARIOS-']
+                scenarios.append(Scenario("some_scenario"))
+                actual_index = listbox_get_selection(listbox)
+                window['-SCENARIOS-'].update(values=list(map(scenario_name, scenarios)))
+                listbox_set_selection(listbox=listbox, index=actual_index)
+            else:
+                type = type.lower()[:-1]
+                eval(f"actual_scenario.add_{type}()")
+                array_with_selected_type_values = eval(f"actual_scenario.get_{type}s()")
+                window[c].update(values=array_with_selected_type_values)
+        elif event in specials:
             ar = specials.copy()
             ar.remove(event)
             for listbox in ar:
@@ -240,29 +271,19 @@ def gui_for_scenarios():
             autocomplete(text=text, choices_array=choices, list_element=list_element,
                          window=window, name_of_container='-BOX-CONTAINER-')
 
-            # if text:
-            #     prediction_list = [item for item in choices if item.startswith(text)]
-            #
-            # list_element.update(values=prediction_list)
-            # sel_item = 0
-            # list_element.update(set_to_index=sel_item)
-            #
-            #
-            # if len(prediction_list) > 0:
-            #     window['-BOX-CONTAINER-'].update(visible=True)
-            # else:
-            #     window['-BOX-CONTAINER-'].update(visible=False)
-
             attribute_inputs_refresh(window, text)
 
         elif event == '-SAVE-':
             text_in_input = values['-INPUT-HERE-']
+            only_scenario_selected = True
             for s in specials:
                 if window[s].get():
-                    c = window[s].get_list_values()
-                    c[window[s].get_indexes()[0]] = text_in_input
-                    window[s].update(values=c)
-                    window['-INPUT-HERE-'].update("")
+                    update_values_in_listbox_and_retrieve_selection(listbox=window[s],
+                                                                    new_text=text_in_input)
+                    only_scenario_selected = False
+            if only_scenario_selected:
+                update_values_in_listbox_and_retrieve_selection(listbox=window['-SCENARIOS-'],
+                                                                new_text=text_in_input)
 
             attribute_inputs_refresh(window, text_in_input)
         elif '-INSERT-ATTRIBUTE-' in event:
@@ -279,21 +300,19 @@ def gui_for_scenarios():
             autocomplete(text=text, choices_array=ids, list_element=window.Element(f'-BOX-ATTRIBUTE-{index}'),
                          window=window, name_of_container=f'-BOX-ATTRIBUTE-CONTAINER-{index}-')
         elif '-SCENARIOS-' == event:
-            actual_scenario_title = window['-SCENARIOS-'].get()[0]
-            actual_scenario = scenarios[0]
-            if scenario_name(actual_scenario) != actual_scenario_title:
-                for scenario in scenarios[1:]:
-                    if scenario_name(scenario) == actual_scenario_title:
-                        actual_scenario = scenario
-                    break
+            index = listbox_get_selection(window['-SCENARIOS-'])
+
+            actual_scenario = scenarios[index]
+
+            for listbox in specials:
+                window[listbox].set_value([])
+
             window['-GIVENS-'].update(values=actual_scenario.get_givens())
             window['-WHENS-'].update(values=actual_scenario.get_whens())
             window['-THENS-'].update(values=actual_scenario.get_thens())
 
-
         elif event == '-SAVE-TO-FILE-':
             save_to_file(window)
-        print(event)
     window.close()
 
 
