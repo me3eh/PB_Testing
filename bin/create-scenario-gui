@@ -1,0 +1,5 @@
+import extra_modules_for_pb_testing
+
+from scenario_helper.gui_for_creating_tests import gui_for_scenarios
+
+gui_for_scenarios()
