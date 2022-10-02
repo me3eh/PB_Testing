@@ -4,7 +4,9 @@ import extra_modules_for_pb_testing
 
 from preparation.create_directory import create_dir
 from preparation.create_config_file import create_config_file
-
+from preparation.steps_files import copy_common_steps
 create_dir(['features', 'steps', 'pages', 'resources_for_testing'])
 
 create_config_file()
+
+copy_common_steps()
