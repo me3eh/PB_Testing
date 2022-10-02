@@ -2,16 +2,21 @@ import os
 import re
 
 
+def gherkin_prefix_regex(attribute):
+    return f"(?<=\@{attribute}\([\"|\'])(.*?)(?=[\"|\']\))"
+
+
 def load_gherkin_attributes():
     steps_files = os.listdir("steps")
 
     given, when, then = [], [], []
 
-    for files in steps_files:
+    for index, files in enumerate(steps_files):
         with open(f'steps/{files}', 'r') as f:
             file_inside = f.read()
 
-            given.append(re.findall("(?<=\@given\()(.*?)(?=\))", file_inside))
-            when.append(re.findall("(?<=\@when\()(.*?)(?=\))", file_inside))
-            then.append(re.findall("(?<=\@then\()(.*?)(?=\))", file_inside))
+            given += re.findall(gherkin_prefix_regex('given'), file_inside)
+            when += re.findall(gherkin_prefix_regex('when'), file_inside)
+            then += re.findall(gherkin_prefix_regex('then'), file_inside)
+
     return given, when, then
