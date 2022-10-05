@@ -1,20 +1,30 @@
 
-Library for BDD testing. Work in Progress. Have fun using this library.
-This command will initialize needed directories for testing with our project
-Pushing to repo
-To prepare your project with directories
+Library for BDD testing.
+
+# Commands
+All commands are typed into terminal
+<hr style="border:2px solid gray"/>
+
 ```bash
 prepare
 ```
-Change localhost port if your project is by default using something different than port 3000
+It will create:
+- directories: __resources_for_testing, features, steps, pages__
+- configuration_file __config.ini__
+- __common_steps.py__ file in steps,`` consisting basic commands used in testing
+(selenium finding, clicking elements on site)
 
 To scan for urls in your project (you must be in your project directory).
 Available frameworks: rails, django
+<hr style="border:2px solid gray"/>
+
 ```bash
 scan_for_urls
 ```
 
 To get all attributes located at your site with url in your project, type 
+<hr style="border:2px solid gray"/>
+
 ```bash
 attributes_in_sites
 ```

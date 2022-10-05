@@ -1,0 +1,6 @@
+#!/usr/bin/env python
+
+import extra_modules_for_pb_testing
+from preparation.configuration_gui import launch_configuration
+
+launch_configuration()

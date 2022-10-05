@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.2.22
+Version: 0.1.2.37
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -15,19 +15,38 @@ Description-Content-Type: text/markdown
 License-File: LICENSE
 
 
-Library for BDD testing. Work in Progress. Have fun using this library.
-This command will initialize needed directories for testing with our project
-Pushing to repo
+Library for BDD testing.
+
+# Commands
+All commands are typed into terminal
+<hr style="border:2px solid gray"/>
 
 ```bash
-create-dirs
+prepare
+```
+It will create:
+- directories: __resources_for_testing, features, steps, pages__
+- configuration_file __config.ini__
+- __common_steps.py__ file in steps, consisting basic commands used in testing
+(selenium finding, clicking elements on site)
+
+To scan for urls in your project (you must be in your project directory).
+Available frameworks: rails, django
+<hr style="border:2px solid gray"/>
+
+```bash
+scan_for_urls
 ```
 
-To create script file, you will need to type command below
+To get all attributes located at your site with url in your project, type 
+<hr style="border:2px solid gray"/>
+
 ```bash
-create-scenario
+attributes_in_sites
 ```
-After that the menu will apear. Hopefully everything will be understandable from this point
+It will drop directories into your resources_for_testing directory
+
+
 
 Little tips:
 creating fixtures
@@ -58,6 +77,6 @@ python3 -m twine upload --repository testpypi dist/*
 ```
 
 Points to do:
-- [ ] add class and id into file resources_for_testing
-- [ ] decide if project need TUI (terminal interface) or GUI (graphical interface)
+- [x] add class and id into file resources_for_testing
+- [ ] decide if project need TUI (terminal interface) or GUI (graphical interface) - probably GUI - more handy
 - [ ] think about urls with parameters (what to do with them and how to extract classes and ids from them after picking attributes)

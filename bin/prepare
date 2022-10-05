@@ -5,8 +5,18 @@ import extra_modules_for_pb_testing
 from preparation.create_directory import create_dir
 from preparation.create_config_file import create_config_file
 from preparation.steps_files import copy_common_steps
+from sqlite.base import database_setup
+from url_importer import django, rails
+
 create_dir(['features', 'steps', 'pages', 'resources_for_testing'])
 
 create_config_file()
 
+database_setup()
+
 copy_common_steps()
+
+# ide_environments = [django, rails]
+# for ide in ide_environments:
+#     if ide.import_urls():
+#         break
