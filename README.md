@@ -1,11 +1,17 @@
+<h1 style="color: black"> 
+    <span style="color: blue">P</span><span style="color: red">B</span>_TESTING</h1>
 
-Library for BDD testing.
+<h3 style="color: black">Library for testing using
+    <span style="color: blue"> Page Object Pattern</span>
+    and
+    <span style="color: red">Behaviour Driven Development.</span>
+</h3>
 
-# Commands
+## Commands
 All commands are typed into terminal
 <hr style="border:2px solid gray"/>
 
-```bash
+```bash``
 prepare
 ```
 It will create:
@@ -13,9 +19,26 @@ It will create:
 - configuration_file __config.ini__
 - __common_steps.py__ file in steps,`` consisting basic commands used in testing
 (selenium finding, clicking elements on site)
+- database for keeping urls and attributes
 
 To scan for urls in your project (you must be in your project directory).
 Available frameworks: rails, django
+<hr style="border:2px solid gray"/>
+
+```bash
+pb_configuration
+```
+
+This method will pop gui with urls from your project, urls used in testing and attributes to those urls,
+which could be used in tests.
+![img.png](img.png)
+It will look like this.
+
+On left we have urls scanned from project.
+
+In the middle there are urls that will be used in testing.
+
+On the right side there will be attributes(ids, input names, css classes) also used in tests.
 <hr style="border:2px solid gray"/>
 
 ```bash
@@ -32,9 +55,19 @@ It will drop directories into your resources_for_testing directory
 
 
 
-Little tips:
-creating fixtures
 
+<hr style="border:2px solid gray"/>
+
+```bash
+create-scenario-gui
+```
+This command is responsible for gui for creating tests.
+![img_1.png](img_1.png)
+It look like this and it will be used for creating bdd type tests. 
+<hr style="border:2px solid gray"/>
+When having problems with starting python test database with dumped data
+
+## Dumping data from 
 ```bash
 python3 manage.py dumpdata auth.User --indent 4 > users.json
 ```
@@ -44,23 +77,3 @@ and after that to run server with date from fixtures
 ```bash
 python3 manage.py testserver users.json groups.json --addrport 7000 & PID=$
 ```
-<div style="background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red); text-align: center; color: black;">
-<h1 style="margin-bottom: 20px">Little tips for building python package<br/>( probably only me)</h1>
-</div>
-Building dist files for python pypi
-
-```bash
-python3 -m build
-```
-<br/>
-
-Pushing files for python pypi
-
-```bash
-python3 -m twine upload --repository testpypi dist/*
-```
-
-Points to do:
-- [x] add class and id into file resources_for_testing
-- [ ] decide if project need TUI (terminal interface) or GUI (graphical interface) - probably GUI - more handy
-- [ ] think about urls with parameters (what to do with them and how to extract classes and ids from them after picking attributes)
