@@ -17,10 +17,10 @@ def get_browser_attributes(site):
 
     soup = BeautifulSoup(reqs.text, features='lxml')
 
-    attributes = ['class', 'id']
+    attributes = ['class', 'id', 'name']
     dictionary_with_attributes, array_with_attributes = create_dictionaries(attributes)
 
-    for tag in soup.find_all('div'):
+    for tag in soup.find_all():
         for attribute in attributes:
             found_attribute = tag.get(attribute)
             if found_attribute is not None:
