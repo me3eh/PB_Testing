@@ -40,7 +40,7 @@ src/scenario_helper/gui_test.py
 src/scenario_helper/menu_helper.py
 src/scenario_helper/scenario.py
 src/sqlite/__init__.py
-src/sqlite/base.py
+src/sqlite/database.py
 src/url_importer/__init__.py
 src/url_importer/django.py
 src/url_importer/rails.py
