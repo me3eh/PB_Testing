@@ -68,6 +68,15 @@ class Scenario:
     def remove_then(self):
         self.thens.pop()
 
+    def remove_given_index(self, index):
+        self.givens.pop(index)
+
+    def remove_when_index(self, index):
+        self.whens.pop(index)
+
+    def remove_then_index(self, index):
+        self.thens.pop(index)
+
     def get_as_string(self):
         whole_text = f"\tScenario: {self.scenario_name}\n"
         test_elements = [self.givens, self.whens, self.thens]

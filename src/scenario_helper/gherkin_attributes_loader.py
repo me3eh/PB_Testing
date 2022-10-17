@@ -15,8 +15,8 @@ def load_gherkin_attributes():
         with open(f'steps/{files}', 'r') as f:
             file_inside = f.read()
 
-            given += re.findall(gherkin_prefix_regex('given'), file_inside)
-            when += re.findall(gherkin_prefix_regex('when'), file_inside)
-            then += re.findall(gherkin_prefix_regex('then'), file_inside)
+            given += re.findall(gherkin_prefix_regex(attribute='given'), file_inside)
+            when += re.findall(gherkin_prefix_regex(attribute='when'), file_inside)
+            then += re.findall(gherkin_prefix_regex(attribute='then'), file_inside)
 
     return given, when, then

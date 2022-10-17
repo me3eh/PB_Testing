@@ -3,4 +3,5 @@ interface
 pb_testing
 preparation
 scenario_helper
+sqlite
 url_importer

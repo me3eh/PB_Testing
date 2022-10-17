@@ -1,13 +1,16 @@
 import url_importer.shell_command as sc
 
 def import_urls():
-    command = 'rails routes'
+    command = 'rails routes -g=GET'
     project_name = 'Rails'
 
-    if not sc.validity_command(command=command, project_name=project_name):
+    if not sc.command_validity(command=command):
+        print(f"{project_name} Project? No")
         return False
+
     print(f"{project_name} Project? Yes")
 
-    sc.execute_command_and_put_into_file_rails(command, column_read=0)
+    urls = sc.execute_command_rails(command)
 
+    print(urls)
     return True
