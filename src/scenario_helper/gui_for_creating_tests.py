@@ -16,9 +16,6 @@ scenarios = [
 
 scenario = ["scenarios1", 'scenarios2']
 givens, whens, thens = load_gherkin_attributes()
-# ['visiting site <url>', 'logged as']
-# whens = ['visiting site <url>', 'bgi']
-# thens = ['yikes', 'anormous']
 
 completions = {
     '-GIVENS-': givens,
