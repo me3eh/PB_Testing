@@ -40,8 +40,8 @@ def step(context, element_id, text):
 
 @given('filling input with name {element_name} text {text}')
 @when('filling input with name {element_name} text {text}')
-def step(context, element_name, text):
-    input_tag = context.driver.find_element(by=By.NAME, value=element_name)
+def step(context, input_name, text):
+    input_tag = context.driver.find_element(by=By.NAME, value=input_name)
     input_tag.send_keys(text)
 
 
@@ -99,10 +99,10 @@ def step(context, css_classes, text):
         f"Current text in element was: '{actual}', it is expected to be '{expected}'."
 
 
-@then('input with name {name} should be disabled')
-def step(context, name):
-    input_tag = context.driver.find_element(by=By.NAME, value=name)
-    assert not input_tag.is_enabled(), f"Current element with name:{name} was: enabled"
+@then('input with name {input_name} should be disabled')
+def step(context, input_name):
+    input_tag = context.driver.find_element(by=By.NAME, value=input_name)
+    assert not input_tag.is_enabled(), f"Current element with name:{input_name} was: enabled"
 
 
 @then('element with id {element_id} should be disabled')
@@ -117,10 +117,10 @@ def step(context, css_classes):
     assert not element.is_enabled(), f"Current element with id:{css_classes} was: enabled"
 
 
-@then('input with name {name} should be visible')
-def step(context, name):
-    input_tag = context.driver.find_element(by=By.NAME, value=name)
-    assert input_tag.is_displayed(), f"Current element with name:{name} was: enabled"
+@then('input with name {input_name} should be visible')
+def step(context, input_name):
+    input_tag = context.driver.find_element(by=By.NAME, value=input_name)
+    assert input_tag.is_displayed(), f"Current element with name:{input_name} was: enabled"
 
 
 @then('element with id {element_id} should be visible')
@@ -135,10 +135,10 @@ def step(context, css_classes):
     assert element.is_displayed(), f"Current element with id:{css_classes} is not visible"
 
 
-@then('input with name {name} should not be visible')
-def step(context, name):
-    element = context.driver.find_element(by=By.NAME, value=name)
-    assert not element.is_displayed(), f"Current element with name:{name} is: visible"
+@then('input with name {input_name} should not be visible')
+def step(context, input_name):
+    element = context.driver.find_element(by=By.NAME, value=input_name)
+    assert not element.is_displayed(), f"Current element with name:{input_name} is: visible"
 
 
 @then('element with id {element_id} should not be visible')

@@ -10,8 +10,7 @@ THEN_COLOR = ('yellow', "black")
 SCENARIO_COLOR = 'purple'
 
 scenarios = [
-    Scenario(scenario_name='scenario1'),
-    Scenario(scenario_name='scenario2')
+    Scenario(scenario_name='scenario1')
 ]
 
 scenario = ["scenarios1", 'scenarios2']
@@ -24,7 +23,10 @@ completions = {
 }
 specials = ['-GIVENS-', '-WHENS-', '-THENS-']
 choices = ['di', 'da']
+urls = ['/yup', '/something_else']
 ids = ['maciek', 'mateusz', 'lukasz', 'dawid']
+css_classes = ['yikes', '.huhi.niech_bedzie']
+input_names = ['input', 'password']
 attributes_index = 0
 
 
@@ -83,7 +85,7 @@ def new_column(index):
                         sg.Col(
                             [
                                 [
-                                    sg.Listbox([], size=(20, 4), enable_events=True, key=f'-BOX-ATTRIBUTE-{index}',
+                                    sg.Listbox([], size=(20, 4), enable_events=True, key=f'-BOX-ATTRIBUTE-{index}-',
                                                select_mode=sg.LISTBOX_SELECT_MODE_SINGLE, no_scrollbar=True)
                                 ]
                             ], key=f'-BOX-ATTRIBUTE-CONTAINER-{index}-', pad=(0, 0), visible=False
@@ -313,6 +315,14 @@ def gui_for_scenarios():
             window['-INPUT-HERE-'].update(value=text)
             window['-BOX-CONTAINER-'].update(visible=False)
             attribute_inputs_refresh(window, text)
+        elif '-BOX-ATTRIBUTE-' in event:
+            print("event", event)
+            index = re.findall("(?<=-)(\d+)(?=-)", event)[0]
+            text = values[f'-BOX-ATTRIBUTE-{index}-'][0]
+
+            window[f'-INPUT-ATTRIBUTE-{index}-'].update(value=text)
+            window[f'-BOX-ATTRIBUTE-CONTAINER-{index}-'].update(visible=False)
+            # attribute_inputs_refresh(window, text)
         elif event == "-INPUT-HERE-":
             text = values[event]
 
@@ -348,9 +358,24 @@ def gui_for_scenarios():
             attribute_inputs_refresh(window, new_input_string)
         elif '-INPUT-ATTRIBUTE-' in event:
             index = re.findall("(?<=-)(\d+)(?=-)", event)[0]
+
+            attribute_label = window[f'-LABEL-{index}-'].get()
+            attribute_label = attribute_label.replace("Attribute: ", "")
+            # collection = eval(f"{attribute_label}")
             text = values[event]
-            autocomplete(text=text, choices_array=ids, list_element=window.Element(f'-BOX-ATTRIBUTE-{index}'),
-                         window=window, name_of_container=f'-BOX-ATTRIBUTE-CONTAINER-{index}-')
+            collection = None
+            if attribute_label == 'element_id':
+                collection = ids
+            if attribute_label == 'css_classes':
+                collection = css_classes
+            if attribute_label == 'input_name':
+                collection = input_names
+            if attribute_label == 'url':
+                collection = urls
+
+            if collection != None:
+                autocomplete(text=text, choices_array=collection, list_element=window.Element(f'-BOX-ATTRIBUTE-{index}-'),
+                             window=window, name_of_container=f'-BOX-ATTRIBUTE-CONTAINER-{index}-')
         elif '-SCENARIOS-' == event:
             index = listbox_get_selection(window['-SCENARIOS-'])
 
