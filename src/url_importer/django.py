@@ -1,5 +1,5 @@
 import url_importer.shell_command as sc
-from sqlite.base import database_save_urls
+from sqlite.database import save_urls
 
 
 def import_urls():
@@ -14,7 +14,7 @@ def import_urls():
 
     urls = sc.execute_command_django(command)
 
-    database_save_urls(urls)
+    save_urls(urls)
 
     # print(urls)
     return True

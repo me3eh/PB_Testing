@@ -10,8 +10,9 @@ def create_config_file():
     config.set('main', 'domain', 'http://localhost:3000')
     config.set('main', 'username_field', 'username')
     config.set('main', 'password_field', 'password')
-    config.set('main', 'username_value', 'http://localhost:3000')
-    config.set('main', 'password_value', 'http://localhost:3000')
+    config.set('main', 'username_value', 'jar')
+    config.set('main', 'password_value', 'jarjarjar')
+    config.set('main', 'login_path', '/login')
 
     with open('resources_for_testing/config.ini', 'w') as f:
         config.write(f)

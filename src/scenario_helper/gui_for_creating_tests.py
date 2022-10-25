@@ -274,7 +274,6 @@ def gui_for_scenarios():
                 window[c].update(values=array_with_selected_type_values)
         elif "-DELETE-" in event:
             found = False
-            print("lol")
             index = listbox_get_selection(window['-SCENARIOS-'])
             actual_scenario = scenarios[index]
 
@@ -290,9 +289,12 @@ def gui_for_scenarios():
                     found = True
             if not found:
                 scenario_listbox = window['-SCENARIOS-']
-                index = listbox_get_selection(scenario_listbox)
-                scenarios.pop(index)
-                delete_selected_from_listbox(listbox=scenario_listbox)
+                if len(scenarios) == 1:
+                    sg.popup("Cannot delete last scenario", auto_close=True, auto_close_duration=3)
+                else:
+                    index = listbox_get_selection(scenario_listbox)
+                    scenarios.pop(index)
+                    delete_selected_from_listbox(listbox=scenario_listbox)
 
         elif event in specials:
             ar = specials.copy()

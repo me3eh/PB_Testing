@@ -7,12 +7,16 @@ setup.cfg
 setup.py
 bin/create-dirs
 bin/create-scenario
+bin/create-scenario-gui
 bin/extra_modules_for_pb_testing.py
 bin/pb_configuration
 bin/prepare
 bin/scan_for_urls
+bin/step_creator
 src/browser_scraper/__init__.py
 src/browser_scraper/test.py
+src/gui/__init__.py
+src/gui/step_creation.py
 src/interface/__init__.py
 src/interface/menu.py
 src/pb_testing/__init__.py
@@ -29,6 +33,7 @@ src/preparation/create_config_file.py
 src/preparation/create_directory.py
 src/preparation/site_attributes.py
 src/preparation/steps_files.py
+src/scenario_helper/GUI_TEST_2.PY.py
 src/scenario_helper/__init__.py
 src/scenario_helper/actions.py
 src/scenario_helper/autocompleter.py
@@ -39,6 +44,9 @@ src/scenario_helper/gui_for_creating_tests.py
 src/scenario_helper/gui_test.py
 src/scenario_helper/menu_helper.py
 src/scenario_helper/scenario.py
+src/site_scraping/__init__.py
+src/site_scraping/site_info.py
+src/site_scraping/test.py
 src/sqlite/__init__.py
 src/sqlite/database.py
 src/url_importer/__init__.py

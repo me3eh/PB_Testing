@@ -1,0 +1,7 @@
+#!/usr/bin/env python
+
+import extra_modules_for_pb_testing
+
+from gui.step_creation import create_step
+
+create_step()

@@ -1,7 +1,9 @@
 browser_scraper
+gui
 interface
 pb_testing
 preparation
 scenario_helper
+site_scraping
 sqlite
 url_importer
