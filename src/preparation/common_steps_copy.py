@@ -72,8 +72,7 @@ def step(context, link_text):
 @then('it should have a title {text}')
 def step(context, text):
     title = context.driver.title
-    assert title == text, f"Current web title was: '{title}', it is expected to be '{text}'." \
-                          f"Probably problem with minus sign. Copy it and it should be fine"
+    assert title == text, f"Current web title was: '{title}', it is expected to be '{text}'."
 
 
 @then('it should have an url {url}')

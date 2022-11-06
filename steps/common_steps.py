@@ -6,10 +6,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# profile = webdriver.Firefox()
-# profile.find_element('da').is_
-# profile.use ind_element(by=By.NAME, value=name)
-# profile.find_element
 
 
 def css_format(class_name):
@@ -18,6 +14,8 @@ def css_format(class_name):
 
 @given('visiting url {url}')
 @when('visiting url {url}')
+@given('visiting site {url}')
+@when('visiting site {url}')
 def step(context, url):
     if "https://" in url or 'http://' in url:
         context.driver.get(url)
@@ -37,11 +35,19 @@ def step(context, css_classes):
 def step(context, element_id, text):
     context.driver.find_element(value=element_id).send_keys(text)
 
+@given('filling input with xpath {xpath} with text {text}')
+@when('filling input with xpath {xpath} with text {text}')
+def step(context, xpath, text):
+    context.driver.find_element_by_xpath(xpath).send_keys(text)
+
+@when('sleep 5')
+def step(context):
+    time.sleep(5)
 
 @given('filling input with name {element_name} text {text}')
 @when('filling input with name {element_name} text {text}')
-def step(context, input_name, text):
-    input_tag = context.driver.find_element(by=By.NAME, value=input_name)
+def step(context, element_name, text):
+    input_tag = context.driver.find_element(by=By.NAME, value=element_name)
     input_tag.send_keys(text)
 
 
@@ -63,6 +69,12 @@ def step(context, link):
     WebDriverWait(context.driver, 20).until(EC.element_to_be_clickable((By.XPATH, f"a[href*='{link}']"))).click()
 
 
+@given('clicking on element with xpath {xpath}')
+@when('clicking on element with xpath {xpath}')
+def step(context, xpath):
+    WebDriverWait(context.driver, 20).until(EC.element_to_be_clickable((By.XPATH, xpath))).click()
+
+
 @given('clicking on link with link text {link_text}')
 @when('clicking on link with link text {link_text}')
 def step(context, link_text):
@@ -72,8 +84,7 @@ def step(context, link_text):
 @then('it should have a title {text}')
 def step(context, text):
     title = context.driver.title
-    assert title == text, f"Current web title was: '{title}', it is expected to be '{text}'." \
-                          f"Probably problem with minus sign. Copy it and it should be fine"
+    assert title == text, f"Current web title was: '{title}', it is expected to be '{text}'."
 
 
 @then('it should have an url {url}')
@@ -151,3 +162,4 @@ def step(context, element_id):
 def step(context, css_classes):
     element = context.driver.find_element_by_class_name(css_format(css_classes)).text
     assert not element.is_displayed(), f"Current element with css_class:{css_classes} is: visible"
+
