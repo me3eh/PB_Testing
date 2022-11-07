@@ -10,33 +10,40 @@ def step_impl(context):
     ''')
 
 
-@when ('something called')
+@given('kekw')
 def step(context):
 	context.execute_steps(u'''
-		Given visiting site youshstg.myshopify.com
-		Given filling input with xpath //input[@type='password' and contains(@class, 'form-input') and @id='password' and @name='password' and @autocomplete='nope'] with text lailtu
-		None
-	''')
-@Given ('Something')
-def step(context):
-	context.execute_steps(u'''
-		Given visiting site https://youshstg.myshopify.com
-		Given filling input with xpath //input[@type='password' and contains(@class, 'form-input') and @id='password' and @name='password' and @autocomplete='nope'] with text lailtu
-		None
-	''')
-@Given ('Another')
-def step(context):
-	context.execute_steps(u'''
-		Given visiting site https://youshstg.myshopify.com
-		Given filling input with xpath //input[@type='password' and contains(@class, 'form-input') and @id='password' and @name='password' and @autocomplete='nope'] with text lailtu
-		Given clicking on element with xpath //button[@type='submit']
+		Given visiting site https://gram.pl
+		Given clicking on element with xpath //a[@href='https://forum.gram.pl/' and contains(@class, 'menu-link') and @target='_blank' and @rel='noopener noreferrer']
 	''')
 
-@Given ('Moj_plan')
+@given ('Something')
 def step(context):
 	context.execute_steps(u'''
-		Given visiting site https://youshstg.myshopify.com
-		Given filling input with xpath //input[@type='password' and contains(@class, 'form-input') and @id='password' and @name='password' and @autocomplete='nope'] with text lailtu
-		Given clicking on element with xpath //button[@type='submit']
-		
+		Given visiting site https://gram.pl
+		Given clicking on element with xpath //button[@class='menu-link']
+	''')
+@given ('Something')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+		None
+	''')
+@given ('Something')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+		None
+	''')
+@given ('kekw')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+		None
+	''')
+@given ('Something')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+		Then clicking on element with xpath 
 	''')

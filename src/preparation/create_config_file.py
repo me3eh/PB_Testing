@@ -13,6 +13,7 @@ def create_config_file():
     config.set('main', 'username_value', 'jar')
     config.set('main', 'password_value', 'jarjarjar')
     config.set('main', 'login_path', '/login')
+    config.set('main', 'last_site', 'https://gram.pl')
 
     with open('resources_for_testing/config.ini', 'w') as f:
         config.write(f)

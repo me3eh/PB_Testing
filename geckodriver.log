@@ -1491,3 +1491,101 @@ DevTools listening on ws://localhost:59861/devtools/browser/7989ac65-627b-40c5-8
 1652782779543	Marionette	INFO	Listening on port 36201
 1652782779584	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
 1652782779647	Marionette	INFO	Stopped listening on port 36201
+1667817483933	geckodriver	INFO	Listening on 127.0.0.1:37957
+1667817484949	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofilequZwB2"
+1667817485621	Marionette	INFO	Marionette enabled
+1667817485625	Marionette	INFO	Listening on port 32789
+1667817485763	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilequZwB2/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1667817489820	Marionette	INFO	Stopped listening on port 32789
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+1667817526119	geckodriver	INFO	Listening on 127.0.0.1:53313
+1667817526124	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileSmmqLc"
+1667817526738	Marionette	INFO	Marionette enabled
+1667817526743	Marionette	INFO	Listening on port 34979
+1667817526950	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileSmmqLc/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1667817529852	Marionette	INFO	Stopped listening on port 34979
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+1667817580765	geckodriver	INFO	Listening on 127.0.0.1:59187
+1667817580769	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileEufhfp"
+1667817581331	Marionette	INFO	Marionette enabled
+1667817581336	Marionette	INFO	Listening on port 44867
+1667817581458	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileEufhfp/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1667817597416	geckodriver	INFO	Listening on 127.0.0.1:48425
+1667817597421	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileuSgJIF"
+1667817598007	Marionette	INFO	Marionette enabled
+1667817598011	Marionette	INFO	Listening on port 42493
+1667817598121	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileuSgJIF/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+ATTENTION: default value of option mesa_glthread overridden by environment.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/yBpsGyrbw-0ekNfFbDofVV3UtCeaMQwd_FuZQ5DuPuw.js line 2 > eval line 2092 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1667817606844	Marionette	INFO	Stopped listening on port 42493
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+1667817614124	geckodriver	INFO	Listening on 127.0.0.1:57729
+1667817615142	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileGw3a60"
+1667817615752	Marionette	INFO	Marionette enabled
+1667817615757	Marionette	INFO	Listening on port 37249
+1667817615897	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileGw3a60/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+ATTENTION: default value of option mesa_glthread overridden by environment.
+JavaScript warning: https://pagead2.googlesyndication.com/bg/yBpsGyrbw-0ekNfFbDofVV3UtCeaMQwd_FuZQ5DuPuw.js line 2 > eval line 4398 > eval line 1 > eval line 1 > eval, line 1: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1667817624858	Marionette	INFO	Stopped listening on port 37249
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+1667817838412	geckodriver	INFO	Listening on 127.0.0.1:47227
+1667817887553	geckodriver	INFO	Listening on 127.0.0.1:43049
+1667817887566	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileOE35k8"
+1667817888262	Marionette	INFO	Marionette enabled
+1667817888266	Marionette	INFO	Listening on port 39203
+1667817888390	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileOE35k8/search.json.mozlz4", (void 0)))
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+Exiting due to channel error.
+1667817909645	geckodriver	INFO	Listening on 127.0.0.1:48033
+1667817909649	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileJeku44"
+1667817910197	Marionette	INFO	Marionette enabled
+1667817910202	Marionette	INFO	Listening on port 42355
+1667817910317	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileJeku44/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1667817918515	Marionette	INFO	Stopped listening on port 42355
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+1667817976264	geckodriver	INFO	Listening on 127.0.0.1:39259
+1667817976268	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileHKxXcJ"
+1667817976821	Marionette	INFO	Marionette enabled
+1667817976825	Marionette	INFO	Listening on port 37059
+1667817976943	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofileHKxXcJ/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1667817985226	Marionette	INFO	Stopped listening on port 37059
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+console.error: services.settings: 
+  main/query-stripping Signature failed  TypeError: NetworkError: Network request failed
+1667818177510	geckodriver	INFO	Listening on 127.0.0.1:45395
+1667818177514	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofile7FnUWZ"
+1667818178106	Marionette	INFO	Marionette enabled
+1667818178110	Marionette	INFO	Listening on port 39771
+1667818178211	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofile7FnUWZ/search.json.mozlz4", (void 0)))
+JavaScript error: , line 0: uncaught exception: Object
+JavaScript error: , line 0: uncaught exception: Object
+1667818186865	Marionette	INFO	Stopped listening on port 39771
+console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
+console.error: services.settings: 
+  main/query-stripping Signature failed  TypeError: NetworkError: Network request failed

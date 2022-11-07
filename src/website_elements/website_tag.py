@@ -46,13 +46,13 @@ class WebsiteTag:
                     full_xpath += ' and '
                 else:
                     full_xpath += '['
-                if a[0] == 'class':
-                    for index, class_attribute in enumerate(a[1]):
-                        if index != 0:
-                            full_xpath += ' and '
-                        full_xpath += f"contains(@class, '{class_attribute}')"
+
+                if type(a[1]) == list:
+                    attribute_in_string = ' '.join(a[1])
                 else:
-                    full_xpath += f"@{a[0]}='{a[1]}'"
+                    attribute_in_string = a[1]
+
+                full_xpath += f"@{a[0]}='{attribute_in_string}'"
             full_xpath += ']'
             return full_xpath
         else:
@@ -64,12 +64,19 @@ class WebsiteTag:
         return f' with text {self.attribute}'
 
     def get_command(self):
+        print("Wartosc to ", self.value_for_bdd)
         if self.value_for_bdd == 'visiting site':
             return f'{self.bdd_attribute} visiting site {self.attribute}'
-        if self.value_for_bdd == 'filling input':
+        elif self.value_for_bdd == 'filling input':
             return f'{self.bdd_attribute} filling input with xpath {self.attributes_to_html()} with text {self.attribute}'
-        if self.value_for_bdd == 'clicking button':
+        elif self.value_for_bdd == 'clicking button':
             return f'{self.bdd_attribute} clicking on element with xpath {self.attributes_to_html()}'
+        elif self.value_for_bdd == 'clicking link':
+            return f'{self.bdd_attribute} clicking on element with xpath {self.attributes_to_html()}'
+        elif self.value_for_bdd == 'assert title of site':
+            return f'{self.bdd_attribute} it should have a title {self.attribute}'
+        elif self.value_for_bdd == 'assert url of site':
+            return f'{self.bdd_attribute} it should have an url {self.attribute}'
 
     def format_for_listbox_with_available_actions(self):
         return f"<{self.type_of_tag} {self._id()}{self._css_class()}{self._text_inside()}>"

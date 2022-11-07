@@ -2,7 +2,6 @@ LICENSE
 MANIFEST.in
 README.md
 makefile
-pyproject.toml
 setup.cfg
 setup.py
 bin/create-dirs
@@ -24,7 +23,6 @@ src/pb_testing/my_functions.py
 src/pb_testing.egg-info/PKG-INFO
 src/pb_testing.egg-info/SOURCES.txt
 src/pb_testing.egg-info/dependency_links.txt
-src/pb_testing.egg-info/requires.txt
 src/pb_testing.egg-info/top_level.txt
 src/preparation/__init__.py
 src/preparation/common_steps_copy.py
@@ -49,7 +47,11 @@ src/site_scraping/site_info.py
 src/site_scraping/test.py
 src/sqlite/__init__.py
 src/sqlite/database.py
+src/text_to_test_transform/__init__.py
+src/text_to_test_transform/test.py
 src/url_importer/__init__.py
 src/url_importer/django.py
 src/url_importer/rails.py
 src/url_importer/shell_command.py
+src/website_elements/__init__.py
+src/website_elements/website_tag.py
