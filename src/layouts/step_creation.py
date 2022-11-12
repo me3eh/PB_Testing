@@ -114,7 +114,7 @@ def get_layout(domain,
                         sg.Combo(actions, default_value=actions[0], key='-ACTIONS-CHOICE-', readonly=True,
                                  enable_events=True),
                         sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-BDD-ATTRIBUTE-', readonly=True,
-                                 enable_events=True),
+                                 enable_events=True, tooltip="huhi"),
                         sg.Text(GIVEN_ATTRIBUTE_INFO, key='-BDD-ATTRIBUTE-INFO-', enable_events=True)
                     ],
                     [
@@ -123,7 +123,7 @@ def get_layout(domain,
                 ]),
                 sg.Column([
                     [
-                        sg.Multiline("", disabled=True, background_color='#faea5a', size=(40, 10),
+                        sg.Multiline("", disabled=True, size=(40, 10), background_color='#faea5a',
                                      key='-TAG-DESCRIPTION-')
                     ],
                     [
@@ -132,7 +132,28 @@ def get_layout(domain,
                     [
                         sg.Input("Additional", key='-HELPER-INPUT-')
                     ]
-                ])
+                ]),
+                sg.Column([
+                    [
+                        sg.Text("Xpath of element:", key='-XPATH-INFO-')
+                    ],
+                    [
+                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 10)),
+                        sg.Column(
+                            [
+                                [
+                                    sg.Button('Check if exists in html', button_color='blue', key='-XPATH-EXISTS-')
+                                ],
+                                [
+                                    sg.Button('Save xpath', button_color='red', key='-XPATH-SAVE-')
+                                ]
+                            ]
+                        )
+                    ],
+                    [
+                        sg.Text("", key='-XPATH-ELEMENTS-')
+                    ]
+                ]),
             ],
             [
                 sg.Button("Add new action", k='-ADD-ACTION-'),
@@ -145,7 +166,7 @@ def get_layout(domain,
             ],
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
-                sg.Listbox(todo_actions_in_array, size=(20, 20), k='-ACTION-LIST-', expand_x=True),
+                sg.Listbox(todo_actions_in_array, size=(20, 20), k='-ACTION-LIST-', expand_x=True, enable_events=True),
                 sg.Column([[]], k='layout_principal'),
                 sg.Column([
                     [

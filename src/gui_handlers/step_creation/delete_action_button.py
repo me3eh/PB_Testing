@@ -1,4 +1,4 @@
-def call(window, plan):
+def delete_action(window, plan):
     selected_action = window['-ACTION-LIST-'].get_indexes()
     print(selected_action)
 

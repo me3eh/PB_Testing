@@ -5,12 +5,15 @@ class WebsiteTag:
         self.attrs = None
         self.text = None
         self.type_of_tag = type_of_tag
+        self.xpath = None
+        self.whole_html = None
         if whole_html != None:
             self.attrs = whole_html.attrs
             self.id = self.attrs['id'] if 'id' in self.attrs else None
             self.css_class = self.attrs['class'] if 'class' in self.attrs else None
             self.text = whole_html.text if whole_html.text != '' else None
             self.whole_html = whole_html
+            self.xpath = self.attributes_to_html()
         self.bdd_attribute = bdd_attribute
         self.value_for_bdd = value_for_bdd
         self.attribute = attribute
