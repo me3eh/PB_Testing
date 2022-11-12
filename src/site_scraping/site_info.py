@@ -25,7 +25,8 @@ def get_saved_site(site):
         return last_used_html
 
     reqs = requests.get(site)
-    saved_htmls[site] = reqs.text
+    soup = BeautifulSoup(reqs.text, features='lxml')
+    saved_htmls[site] = soup.prettify()
     last_used_html = saved_htmls[site]
     print("oddano stronę, którą trzeba było wyszukać")
     return reqs.text

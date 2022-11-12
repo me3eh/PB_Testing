@@ -9,5 +9,5 @@ def pick_tag(window, todo_actions):
                 window['-TAG-DESCRIPTION-'].update(selected_tag.whole_html.prettify())
                 window['-XPATH-INPUT-'].update(selected_tag.xpath)
             else:
-                window['-TAG-DESCRIPTION-'].update(visible=False)
-                window['-XPATH-INPUT-'].update(visible=False)
+                window['-TAG-DESCRIPTION-'].update('Current action does not have any tag')
+                window['-XPATH-INPUT-'].update('Current action does not have any xpath')

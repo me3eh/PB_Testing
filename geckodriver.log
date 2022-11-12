@@ -1589,3 +1589,17 @@ JavaScript error: , line 0: uncaught exception: Object
 console.warn: services.settings: main/partitioning-exempt-urls sync interrupted by shutdown
 console.error: services.settings: 
   main/query-stripping Signature failed  TypeError: NetworkError: Network request failed
+1668267200649	geckodriver	INFO	Listening on 127.0.0.1:54361
+1668267201660	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofilevtVhTm"
+1668267202295	Marionette	INFO	Marionette enabled
+1668267202299	Marionette	INFO	Listening on port 42023
+1668267202610	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at /tmp/rust_mozprofilevtVhTm/search.json.mozlz4", (void 0)))
+1668267204366	Marionette	INFO	Stopped listening on port 42023
+1668267205495	geckodriver	INFO	Listening on 127.0.0.1:41155
+1668267206508	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "--marionette" "-no-remote" "-profile" "/tmp/rust_mozprofileWoDdSa"
+1668267207191	Marionette	INFO	Marionette enabled
+1668267207196	Marionette	INFO	Listening on port 40337
+1668267207326	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+Exiting due to channel error.
+Exiting due to channel error.

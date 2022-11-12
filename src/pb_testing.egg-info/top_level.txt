@@ -1,5 +1,6 @@
 browser_scraper
 gui
+gui_handlers
 interface
 pb_testing
 preparation

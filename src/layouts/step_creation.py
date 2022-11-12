@@ -142,7 +142,13 @@ def get_layout(domain,
                         sg.Column(
                             [
                                 [
-                                    sg.Button('Check if exists in html', button_color='blue', key='-XPATH-EXISTS-')
+                                    sg.Button('Show whole html in external app', button_color='orange', key='-SHOW-HTML-')
+                                ],
+                                [
+                                    sg.Button('Copy whole html', button_color='black', key='-COPY-HTML-')
+                                ],
+                                [
+                                    sg.Button('Check if xpath exists in html', button_color='blue', key='-XPATH-EXISTS-')
                                 ],
                                 [
                                     sg.Button('Save xpath', button_color='red', key='-XPATH-SAVE-')
