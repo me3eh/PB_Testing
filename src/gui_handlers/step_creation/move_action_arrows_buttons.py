@@ -14,5 +14,6 @@ def move_action(event, window, sg, error_picture, todo_actions):
             window['-ACTION-LIST-'].update(create_todo_actions_for_listbox(todo_actions))
             window['-ACTION-LIST-'].widget.selection_set(final_index)
 
+
 def create_todo_actions_for_listbox(todo_actions):
     return list(map(lambda obj: obj.format_for_todo_listbox(), todo_actions))
