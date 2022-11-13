@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 
-INFORMATION_ABOUT_UNIQUENESS = 'First you need to have xpath of your element unique :D'
+INFORMATION_ABOUT_UNIQUENESS = 'To have your save buttons enabled, you need to have xpath of your element unique :D'
 
 
 def get_layout(domain,
