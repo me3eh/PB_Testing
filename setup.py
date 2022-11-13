@@ -11,7 +11,10 @@ setup(
     license='MIT',
     install_requires=[
         'bs4 >= 0.0.1',
-        'behave >= 1.2.5'
+        'behave >= 1.2.5',
+        'PySimpleGUI >= 4.60.4',
+        'pyperclip >= 1.8.2',
+        'mechanize >= 0.4.8'
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest==4.4.1'],

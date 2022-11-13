@@ -10,7 +10,7 @@ class WebsiteTag:
         if whole_html != None:
             self.attrs = whole_html.attrs
             self.id = self.attrs['id'] if 'id' in self.attrs else None
-            self.css_class = self.attrs['class'] if 'class' in self.attrs else None
+            self.css_class = ' '.join(self.attrs['class']) if 'class' in self.attrs else None
             self.text = whole_html.text if whole_html.text != '' else None
             self.whole_html = whole_html
             self.xpath = self.attributes_to_html()
@@ -32,7 +32,7 @@ class WebsiteTag:
 
     def _css_class(self):
         if self.css_class != None:
-            return f"css_class = {self.css_class} "
+            return f"css_class='{self.css_class}' "
         return ""
 
     def _text_inside(self):

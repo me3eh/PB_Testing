@@ -53,7 +53,8 @@ def get_browser_attributes(site):
     return array_with_attributes
 
 
-def get_logged_browser_attributes(site, username_field, username_value, password_field, password_value, login_path, domain):
+def get_logged_browser_attributes(site, username_field, username_value, password_field,
+                                  password_value, login_path, domain):
     br = mechanize.Browser()
     ad = br.open(f"{domain}{login_path}")
     br.select_form(nr=0)
@@ -73,9 +74,9 @@ def get_tag(response, tag):
     return tags
 
 
-def get_tag_logged_in(site, username_field, username_value, password_field, password_value, login_path, tag):
-    response = get_logged_browser_attributes(site, username_field, username_value, password_field, password_value,
-                                             login_path)
+def get_tag_logged_in(site, username_field, username_value, password_field, password_value, login_path, tag, domain):
+    response = get_logged_browser_attributes(site, username_field, username_value, password_field,
+                                             password_value, login_path, domain)
     return get_tag(response, tag=tag)
 
 

@@ -1,5 +1,8 @@
 import PySimpleGUI as sg
 
+INFORMATION_ABOUT_UNIQUENESS = 'First you need to have xpath of your element unique :D'
+
+
 def get_layout(domain,
                login_path,
                last_site,
@@ -118,19 +121,19 @@ def get_layout(domain,
                         sg.Text(GIVEN_ATTRIBUTE_INFO, key='-BDD-ATTRIBUTE-INFO-', enable_events=True)
                     ],
                     [
-                        sg.Listbox(["There is nothing here...yet"], size=(40, 20), k='-TAG-LIST-', enable_events=True)
+                        sg.Listbox([], size=(40, 20), k='-TAG-LIST-', enable_events=True)
                     ]
                 ]),
                 sg.Column([
                     [
-                        sg.Multiline("", disabled=True, size=(40, 10), background_color='#faea5a',
+                        sg.Text("Tag description:")
+                    ],
+                    [
+                        sg.Multiline("", disabled=True, size=(40, 15), background_color='#faea5a',
                                      key='-TAG-DESCRIPTION-')
                     ],
                     [
-                        sg.Text("Write here your info for input", key='-HELPER-INPUT-LABEL-')
-                    ],
-                    [
-                        sg.Input("Additional", key='-HELPER-INPUT-')
+                        sg.Text("")
                     ]
                 ]),
                 sg.Column([
@@ -138,7 +141,7 @@ def get_layout(domain,
                         sg.Text("Xpath of element:", key='-XPATH-INFO-')
                     ],
                     [
-                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 10)),
+                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 15)),
                         sg.Column(
                             [
                                 [
@@ -159,12 +162,24 @@ def get_layout(domain,
                     [
                         sg.Text("", key='-XPATH-ELEMENTS-')
                     ]
-                ]),
+                ])
             ],
             [
-                sg.Button("Add new action", k='-ADD-ACTION-'),
-                sg.Button("Save action", k='-SAVE-ACTION-'),
+                sg.Button("Add new action", k='-ADD-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
+                sg.Button("Save action", k='-SAVE-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
                 sg.Button("Delete selected action", k='-DELETE-ACTION-', button_color='red'),
+                sg.Column([[]], expand_x=True),
+                sg.Column([
+                    [
+                        sg.Text("Write here your info for input", key='-HELPER-INPUT-LABEL-')
+                    ],
+                    [
+                        sg.Input("Additional", key='-HELPER-INPUT-')
+                    ]
+                ], expand_x=True)
+            ],
+            [
+              sg.HorizontalSeparator()
             ],
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
