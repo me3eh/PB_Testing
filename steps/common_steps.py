@@ -6,10 +6,6 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-# profile = webdriver.Firefox()
-# profile.find_element('da').is_
-# profile.use ind_element(by=By.NAME, value=name)
-# profile.find_element
 
 
 def css_format(class_name):
@@ -18,6 +14,8 @@ def css_format(class_name):
 
 @given('visiting url {url}')
 @when('visiting url {url}')
+@given('visiting site {url}')
+@when('visiting site {url}')
 def step(context, url):
     if "https://" in url or 'http://' in url:
         context.driver.get(url)
@@ -37,6 +35,14 @@ def step(context, css_classes):
 def step(context, element_id, text):
     context.driver.find_element(value=element_id).send_keys(text)
 
+@given('filling input with xpath {xpath} with text {text}')
+@when('filling input with xpath {xpath} with text {text}')
+def step(context, xpath, text):
+    context.driver.find_element_by_xpath(xpath).send_keys(text)
+
+@when('sleep {time}')
+def step(context, time):
+    time.sleep(time)
 
 @given('filling input with name {element_name} text {text}')
 @when('filling input with name {element_name} text {text}')
@@ -63,6 +69,12 @@ def step(context, link):
     WebDriverWait(context.driver, 20).until(EC.element_to_be_clickable((By.XPATH, f"a[href*='{link}']"))).click()
 
 
+@given('clicking on element with xpath {xpath}')
+@when('clicking on element with xpath {xpath}')
+def step(context, xpath):
+    WebDriverWait(context.driver, 20).until(EC.element_to_be_clickable((By.XPATH, xpath))).click()
+
+
 @given('clicking on link with link text {link_text}')
 @when('clicking on link with link text {link_text}')
 def step(context, link_text):
@@ -72,8 +84,7 @@ def step(context, link_text):
 @then('it should have a title {text}')
 def step(context, text):
     title = context.driver.title
-    assert title == text, f"Current web title was: '{title}', it is expected to be '{text}'." \
-                          f"Probably problem with minus sign. Copy it and it should be fine"
+    assert title == text, f"Current web title was: '{title}', it is expected to be '{text}'."
 
 
 @then('it should have an url {url}')
@@ -99,10 +110,10 @@ def step(context, css_classes, text):
         f"Current text in element was: '{actual}', it is expected to be '{expected}'."
 
 
-@then('input with name {name} should be disabled')
-def step(context, name):
-    input_tag = context.driver.find_element(by=By.NAME, value=name)
-    assert not input_tag.is_enabled(), f"Current element with name:{name} was: enabled"
+@then('input with name {input_name} should be disabled')
+def step(context, input_name):
+    input_tag = context.driver.find_element(by=By.NAME, value=input_name)
+    assert not input_tag.is_enabled(), f"Current element with name:{input_name} was: enabled"
 
 
 @then('element with id {element_id} should be disabled')
@@ -117,10 +128,10 @@ def step(context, css_classes):
     assert not element.is_enabled(), f"Current element with id:{css_classes} was: enabled"
 
 
-@then('input with name {name} should be visible')
-def step(context, name):
-    input_tag = context.driver.find_element(by=By.NAME, value=name)
-    assert input_tag.is_displayed(), f"Current element with name:{name} was: enabled"
+@then('input with name {input_name} should be visible')
+def step(context, input_name):
+    input_tag = context.driver.find_element(by=By.NAME, value=input_name)
+    assert input_tag.is_displayed(), f"Current element with name:{input_name} was: enabled"
 
 
 @then('element with id {element_id} should be visible')
@@ -135,10 +146,10 @@ def step(context, css_classes):
     assert element.is_displayed(), f"Current element with id:{css_classes} is not visible"
 
 
-@then('input with name {name} should not be visible')
-def step(context, name):
-    element = context.driver.find_element(by=By.NAME, value=name)
-    assert not element.is_displayed(), f"Current element with name:{name} is: visible"
+@then('input with name {input_name} should not be visible')
+def step(context, input_name):
+    element = context.driver.find_element(by=By.NAME, value=input_name)
+    assert not element.is_displayed(), f"Current element with name:{input_name} is: visible"
 
 
 @then('element with id {element_id} should not be visible')
@@ -151,3 +162,4 @@ def step(context, element_id):
 def step(context, css_classes):
     element = context.driver.find_element_by_class_name(css_format(css_classes)).text
     assert not element.is_displayed(), f"Current element with css_class:{css_classes} is: visible"
+

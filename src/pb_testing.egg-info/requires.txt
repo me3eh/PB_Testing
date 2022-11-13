@@ -1,4 +1,2 @@
-setuptools
-behave
-selenium
-PySimpleGUI
+bs4>=0.0.1
+behave>=1.2.5

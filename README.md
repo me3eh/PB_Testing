@@ -11,9 +11,10 @@
 All commands are typed into terminal
 <hr style="border:2px solid gray"/>
 
-```bash``
+```bash
 prepare
 ```
+
 It will create:
 - directories: __resources_for_testing, features, steps, pages__
 - configuration_file __config.ini__
