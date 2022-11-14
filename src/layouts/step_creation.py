@@ -2,6 +2,9 @@ import PySimpleGUI as sg
 
 INFORMATION_ABOUT_UNIQUENESS = 'To have your save buttons enabled, you need to have xpath of your element unique :D'
 
+input_width = 20
+number_items_to_show = 4
+
 
 def get_layout(domain,
                login_path,
@@ -24,7 +27,7 @@ def get_layout(domain,
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
                 sg.Input("Something", key='-TITLE-OF-TEST-'),
-                sg.Column([[]], k='layout_principal', expand_x=True)
+                sg.Column([[]], k='layout_principal', expand_x=True),
             ],
             [
                 sg.HorizontalSeparator()
@@ -42,13 +45,37 @@ def get_layout(domain,
                     ],
                     [
                         sg.Input(login_path, key='-LOGIN-PATH-', size=(20, 20), disabled=True,
-                                 disabled_readonly_background_color='red')
+                                 disabled_readonly_background_color='red', enable_events=True)
+                    ],
+                    [
+                        sg.Col(
+                            [
+                                [
+                                    sg.Listbox(values=[], size=(input_width, number_items_to_show),
+                                               enable_events=True,
+                                               key='-LOGIN-PATH-BOX-', select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                                               no_scrollbar=True, background_color='#13445a')
+                                ]
+                            ], key='-LOGIN-PATH-BOX-CONTAINER-', pad=(0, 0), visible=True
+                        )
                     ],
                     [
                         sg.Text("Site for scraping")
                     ],
                     [
-                        sg.Input(last_site, key='-LAST-SITE-', size=(20, 20))
+                        sg.Input(last_site, key='-LAST-SITE-', size=(20, 20), enable_events=True)
+                    ],
+                    [
+                        sg.Col(
+                            [
+                                [
+                                    sg.Listbox(values=[], size=(input_width, number_items_to_show),
+                                               enable_events=True,
+                                               key='-LAST-SITE-BOX-', select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                                               no_scrollbar=True, background_color='#13445a')
+                                ]
+                            ], key='-LAST-SITE-BOX-CONTAINER-', pad=(0, 0), visible=True
+                        )
                     ]
                 ]
             ),
@@ -117,7 +144,7 @@ def get_layout(domain,
                         sg.Combo(actions, default_value=actions[0], key='-ACTIONS-CHOICE-', readonly=True,
                                  enable_events=True),
                         sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-BDD-ATTRIBUTE-', readonly=True,
-                                 enable_events=True, tooltip="huhi"),
+                                 enable_events=True),
                         sg.Text(GIVEN_ATTRIBUTE_INFO, key='-BDD-ATTRIBUTE-INFO-', enable_events=True)
                     ],
                     [
@@ -145,13 +172,15 @@ def get_layout(domain,
                         sg.Column(
                             [
                                 [
-                                    sg.Button('Show whole html in external app', button_color='orange', key='-SHOW-HTML-')
+                                    sg.Button('Show whole html in external app', button_color='orange',
+                                              key='-SHOW-HTML-')
                                 ],
                                 [
                                     sg.Button('Copy whole html', button_color='black', key='-COPY-HTML-')
                                 ],
                                 [
-                                    sg.Button('Check if xpath exists in html', button_color='blue', key='-XPATH-EXISTS-')
+                                    sg.Button('Check if xpath exists in html', button_color='blue',
+                                              key='-XPATH-EXISTS-')
                                 ],
                                 [
                                     sg.Button('Save xpath', button_color='red', key='-XPATH-SAVE-')
