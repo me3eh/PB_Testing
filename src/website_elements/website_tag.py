@@ -55,7 +55,7 @@ class WebsiteTag:
                 else:
                     attribute_in_string = a[1]
 
-                full_xpath += f"@{a[0]}='{attribute_in_string}'"
+                full_xpath += f"@{a[0]}={repr(attribute_in_string)}"
             full_xpath += ']'
             return full_xpath
         else:
@@ -68,6 +68,7 @@ class WebsiteTag:
 
     def get_command(self):
         print("Wartosc to ", self.value_for_bdd)
+
         if self.value_for_bdd == 'visiting site':
             return f'{self.bdd_attribute} visiting site {self.attribute}'
         elif self.value_for_bdd == 'filling input':
@@ -76,13 +77,19 @@ class WebsiteTag:
             return f'{self.bdd_attribute} clicking on element with xpath {self.attributes_to_html()}'
         elif self.value_for_bdd == 'clicking link':
             return f'{self.bdd_attribute} clicking on element with xpath {self.attributes_to_html()}'
+        elif self.value_for_bdd == 'waiting for amount of seconds':
+            return f'{self.bdd_attribute} waiting for amount of seconds {self.attribute}'
+        elif self.value_for_bdd == 'selecting option from select':
+            return f'{self.bdd_attribute} selecting option {self.attribute} from select with xpath {self.xpath}'
         elif self.value_for_bdd == 'assert title of site':
             return f'{self.bdd_attribute} it should have a title {self.attribute}'
         elif self.value_for_bdd == 'assert url of site':
             return f'{self.bdd_attribute} it should have an url {self.attribute}'
-
     def format_for_listbox_with_available_actions(self):
+        print(self.xpath)
+        print(self.whole_html)
         return f"<{self.type_of_tag} {self._id()}{self._css_class()}{self._text_inside()}>"
 
     def format_for_todo_listbox(self):
-        return f"{self.bdd_attribute} {self.value_for_bdd}{self.get_attribute_from_gui()} {self.attributes_to_html()}"
+        print(self.value_for_bdd)
+        return f"{self.bdd_attribute} {self.value_for_bdd}{self.get_attribute_from_gui()}"

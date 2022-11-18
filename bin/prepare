@@ -16,7 +16,7 @@ setup()
 
 copy_common_steps()
 
-# ide_environments = [django, rails]
-# for ide in ide_environments:
-#     if ide.import_urls():
-#         break
+ide_environments = [django, rails]
+for ide in ide_environments:
+    if ide.import_urls():
+        break

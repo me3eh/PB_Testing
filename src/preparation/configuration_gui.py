@@ -9,39 +9,39 @@ def save_configuration(config):
     with open('resources_for_testing/config.ini', 'w') as f:
         config.write(f)
 
-def fill_attribute_listbox(window):
-    checked_url = window['-USER-URLS-'].get()
-    if not checked_url:
-        sg.popup("Not checked anything")
-    else:
-        attribute = window['-ATTRIBUTE-SELECT-'].get()
-        print(attribute)
-        print(checked_url[0])
-        values = database.retrieve_attribute(attribute=attribute, url=checked_url[0])
-        print(values)
-        if values and values[0][0] != None:
-            window['-ATTRIBUTES-LISTBOX-'].update(eval(values[0][0]))
-        else:
-            window['-ATTRIBUTES-LISTBOX-'].update([])
+# def fill_attribute_listbox(window):
+#     checked_url = window['-USER-URLS-'].get()
+#     if not checked_url:
+#         sg.popup("Not checked anything")
+#     else:
+#         # attribute = window['-ATTRIBUTE-SELECT-'].get()
+#         # print(attribute)
+#         print(checked_url[0])
+#         values = database.retrieve_attribute(attribute=attribute, url=checked_url[0])
+#         print(values)
+#         if values and values[0][0] != None:
+#             window['-ATTRIBUTES-LISTBOX-'].update(eval(values[0][0]))
+#         else:
+#             window['-ATTRIBUTES-LISTBOX-'].update([])
 
 def launch_configuration():
     config = ConfigParser()
 
     config.read('resources_for_testing/config.ini')
-    domain = config.get('main', 'domain')
+    # domain = config.get('main', 'domain')
     layout = [
-        [
-            sg.Text('Main domain testing'),
-            sg.Column([[]], k='layout_principal', expand_x=True)
-        ],
-        [
-            sg.Input(f'{domain}', k="-DOMAIN-INPUT-"),
-            sg.Column([[]], k='layout_principal', expand_x=True)
-        ],
-        [
-            sg.Button('Save configuration', k="-SAVE-"),
-            sg.Column([[]], k='layout_principal', expand_x=True)
-        ],
+        # [
+        #     sg.Text('Main domain testing'),
+        #     sg.Column([[]], k='layout_principal', expand_x=True)
+        # ],
+        # [
+        #     sg.Input(f'{domain}', k="-DOMAIN-INPUT-"),
+        #     sg.Column([[]], k='layout_principal', expand_x=True)
+        # ],
+        # [
+        #     sg.Button('Save configuration', k="-SAVE-"),
+        #     sg.Column([[]], k='layout_principal', expand_x=True)
+        # ],
         [
             sg.Column(
                 [
@@ -60,7 +60,7 @@ def launch_configuration():
                     [
                         sg.Button("==>", k='-ADD-')
                     ]
-                ]
+                ], expand_x=True
             ),
             sg.Column(
                 [
@@ -75,27 +75,27 @@ def launch_configuration():
                                    k='-USER-URLS-', size=(20, 20))
                     ]
                 ], k='layout_principal', expand_x=True),
-            sg.Column(
-                [
-                    [
-                        sg.Button("Check attributes", k='-CHECK-')
-                    ]
-                ]
-            ),
-            sg.Column(
-                [
-                    [
-                        sg.Text('Choose attributes')
-                    ],
-                    [
-                        sg.Combo(attributes, default_value=attributes[0], key='-ATTRIBUTE-SELECT-', readonly=True,
-                                 enable_events=True)
-                    ],
-                    [
-                        sg.Listbox(values=[], k='-ATTRIBUTES-LISTBOX-', size=(20, 20))
-                    ]
-                ]
-            )
+            # sg.Column(
+            #     [
+            #         [
+            #             sg.Button("Check attributes", k='-CHECK-')
+            #         ]
+            #     ]
+            # ),
+            # sg.Column(
+            #     [
+            #         [
+            #             sg.Text('Choose attributes')
+            #         ],
+            #         [
+            #             sg.Combo(attributes, default_value=attributes[0], key='-ATTRIBUTE-SELECT-', readonly=True,
+            #                      enable_events=True)
+            #         ],
+            #         [
+            #             sg.Listbox(values=[], k='-ATTRIBUTES-LISTBOX-', size=(20, 20))
+            #         ]
+            #     ]
+            # )
         ],
         [
             sg.Input("Yas", k='-INPUT-ANYTHING-'),
@@ -111,27 +111,27 @@ def launch_configuration():
         print(event)
         if event == sg.WIN_CLOSED or event == "Exit":
             break
-        if event == '-SAVE-':
-            new_domain = window["-DOMAIN-INPUT-"].get()
-            config.set('main', 'domain', new_domain)
-            save_configuration(config)
-            sg.popup("Everything set", auto_close_duration=1, auto_close=True, title=':D')
-        elif event == '-ATTRIBUTE-SELECT-':
-            fill_attribute_listbox(window)
-        elif event == '-USER-URLS-':
-            fill_attribute_listbox(window)
+        # if event == '-SAVE-':
+        #     new_domain = window["-DOMAIN-INPUT-"].get()
+        #     config.set('main', 'domain', new_domain)
+        #     save_configuration(config)
+        #     sg.popup("Everything set", auto_close_duration=1, auto_close=True, title=':D')
+        # elif event == '-ATTRIBUTE-SELECT-':
+        #     fill_attribute_listbox(window)
+        # elif event == '-USER-URLS-':
+        #     fill_attribute_listbox(window)
 
-        elif event == '-CHECK-':
-            checked_url = window['-USER-URLS-'].get()[0]
-            if not checked_url:
-                sg.popup("Not checked anything")
-            else:
-                domain = config.get('main', 'domain')
-                browser_attributes = get_browser_attributes(domain + '/' + ''.join(checked_url))
-                print(browser_attributes)
-                database.save_attributes(checked_url, css_classes=browser_attributes['class'],
-                                         ids=browser_attributes['id'], input_names=browser_attributes['name'])
-                print(domain + '/' + ''.join(checked_url))
+        # elif event == '-CHECK-':
+        #     checked_url = window['-USER-URLS-'].get()[0]
+        #     if not checked_url:
+        #         sg.popup("Not checked anything")
+        #     else:
+        #         domain = config.get('main', 'domain')
+        #         browser_attributes = get_browser_attributes(domain + '/' + ''.join(checked_url))
+        #         print(browser_attributes)
+        #         database.save_attributes(checked_url, css_classes=browser_attributes['class'],
+        #                                  ids=browser_attributes['id'], input_names=browser_attributes['name'])
+        #         print(domain + '/' + ''.join(checked_url))
         elif event == '-ADD-':
             checked_url = window['-SCANNED-URLS-'].get()
             if not checked_url:
@@ -185,4 +185,4 @@ def launch_configuration():
                 database.delete_url(values[selected_index[0]])
                 del values[selected_index[0]]
                 window['-USER-URLS-'].update(values)
-            window['-ATTRIBUTES-LISTBOX-'].update([])
+            # window['-ATTRIBUTES-LISTBOX-'].update([])

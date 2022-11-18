@@ -40,9 +40,7 @@ def step(context, element_id, text):
 def step(context, xpath, text):
     context.driver.find_element_by_xpath(xpath).send_keys(text)
 
-@when('sleep {time}')
-def step(context, time):
-    time.sleep(time)
+
 
 @given('filling input with name {element_name} text {text}')
 @when('filling input with name {element_name} text {text}')

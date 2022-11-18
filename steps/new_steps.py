@@ -9,18 +9,26 @@ def step_impl(context):
         then it should have an url https://youshstg.myshopify.com/
     ''')
 
-@given ('Something')
+#
+# @given ('sprawdzenie_strony_rails')
+# def step(context):
+# 	context.execute_steps(u'''
+# 		Given visiting site http://localhost:3000
+# 		Given selecting option joe from select with xpath //select[@id='id_created_by' and @name='created_by' and @required='']
+# 		Given filling input with xpath //input[@name='lol'] with text cos fajnego
+# 		Given waiting for amount of seconds 10
+# 	''')
+@given ('bawienie_sie_z_railsami')
 def step(context):
 	context.execute_steps(u'''
-		Then it should have an url Additional
-		Then it should have an url Additional
-		Given visiting site https://google.com
-		Then it should have an url Additional
-		Then it should have a title Additional
+		Given visiting site http://localhost:3000
+		Given selecting option maciek from select with xpath //select[@id='id_created_by' and @name='created_by' and @required='']
+		Given filling input with xpath //input[@name='inpucik'] with text jakos to idzie
+		Given waiting for amount of seconds 10
 	''')
-@given ('asdfasdf')
+
+@given ('login')
 def step(context):
 	context.execute_steps(u'''
-		Then it should have an url Additional
-		Given visiting site https://google.com
-	''')
+		Given login
+    ''')

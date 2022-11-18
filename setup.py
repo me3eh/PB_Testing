@@ -14,7 +14,8 @@ setup(
         'behave >= 1.2.5',
         'PySimpleGUI >= 4.60.4',
         'pyperclip >= 1.8.2',
-        'mechanize >= 0.4.8'
+        'mechanize >= 0.4.8',
+        'mechanize >= 4.6.0',
     ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest==4.4.1'],

@@ -8,7 +8,7 @@ from layouts import step_creation
 from website_elements.action_name import ActionName
 from gui_handlers.step_creation import xpath_viewer_input, move_action_arrows_buttons, tag_list_listbox
 from gui_handlers.step_creation import todo_actions_listbox, show_html_button, copy_html_button
-from gui_handlers.step_creation import save_configuration_button, load_configuration_button, actions_choice_selection
+from gui_handlers.step_creation import save_configuration_button, load_configuration_button, actions_choice_select
 from sqlite import database
 
 import sys
@@ -21,10 +21,15 @@ GIVEN_ATTRIBUTE_INFO = "Template"
 urls_from_project = database.retrieve_urls('urls_and_attributes')
 input_text = ''
 
-given_when_actions = [ActionName('visiting site', attribute_needed=False),
-                      ActionName('filling input', attribute_needed=True),
-                      ActionName('clicking button', attribute_needed=True),
-                      ActionName('clicking link', attribute_needed=True)]
+given_when_actions = [
+    ActionName('visiting site', attribute_needed=False),
+    ActionName('filling input', attribute_needed=True),
+    ActionName('clicking button', attribute_needed=True),
+    ActionName('clicking link', attribute_needed=True),
+    ActionName('attaching file to file input', attribute_needed=True),
+    ActionName('selecting option from select', attribute_needed=True),
+    ActionName('waiting for amount of seconds', attribute_needed=True)
+]
 then_actions = [ActionName('assert url of site', attribute_needed=False),
                 ActionName('assert title of site', attribute_needed=False)]
 actions = given_when_actions
@@ -85,16 +90,8 @@ def action_create(type_of_action,
                   selected_tag,
                   current_tags,
                   xpath):
-    if type_of_action == 'visiting site':
-        return WebsiteTag(value_for_bdd='visiting site',
-                          attribute=input_for_action,
-                          bdd_attribute=bdd_attribute)
-    elif type_of_action == 'assert url of site':
-        return WebsiteTag(value_for_bdd='assert url of site',
-                          attribute=input_for_action,
-                          bdd_attribute=bdd_attribute)
-    elif type_of_action == 'assert title of site':
-        return WebsiteTag(value_for_bdd='assert title of site',
+    if type_of_action in ['visiting site', 'assert url of site', 'assert title of site', 'waiting for amount of seconds']:
+        return WebsiteTag(value_for_bdd=type_of_action,
                           attribute=input_for_action,
                           bdd_attribute=bdd_attribute)
     else:
@@ -109,8 +106,6 @@ def action_create(type_of_action,
 
 
 def create_step():
-    # sg.theme('DarkTeal9')
-
     sys.setrecursionlimit(6000)
     global actions, input_text
 
@@ -142,6 +137,7 @@ def create_step():
     window = sg.Window("Step creator", layout, resizable=True, finalize=True)
     window['-LOGIN-PATH-BOX-CONTAINER-'].update(visible=False)
     window['-LAST-SITE-BOX-CONTAINER-'].update(visible=False)
+    window['-NOT-USED-ONLY-FOR-PROPER-LAYOUT-'].update(visible=False)
     while True:
         event, values = window.read()
         print(event)
@@ -177,7 +173,7 @@ def create_step():
             value_of_checkbox = not values[event]
             login_inputs_disabled(window, value_of_checkbox)
         elif event == '-ACTIONS-CHOICE-':
-            actions_choice_selection.find_all_selections(window, values, event, site_info, current_tags)
+            actions_choice_select.find_all_selections(window, values, event, site_info, current_tags)
         elif event == '-TAG-LIST-':
             tag_list_listbox.pick_tag(window=window, current_tags=current_tags,
                                       last_used_html=site_info.get_last_used_html())
