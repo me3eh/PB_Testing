@@ -1,7 +1,6 @@
 import PySimpleGUI as sg
 from configparser import ConfigParser
 from sqlite import database
-from site_scraping.site_info import get_browser_attributes
 
 attributes = ['ids', 'css_classes', 'input_names']
 
@@ -145,6 +144,7 @@ def launch_configuration():
                 else:
                     new_urls = urls + checked_url
                     window['-USER-URLS-'].update(new_urls)
+                    database.add_url(new_urls)
         elif event == '-SAVE-ANYTHING-':
             input = window['-INPUT-ANYTHING-'].get()
             checked_url = window['-USER-URLS-'].get()

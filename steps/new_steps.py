@@ -32,3 +32,8 @@ def step(context):
 	context.execute_steps(u'''
 		Given login
     ''')
+@given ('Something')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+	''')

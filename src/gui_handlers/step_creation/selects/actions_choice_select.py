@@ -1,4 +1,10 @@
-import save_action_buttons
+from gui_handlers.step_creation.buttons import save_action_buttons
+
+
+def show_saved_actions(values, event, window):
+    visibility = values[event] == 'use saved actions'
+    window['-SAVED-ACTIONS-'].update(visible=visibility)
+
 
 def find_all_selections(window, values, event, site_info, current_tags):
     domain = window['-DOMAIN-'].get()
@@ -22,7 +28,7 @@ def find_all_selections(window, values, event, site_info, current_tags):
     tag = None
     tag_attributes = None
 
-    if values[event] in ['visiting site', 'waiting for amount of seconds']:
+    if values[event] in ['visiting site', 'waiting for amount of seconds', 'use saved actions']:
         tags_found = []
         save_action_buttons.enable_save_buttons(window)
         need_to_search_for_tags = False

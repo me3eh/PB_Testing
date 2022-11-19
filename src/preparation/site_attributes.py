@@ -1,6 +1,4 @@
-
-from scenario_helper.file_helper import read_from_file, write_to_file_array, create_dir
-from site_scraping.site_info import get_browser_attributes
+from services.site_info import get_browser_attributes
 # from configparser import ConfigParser
 
 

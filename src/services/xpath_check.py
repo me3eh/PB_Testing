@@ -10,6 +10,3 @@ def get_number_of_match(html, xpath):
         else:
             return 0, 0
 
-# c = requests.get('http://localhost:3000/da')
-# s = get_number_of_match(c.text, "//a[@href='#' and @onclick='return toggleEnvDump()']")
-# print(s)

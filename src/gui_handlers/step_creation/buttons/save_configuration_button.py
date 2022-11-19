@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 import pickle
 
+
 def save_configuration(window, values, event, todo_actions):
     config = ConfigParser()
     if 'main' not in config:

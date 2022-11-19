@@ -1,5 +1,5 @@
-from site_scraping import xpath_check
-import save_action_buttons
+from services import xpath_check
+from gui_handlers.step_creation.buttons import save_action_buttons
 
 
 def check_if_xpath_unique(last_used_html, window):

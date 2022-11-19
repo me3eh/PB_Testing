@@ -5,7 +5,7 @@ INFORMATION_ABOUT_UNIQUENESS = 'To have your save buttons enabled, you need to h
 input_width = 20
 number_items_to_show = 4
 
-
+bruh = ['kekw', 'something else']
 def get_layout(domain,
                login_path,
                last_site,
@@ -172,14 +172,18 @@ def get_layout(domain,
                         sg.Text("Available actions for your plan"),
                         sg.Combo(actions, default_value=actions[0], key='-ACTIONS-CHOICE-', readonly=True,
                                  enable_events=True),
+                        sg.pin(sg.Combo(bruh, default_value=bruh[0], key='-SAVED-ACTIONS-', readonly=True,
+                                        enable_events=True, visible=False)),
                         sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-BDD-ATTRIBUTE-', readonly=True,
                                  enable_events=True),
                         sg.Text(GIVEN_ATTRIBUTE_INFO, key='-BDD-ATTRIBUTE-INFO-', enable_events=True)
-                    ],
-                    [
-                        sg.Listbox([], size=(40, 19), k='-TAG-LIST-', enable_events=True)
                     ]
                 ]),
+            ],
+            [
+                sg.Column([[]], expand_x=True),
+                sg.Listbox([], size=(40, 19), k='-TAG-LIST-', enable_events=True),
+                sg.Column([[]], expand_x=True),
                 sg.Column([
                     [
                         sg.Text("Tag description:")
@@ -224,7 +228,7 @@ def get_layout(domain,
             ],
             [
                 sg.Button("Add new action", k='-ADD-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
-                sg.Button("Save action", k='-SAVE-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
+                # sg.Button("Save action", k='-SAVE-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
                 sg.Button("Delete selected action", k='-DELETE-ACTION-', button_color='red'),
                 sg.Column([[]], expand_x=True),
                 sg.Column([
