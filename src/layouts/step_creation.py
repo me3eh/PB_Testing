@@ -6,6 +6,7 @@ input_width = 20
 number_items_to_show = 4
 
 bruh = ['kekw', 'something else']
+bdd_attributes = ['given', 'when', 'then']
 def get_layout(domain,
                login_path,
                last_site,
@@ -264,6 +265,8 @@ def get_layout(domain,
                 sg.Column([[]], k='layout_principal', expand_x=True),
                 [
                     sg.Column([[]], expand_x=True),
+                    sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-ACTION-BDD-ATTRIBUTE-', readonly=True),
+                    sg.Button("Generate plan as action", k='-GENERATE-PLAN-AS-ACTION-', button_color='green'),
                     sg.Button("Generate plan", k='-GENERATE-PLAN-', button_color='purple')
                 ]
             ]

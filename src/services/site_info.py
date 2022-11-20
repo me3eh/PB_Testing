@@ -27,12 +27,16 @@ def get_saved_site_anonymous(site):
         print("oddano zapisaną")
         return last_used_html
 
-    reqs = requests.get(site)
+    try:
+        reqs = requests.get(site)
+    except requests.exceptions.ConnectionError:
+        return "Oops!  That was no valid number.  Try again...", True
+
     soup = BeautifulSoup(reqs.text, features='lxml')
     saved_htmls_anonymous[site] = soup.prettify()
     last_used_html = saved_htmls_anonymous[site]
     print("oddano stronę, którą trzeba było wyszukać")
-    return reqs.text
+    return reqs.text, False
 
 def get_saved_site_logged_in(site, username_field, username_value, password_field, password_value, login_path, domain):
     global last_used_html
@@ -133,7 +137,9 @@ def get_tag_logged_in(site, username_field, username_value, password_field, pass
 
 
 def get_tag_anonymous(site, tag, tag_attributes=None):
-    html = get_saved_site_anonymous(site)
+    html, thrown_exception = get_saved_site_anonymous(site)
+    if thrown_exception is True:
+        return html, thrown_exception
     tags = get_tag(html, tag=tag, tag_attributes=tag_attributes)
 
     return tags

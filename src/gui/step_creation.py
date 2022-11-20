@@ -7,7 +7,7 @@ from website_elements.action_name import ActionName
 from gui_handlers.step_creation.text_inputs import xpath_viewer_input, autocomplete_input
 from gui_handlers.step_creation.buttons import delete_action_button, show_html_button, load_configuration_button
 from gui_handlers.step_creation.buttons import move_action_arrows_buttons, copy_html_button, save_configuration_button
-from gui_handlers.step_creation.buttons import generate_plan_button, add_action_button, save_action_button
+from gui_handlers.step_creation.buttons import generate_plan_button, add_action_button
 
 from gui_handlers.step_creation.listboxes import todo_actions_listbox, tag_list_listbox, todo_actions_and_tag_listboxes
 from gui_handlers.step_creation.selects import actions_choice_select
@@ -148,7 +148,9 @@ def create_step():
             load_configuration_button.load_configuration(window, values, event, todo_actions,
                                                          method_to_disable_inputs=login_inputs_disabled)
         elif event == '-GENERATE-PLAN-':
-            generate_plan_button.generate_plan(window, todo_actions)
+            generate_plan_button.generate_plan(window, todo_actions, plan_is_an_action=False)
+        elif event == '-GENERATE-PLAN-AS-ACTION-':
+            generate_plan_button.generate_plan(window, todo_actions, plan_is_an_action=True)
         # elif event == '-SAVE-ACTION-':
         #     save_action_button.save_action(window, values, current_tags, todo_actions)
         elif event == '-DELETE-ACTION-':

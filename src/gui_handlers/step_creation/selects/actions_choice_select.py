@@ -1,8 +1,10 @@
 from gui_handlers.step_creation.buttons import save_action_buttons
-
+import PySimpleGUI as sg
+from shared_info.constants import ERROR_PNG
 
 def show_saved_actions(values, event, window):
     visibility = values[event] == 'use saved actions'
+    window['-SAVED-ACTIONS-'].update(visible=visibility)
     window['-SAVED-ACTIONS-'].update(visible=visibility)
 
 
@@ -25,8 +27,8 @@ def find_all_selections(window, values, event, site_info, current_tags):
 
     need_to_search_for_tags = True
     tags_found = []
-    tag = None
-    tag_attributes = None
+    tag = tag_attributes = None
+    thrown_exception = False
 
     if values[event] in ['visiting site', 'waiting for amount of seconds', 'use saved actions']:
         tags_found = []
@@ -35,51 +37,27 @@ def find_all_selections(window, values, event, site_info, current_tags):
 
     elif values[event] == 'filling input':
         tag = 'input'
-        # if values['-LOGGED-IN-']:
-        #     tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-        #                                              password_value, login_path, tag='input', domain=domain)
-        # else:
-        #     tags_found = site_info.get_tag_anonymous(site, tag='input')
-
     elif values[event] == 'clicking button':
         tag = 'button'
-        # if values['-LOGGED-IN-']:
-        #     tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-        #                                                password_value, login_path, tag='button', domain=domain)
-        # else:
-        #     tags_found = site_info.get_tag_anonymous(site, tag='button')
     elif values[event] == 'clicking link':
         tag = 'a'
-        # if values['-LOGGED-IN-']:
-        #     tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-        #                                                password_value, login_path, tag='a', domain=domain)
-        # else:
-        #     tags_found = site_info.get_tag_anonymous(site, tag='a')
     elif values[event] == 'attaching file to file input':
         tag = 'input'
         tag_attributes = {'type': 'file'}
-        # if values['-LOGGED-IN-']:
-        #     tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-        #                                              password_value, login_path, tag='input', domain=domain,
-        #                                              tag_attributes={'type': 'file'})
-        # else:
-        #     tags_found = site_info.get_tag_anonymous(site, tag='input', tag_attributes={'type': 'file'})
     elif values[event] == 'selecting option from select':
         tag = 'select'
-        # if values['-LOGGED-IN-']:
-        #     tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-        #                                              password_value, login_path, tag='select', domain=domain)
-        # else:
-        #     tags_found = site_info.get_tag_anonymous(site, tag='select')
-
     if need_to_search_for_tags is True:
         if values['-LOGGED-IN-']:
             tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
                                                      password_value, login_path, domain=domain,
                                                      tag=tag, tag_attributes=tag_attributes)
         else:
-            tags_found = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
-
+            tags_found, thrown_exception = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
+    if thrown_exception is True:
+        sg.popup_notify("No connection to the server with given path. " +
+                        "Try to start local server or check if path is available, then try again.", icon=ERROR_PNG,
+                        title='No connection')
+        return
 
     current_tags.clear()
     current_tags.extend(tags_found)
