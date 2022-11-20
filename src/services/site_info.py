@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 import mechanize
-from website_elements.website_tag import WebsiteTag
-from website_elements.saved_html import SavedHtml
+from models.website_tag import WebsiteTag
+from models.saved_html import SavedHtml
 
 saved_htmls_anonymous = {}
 saved_htmls_logged_in = {}

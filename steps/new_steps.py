@@ -12,7 +12,7 @@ def step_impl(context):
         then it should have an url https://youshstg.myshopify.com/
     ''')
 
-# @given ('sprawdzenie_strony_rails')
+@given ('sprawdzenie_strony_rails')
 # def step(context):
 # 	context.execute_steps(u'''
 # 		Given visiting site http://localhost:3000

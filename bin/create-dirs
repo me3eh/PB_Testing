@@ -1,6 +1,0 @@
-#!/usr/bin/env python
-import extra_modules_for_pb_testing
-
-from directories_preparation.create_directory import create_dir
-
-create_dir(['features', 'steps', 'pages', 'resources_for_testing'])

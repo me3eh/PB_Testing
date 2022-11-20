@@ -3,4 +3,4 @@ import sys
 import io
 
 def test_call():
-    assert django.import_urls() == False
+    assert django.import_urls() is False

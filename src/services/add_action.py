@@ -1,4 +1,4 @@
-from website_elements.website_tag import WebsiteTag
+from models.website_tag import WebsiteTag
 
 
 def action_create(type_of_action,

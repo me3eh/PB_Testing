@@ -36,11 +36,14 @@ def delete_already_existing_step(index, file):
     steps_in_array.pop(index + 1)
 
     full_string = ''
-    for index, s in enumerate(steps_in_array):
+    for index, step in enumerate(steps_in_array):
         part_string = ''
-        for k in s:
-            part_string += k
-        full_string += f'\n\n{part_string}'
+        for part_of_step in step:
+            part_string += part_of_step
+        if index != 0:
+            full_string += '\n\n'
+
+        full_string += f'{part_string}'
 
     with open(f"steps/{file}.py", "w") as f:
         f.write(full_string)

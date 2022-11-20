@@ -1,9 +1,9 @@
 import PySimpleGUI as sg
 from configparser import ConfigParser
 from services import site_info
-from website_elements.website_tag import WebsiteTag
+from models.website_tag import WebsiteTag
 from layouts import step_creation
-from website_elements.action_name import ActionName
+from models.action_name import ActionName
 from gui_handlers.step_creation.text_inputs import xpath_viewer_input, autocomplete_input
 from gui_handlers.step_creation.buttons import delete_action_button, show_html_button, load_configuration_button
 from gui_handlers.step_creation.buttons import move_action_arrows_buttons, copy_html_button, save_configuration_button
