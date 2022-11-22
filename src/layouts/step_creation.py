@@ -5,8 +5,10 @@ INFORMATION_ABOUT_UNIQUENESS = 'To have your save buttons enabled, you need to h
 input_width = 20
 number_items_to_show = 4
 
-bruh = ['kekw', 'something else']
-bdd_attributes = ['given', 'when', 'then']
+
+# bdd_attributes = ['given', 'when', 'then']
+bdd_attributes = ['Given', 'When', 'Then']
+
 def get_layout(domain,
                login_path,
                last_site,
@@ -15,9 +17,9 @@ def get_layout(domain,
                password_field,
                password_value,
                actions,
-               bdd_attributes,
                GIVEN_ATTRIBUTE_INFO,
-               todo_actions_in_array
+               todo_actions_in_array,
+               bruh
                ):
     layout = [
         [

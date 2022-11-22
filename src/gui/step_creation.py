@@ -10,10 +10,12 @@ from gui_handlers.step_creation.buttons import move_action_arrows_buttons, copy_
 from gui_handlers.step_creation.buttons import generate_plan_button, add_action_button
 
 from gui_handlers.step_creation.listboxes import todo_actions_listbox, tag_list_listbox, todo_actions_and_tag_listboxes
-from gui_handlers.step_creation.selects import actions_choice_select
+from gui_handlers.step_creation.selects import actions_choice_select, bdd_attribute_select
 from sqlite import database
 from shared_info.constants import ERROR_PNG
 import sys
+from services.step_parser import import_actions
+
 # GIVEN_ATTRIBUTE_INFO = "<-- Given - preparing site for doing something (for example loggin in)"
 GIVEN_ATTRIBUTE_INFO = "Template"
 # WHEN_ATTRIBUTE_INFO = "<-- When - doing some actions on our site (clicking on buttons)"
@@ -21,20 +23,34 @@ GIVEN_ATTRIBUTE_INFO = "Template"
 urls_from_project = database.retrieve_urls('urls_and_attributes')
 input_text = ''
 
+imported_actions = import_actions()
+
+def step_actions_to_select():
+    return list(map(lambda obj: obj.action_name, imported_actions))
+
+# bruh = ['kekw', 'something else']
+imported_actions_as_string = step_actions_to_select()
+
 given_when_actions = [
     ActionName('visiting site', attribute_needed=False),
     ActionName('filling input', attribute_needed=True),
     ActionName('clicking button', attribute_needed=True),
     ActionName('clicking link', attribute_needed=True),
+    ActionName('clicking input', attribute_needed=True),
+    ActionName('clicking checkbox', attribute_needed=True),
+    ActionName('clicking radio button', attribute_needed=True),
     ActionName('attaching file to file input', attribute_needed=True),
     ActionName('selecting option from select', attribute_needed=True),
     ActionName('waiting for amount of seconds', attribute_needed=True),
     ActionName('use saved actions', attribute_needed=False)
 ]
 then_actions = [ActionName('assert url of site', attribute_needed=False),
-                ActionName('assert title of site', attribute_needed=False)]
+                ActionName('assert title of site', attribute_needed=False),
+                ActionName('assert input is disabled', attribute_needed=False),
+                ActionName('assert input is not visible', attribute_needed=False),
+                ActionName('assert input is visible', attribute_needed=False)
+                ]
 actions = given_when_actions
-bdd_attributes = ['Given', 'When', 'Then']
 
 todo_actions = [WebsiteTag(bdd_attribute='Given', value_for_bdd='visiting site', attribute='https://google.com')]
 
@@ -84,8 +100,6 @@ def save_configuration(config, values_for_config):
         config.write(f)
 
 
-
-
 def create_step():
     sys.setrecursionlimit(6000)
     global actions, input_text
@@ -110,9 +124,9 @@ def create_step():
                                       password_field,
                                       password_value,
                                       get_string_from_action_names(),
-                                      bdd_attributes,
                                       GIVEN_ATTRIBUTE_INFO,
-                                      create_todo_actions_for_listbox()
+                                      create_todo_actions_for_listbox(),
+                                      imported_actions_as_string
                                       )
 
     window = sg.Window("Step creator", layout, resizable=True, finalize=True)
@@ -123,11 +137,10 @@ def create_step():
         event, values = window.read()
         print(event)
         # print(values)
-
         if event == sg.WIN_CLOSED or event == "Exit":
             break
         elif event == '-ADD-ACTION-':
-            add_action_button.add_action(window, values, todo_actions, current_tags)
+            add_action_button.add_action(window, values, todo_actions, current_tags, imported_actions)
         elif event == '-SAVE-CHANGES-TO-CONFIG-':
             values = get_values_for_configuration(window)
             save_configuration(config, values)
@@ -156,15 +169,7 @@ def create_step():
         elif event == '-DELETE-ACTION-':
             delete_action_button.delete_action(window, todo_actions)
         elif event == '-BDD-ATTRIBUTE-':
-            bdd_attribute = values[event]
-            print(bdd_attribute)
-            if bdd_attribute in ['Given', 'When']:
-                actions = given_when_actions
-            else:
-                actions = then_actions
-            print(actions)
-            actions_in_text = get_string_from_action_names()
-            window['-ACTIONS-CHOICE-'].update(values=actions_in_text, value=actions_in_text[0])
+            bdd_attribute_select.change_bdd_attribute(values, event, window, given_when_actions, then_actions)
         elif event in ['-MOVE-UP-', '-MOVE-DOWN-']:
             move_action_arrows_buttons.move_action(event=event, window=window, sg=sg,
                                                    error_picture=ERROR_PNG, todo_actions=todo_actions)

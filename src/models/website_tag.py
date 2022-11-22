@@ -1,5 +1,6 @@
 class WebsiteTag:
-    def __init__(self, whole_html=None, bdd_attribute='Given', value_for_bdd=None, attribute=None, type_of_tag=None):
+    def __init__(self, whole_html=None, bdd_attribute='Given', value_for_bdd=None, attribute=None, type_of_tag=None,
+                 this_is_saved_action=False):
         self.id = None
         self.css_class = None
         self.attrs = None
@@ -7,7 +8,9 @@ class WebsiteTag:
         self.type_of_tag = type_of_tag
         self.xpath = None
         self.whole_html = None
-        if whole_html != None:
+        self.this_is_saved_action = this_is_saved_action
+
+        if whole_html is not None:
             self.attrs = whole_html.attrs
             self.id = self.attrs['id'] if 'id' in self.attrs else None
             self.css_class = ' '.join(self.attrs['class']) if 'class' in self.attrs else None
@@ -41,8 +44,7 @@ class WebsiteTag:
         return ""
 
     def attributes_to_html(self):
-        print(self.attrs)
-        if self.attrs != None and len(self.attrs) > 0:
+        if self.attrs is not None and len(self.attrs) > 0:
             full_xpath = f"//{self.type_of_tag}"
             for index, a in enumerate(self.attrs.items()):
                 if index != 0:
@@ -62,21 +64,23 @@ class WebsiteTag:
             return ''
 
     def get_attribute_from_gui(self):
-        if self.value_for_bdd == 'visiting site':
-            return f' {self.attribute}'
-        return f' with text {self.attribute}'
+        if self.value_for_bdd in ['clicking button', 'clicking link', 'clicking checkbox', 'clicking radio button']:
+            return ''
+        elif self.value_for_bdd in ['visiting site']:
+            return f' with url={self.attribute}'
+        elif self.value_for_bdd in ['waiting for amount of seconds']:
+            return f' {self.attribute} seconds'
+        elif self.value_for_bdd in ['assert title of site', 'assert url of site']:
+            return f' is {self.attribute}'
+        return f' with text={self.attribute}'
 
     def get_command(self):
-        print("Wartosc to ", self.value_for_bdd)
-
         if self.value_for_bdd == 'visiting site':
             return f'{self.bdd_attribute} visiting site {self.attribute}'
         elif self.value_for_bdd == 'filling input':
-            return f'{self.bdd_attribute} filling input with xpath {self.attributes_to_html()} with text {self.attribute}'
-        elif self.value_for_bdd == 'clicking button':
-            return f'{self.bdd_attribute} clicking on element with xpath {self.attributes_to_html()}'
-        elif self.value_for_bdd == 'clicking link':
-            return f'{self.bdd_attribute} clicking on element with xpath {self.attributes_to_html()}'
+            return f'{self.bdd_attribute} filling input with xpath {self.xpath} with text {self.attribute}'
+        elif self.value_for_bdd in ['clicking button', 'clicking link', 'clicking checkbox', 'clicking radio button']:
+            return f'{self.bdd_attribute} clicking on element with xpath {self.xpath}'
         elif self.value_for_bdd == 'waiting for amount of seconds':
             return f'{self.bdd_attribute} waiting for amount of seconds {self.attribute}'
         elif self.value_for_bdd == 'selecting option from select':
@@ -85,11 +89,17 @@ class WebsiteTag:
             return f'{self.bdd_attribute} it should have a title {self.attribute}'
         elif self.value_for_bdd == 'assert url of site':
             return f'{self.bdd_attribute} it should have an url {self.attribute}'
+        elif self.value_for_bdd == 'assert input is disabled':
+            return f'{self.bdd_attribute} input with xpath {self.xpath} should be disabled'
+        elif self.value_for_bdd == 'assert input is not visible':
+            return f'{self.bdd_attribute} input with xpath {self.xpath} should be not visible'
+        elif self.value_for_bdd == 'assert input is visible':
+            return f'{self.bdd_attribute} input with xpath {self.xpath} should be visible'
+        elif self.this_is_saved_action is True:
+            return f'{self.bdd_attribute} {self.xpath}'
+
     def format_for_listbox_with_available_actions(self):
-        print(self.xpath)
-        print(self.whole_html)
-        return f"<{self.type_of_tag} {self._id()}{self._css_class()}{self._text_inside()}>"
+        return f"<{self.type_of_tag} {self._id()}{self.attrs}{self._text_inside()}>"
 
     def format_for_todo_listbox(self):
-        print(self.value_for_bdd)
         return f"{self.bdd_attribute} {self.value_for_bdd}{self.get_attribute_from_gui()}"

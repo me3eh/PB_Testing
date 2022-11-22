@@ -6,7 +6,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.support.ui import Select
 
 def css_format(class_name):
     return class_name.replace(" ", '.')
@@ -38,9 +38,23 @@ def step(context, element_id, text):
 @given('filling input with xpath {xpath} with text {text}')
 @when('filling input with xpath {xpath} with text {text}')
 def step(context, xpath, text):
-    context.driver.find_element_by_xpath(xpath).send_keys(text)
+    context.driver.find_element(By.XPATH, xpath).send_keys(text)
 
+@given('selecting option {text} from select with xpath {xpath}')
+@when('selecting option {text} from select with xpath {xpath}')
+def step(context, text, xpath):
+    element = context.driver.find_element(By.XPATH, xpath)
+    select = Select(element)
+    select.select_by_visible_text(text)
 
+@given('waiting for amount of seconds {time_amount}')
+@when('waiting for amount of seconds {time_amount}')
+def step(context, time_amount):
+    time.sleep(int(time_amount))
+
+@when('sleep {time}')
+def step(context, time):
+    time.sleep(time)
 
 @given('filling input with name {element_name} text {text}')
 @when('filling input with name {element_name} text {text}')

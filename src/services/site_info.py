@@ -25,7 +25,7 @@ def get_saved_site_anonymous(site):
     if site in saved_htmls_anonymous:
         last_used_html = saved_htmls_anonymous[site]
         print("oddano zapisaną")
-        return last_used_html
+        return last_used_html, False
 
     try:
         reqs = requests.get(site)
@@ -47,7 +47,7 @@ def get_saved_site_logged_in(site, username_field, username_value, password_fiel
         for saved_html in htmls:
             if username_value == saved_html.username and password_value == saved_html.password:
                 last_used_html = saved_html.html
-                print("oddano zapisaną")
+                # print("oddano zapisaną")
                 return last_used_html
 
     browser = mechanize.Browser()
@@ -56,7 +56,12 @@ def get_saved_site_logged_in(site, username_field, username_value, password_fiel
         full_login_path = domain + login_path[1:]
     else:
         full_login_path = domain + login_path
-    ad = browser.open(f"{full_login_path}")
+
+    try:
+        ad = browser.open(f"{full_login_path}")
+    except:
+        return 'Something went wrong', True
+
     browser.select_form(nr=0)
     browser[username_field] = username_value
     browser[password_field] = password_value
@@ -72,13 +77,13 @@ def get_saved_site_logged_in(site, username_field, username_value, password_fiel
     else:
         saved_htmls_logged_in[site] = [SavedHtml(site, username_value, password_value, html_from_site)]
 
-    print('czekansko', saved_htmls_logged_in)
+    # print('czekansko', saved_htmls_logged_in)
     # print(saved_htmls_logged_in[site][0].html)
-    print(saved_htmls_logged_in[site][0].username)
-    print(saved_htmls_logged_in[site][0].password)
+    # print(saved_htmls_logged_in[site][0].username)
+    # print(saved_htmls_logged_in[site][0].password)
     last_used_html = html_from_site
     print("oddano stronę, którą trzeba było wyszukać")
-    return request_from_site
+    return request_from_site, False
 
 def get_last_used_html():
     return last_used_html
@@ -130,9 +135,12 @@ def get_tag(response, tag, tag_attributes=None):
 
 def get_tag_logged_in(site, username_field, username_value, password_field, password_value, login_path, tag, domain,
                       tag_attributes=None):
-    print(site)
-    response = get_saved_site_logged_in(site, username_field, username_value, password_field, password_value,
+    # print(site)
+    response, thrown_exception = get_saved_site_logged_in(site, username_field, username_value, password_field, password_value,
                                         login_path, domain)
+    if thrown_exception is True:
+        return response, thrown_exception
+
     return get_tag(response, tag=tag, tag_attributes=tag_attributes)
 
 
@@ -142,7 +150,7 @@ def get_tag_anonymous(site, tag, tag_attributes=None):
         return html, thrown_exception
     tags = get_tag(html, tag=tag, tag_attributes=tag_attributes)
 
-    return tags
+    return tags, thrown_exception
 
 
 # def get_attributes_from_html(html):

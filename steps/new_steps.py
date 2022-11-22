@@ -1,5 +1,3 @@
-
-
 from behave import *
 
 
@@ -12,7 +10,7 @@ def step_impl(context):
         then it should have an url https://youshstg.myshopify.com/
     ''')
 
-@given ('sprawdzenie_strony_rails')
+# @given ('sprawdzenie_strony_rails')
 # def step(context):
 # 	context.execute_steps(u'''
 # 		Given visiting site http://localhost:3000
@@ -21,8 +19,9 @@ def step_impl(context):
 # 		Given waiting for amount of seconds 10
 # 	''')
 
-@given ('Something')
+@given ('huhi')
 def step(context):
 	context.execute_steps(u'''
-		Given visiting site https://google.com
+		Given visiting site http://localhost:3000
+		Given clicking on element with xpath //input[@type='checkbox' and @id='vehicle3' and @name='vehicle3' and @value='Boat']
 	''')

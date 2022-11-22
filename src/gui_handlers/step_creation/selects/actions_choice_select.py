@@ -30,13 +30,20 @@ def find_all_selections(window, values, event, site_info, current_tags):
     tag = tag_attributes = None
     thrown_exception = False
 
-    if values[event] in ['visiting site', 'waiting for amount of seconds', 'use saved actions']:
+    if values[event] in ['visiting site', 'waiting for amount of seconds', 'use saved actions',
+                         'assert url of site', 'assert title of site']:
         tags_found = []
         save_action_buttons.enable_save_buttons(window)
         need_to_search_for_tags = False
 
-    elif values[event] == 'filling input':
+    elif values[event] in ['filling input', 'clicking input', 'assert input is not visible', 'assert input is disabled']:
         tag = 'input'
+    elif values[event] == 'clicking checkbox':
+        tag = 'input'
+        tag_attributes = {'type': 'checkbox'}
+    elif values[event] == 'clicking radio button':
+        tag = 'input'
+        tag_attributes = {'type': 'radio'}
     elif values[event] == 'clicking button':
         tag = 'button'
     elif values[event] == 'clicking link':
@@ -46,11 +53,13 @@ def find_all_selections(window, values, event, site_info, current_tags):
         tag_attributes = {'type': 'file'}
     elif values[event] == 'selecting option from select':
         tag = 'select'
+
     if need_to_search_for_tags is True:
         if values['-LOGGED-IN-']:
-            tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-                                                     password_value, login_path, domain=domain,
-                                                     tag=tag, tag_attributes=tag_attributes)
+            tags_found, thrown_exception = site_info.get_tag_logged_in(site, username_field, username_value,
+                                                                       password_field, password_value, login_path,
+                                                                       domain=domain, tag=tag,
+                                                                       tag_attributes=tag_attributes)
         else:
             tags_found, thrown_exception = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
     if thrown_exception is True:

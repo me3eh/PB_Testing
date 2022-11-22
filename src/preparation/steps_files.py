@@ -9,3 +9,4 @@ def copy_common_steps():
 
     shutil.copyfile(original, target)
     print("Copied common_steps from library!")
+    f'{os.getcwd()}/steps/common_steps.py'

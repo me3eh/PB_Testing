@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.2.52
+Version: 0.1.2.60
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -27,18 +27,20 @@ License-File: LICENSE
 All commands are typed into terminal
 <hr style="border:2px solid gray"/>
 
-```bash``
+```bash
 prepare
 ```
+
 It will create:
 - directories: __resources_for_testing, features, steps, pages__
 - configuration_file __config.ini__
 - __common_steps.py__ file in steps,`` consisting basic commands used in testing
 (selenium finding, clicking elements on site)
-- database for keeping urls and attributes
+- database for keeping urls from your project
+- scan your project for urls
 
-To scan for urls in your project (you must be in your project directory).
-Available frameworks: rails, django
+[//]: # (To scan for urls in your project &#40;you must be in your project directory&#41;.)
+Available frameworks for url scan: rails, django
 <hr style="border:2px solid gray"/>
 
 ```bash
