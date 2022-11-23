@@ -9,14 +9,14 @@ saved_htmls_logged_in = {}
 
 last_used_html = ''
 
-def create_dictionaries(attributes):
-    dictionary_with_attributes = {}
-    array_with_attributes = {}
-
-    for attribute in attributes:
-        dictionary_with_attributes[attribute] = {}
-        array_with_attributes[attribute] = []
-    return dictionary_with_attributes, array_with_attributes
+# def create_dictionaries(attributes):
+#     dictionary_with_attributes = {}
+#     array_with_attributes = {}
+#
+#     for attribute in attributes:
+#         dictionary_with_attributes[attribute] = {}
+#         array_with_attributes[attribute] = []
+#     return dictionary_with_attributes, array_with_attributes
 
 
 def get_saved_site_anonymous(site):
@@ -38,6 +38,7 @@ def get_saved_site_anonymous(site):
     print("oddano stronę, którą trzeba było wyszukać")
     return reqs.text, False
 
+
 def get_saved_site_logged_in(site, username_field, username_value, password_field, password_value, login_path, domain):
     global last_used_html
     # print('zapisane strony', saved_htmls_anonymous.keys())
@@ -48,7 +49,7 @@ def get_saved_site_logged_in(site, username_field, username_value, password_fiel
             if username_value == saved_html.username and password_value == saved_html.password:
                 last_used_html = saved_html.html
                 # print("oddano zapisaną")
-                return last_used_html
+                return last_used_html, False
 
     browser = mechanize.Browser()
     # browser.set_handle_robots(False)
@@ -60,7 +61,7 @@ def get_saved_site_logged_in(site, username_field, username_value, password_fiel
     try:
         ad = browser.open(f"{full_login_path}")
     except:
-        return 'Something went wrong', True
+        return 'Could not connect to server', True
 
     browser.select_form(nr=0)
     browser[username_field] = username_value
@@ -88,40 +89,40 @@ def get_saved_site_logged_in(site, username_field, username_value, password_fiel
 def get_last_used_html():
     return last_used_html
 
-def get_browser_attributes(site):
-    html = get_saved_site(site)
+# def get_browser_attributes(site):
+#     html = get_saved_site(site)
+#
+#     soup = BeautifulSoup(html, features='lxml')
+#     attributes = ['class', 'id', 'name']
+#     dictionary_with_attributes, array_with_attributes = create_dictionaries(attributes)
+#
+#     for tag in soup.find_all():
+#         for attribute in attributes:
+#             found_attribute = tag.get(attribute)
+#             if found_attribute is not None:
+#                 if type(found_attribute) == list:
+#                     found_attribute = ' '.join(found_attribute)
+#                 if found_attribute not in dictionary_with_attributes[attribute]:
+#                     array_with_attributes[attribute].append(found_attribute)
+#                     dictionary_with_attributes[attribute][found_attribute] = True
+#     return array_with_attributes
 
-    soup = BeautifulSoup(html, features='lxml')
-    attributes = ['class', 'id', 'name']
-    dictionary_with_attributes, array_with_attributes = create_dictionaries(attributes)
 
-    for tag in soup.find_all():
-        for attribute in attributes:
-            found_attribute = tag.get(attribute)
-            if found_attribute is not None:
-                if type(found_attribute) == list:
-                    found_attribute = ' '.join(found_attribute)
-                if found_attribute not in dictionary_with_attributes[attribute]:
-                    array_with_attributes[attribute].append(found_attribute)
-                    dictionary_with_attributes[attribute][found_attribute] = True
-    return array_with_attributes
-
-
-def get_logged_browser_attributes(site, username_field, username_value, password_field,
-                                  password_value, login_path, domain):
-    br = mechanize.Browser()
-    if domain.endswith('/') and login_path.startswith("/"):
-        full_login_path = domain + login_path[1:]
-    else:
-        full_login_path = domain + login_path
-    ad = br.open(f"{full_login_path}")
-    br.select_form(nr=0)
-    br[username_field] = username_value
-    br[password_field] = password_value
-    br.submit()
-
-    ad = br.open(site)
-    return ad.read()
+# def get_logged_browser_attributes(site, username_field, username_value, password_field,
+#                                   password_value, login_path, domain):
+#     br = mechanize.Browser()
+#     if domain.endswith('/') and login_path.startswith("/"):
+#         full_login_path = domain + login_path[1:]
+#     else:
+#         full_login_path = domain + login_path
+#     ad = br.open(f"{full_login_path}")
+#     br.select_form(nr=0)
+#     br[username_field] = username_value
+#     br[password_field] = password_value
+#     br.submit()
+#
+#     ad = br.open(site)
+#     return ad.read()
 
 
 def get_tag(response, tag, tag_attributes=None):
@@ -141,7 +142,7 @@ def get_tag_logged_in(site, username_field, username_value, password_field, pass
     if thrown_exception is True:
         return response, thrown_exception
 
-    return get_tag(response, tag=tag, tag_attributes=tag_attributes)
+    return get_tag(response, tag=tag, tag_attributes=tag_attributes), thrown_exception
 
 
 def get_tag_anonymous(site, tag, tag_attributes=None):

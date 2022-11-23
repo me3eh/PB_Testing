@@ -21,7 +21,7 @@ def get_layout(domain,
                todo_actions_in_array,
                bruh
                ):
-    layout = [
+    return [
         [
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
@@ -76,8 +76,7 @@ def get_layout(domain,
                                                            enable_events=True,
                                                            key='-LAST-SITE-BOX-',
                                                            select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
-                                                           no_scrollbar=True,
-                                                           background_color=sg.theme_background_color())
+                                                           no_scrollbar=True)
                                             ]
                                         ], key='-LAST-SITE-BOX-CONTAINER-', pad=(0, 0), visible=True
                                     )
@@ -101,7 +100,7 @@ def get_layout(domain,
                                                            enable_events=True,
                                                            key='-LOGIN-PATH-BOX-',
                                                            select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
-                                                           no_scrollbar=True, background_color=sg.theme_background_color())
+                                                           no_scrollbar=True)
                                             ]
                                         ], key='-LOGIN-PATH-BOX-CONTAINER-', pad=(0, 0), visible=True
                                     )
@@ -274,4 +273,3 @@ def get_layout(domain,
             ]
         ]
     ]
-    return layout

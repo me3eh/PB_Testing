@@ -1,5 +1,6 @@
 import url_importer.shell_command as sc
 
+
 def import_urls():
     command = 'rails routes -g=GET'
     project_name = 'Rails'

@@ -12,6 +12,7 @@ bin/step_creator
 src/gui/__init__.py
 src/gui/step_creation.py
 src/gui_handlers/__init__.py
+src/gui_handlers/configuration_gui/__init__.py
 src/gui_handlers/step_creation/__init__.py
 src/gui_handlers/step_creation/buttons/__init__.py
 src/gui_handlers/step_creation/buttons/add_action_button.py
@@ -30,13 +31,18 @@ src/gui_handlers/step_creation/listboxes/todo_actions_and_tag_listboxes.py
 src/gui_handlers/step_creation/listboxes/todo_actions_listbox.py
 src/gui_handlers/step_creation/selects/__init__.py
 src/gui_handlers/step_creation/selects/actions_choice_select.py
+src/gui_handlers/step_creation/selects/bdd_attribute_select.py
 src/gui_handlers/step_creation/text_inputs/__init__.py
 src/gui_handlers/step_creation/text_inputs/autocomplete_input.py
 src/gui_handlers/step_creation/text_inputs/login_path_input.py
 src/gui_handlers/step_creation/text_inputs/site_scraping_input.py
 src/gui_handlers/step_creation/text_inputs/xpath_viewer_input.py
+src/layouts/__init__.py
+src/layouts/pb_configuration.py
+src/layouts/step_creation.py
 src/models/__init__.py
 src/models/action_name.py
+src/models/saved_actions.py
 src/models/saved_html.py
 src/models/website_tag.py
 src/pb_testing/__init__.py
@@ -61,6 +67,8 @@ src/services/site_info.py
 src/services/step_parser.py
 src/services/url_autocompletion.py
 src/services/xpath_check.py
+src/shared_info/__init__.py
+src/shared_info/constants.py
 src/sqlite/__init__.py
 src/sqlite/database.py
 src/url_importer/__init__.py

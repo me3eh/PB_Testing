@@ -1,50 +1,11 @@
 import PySimpleGUI as sg
+from layouts import pb_configuration
 from sqlite import database
+from shared_info.constants import ERROR_PNG
 
 
 def launch_configuration():
-    layout = [
-        [
-            sg.Column(
-                [
-                    [
-                        sg.Text('Urls from your project'),
-                    ],
-                    [
-                        sg.Text('', expand_y=True),
-                    ],
-                    [
-                        sg.Listbox(values=database.retrieve_urls('original_urls'), k='-SCANNED-URLS-', size=(20, 20))
-                    ]
-                ], k='layout_principal', expand_x=True),
-            sg.Column(
-                [
-                    [
-                        sg.Button("==>", k='-ADD-')
-                    ]
-                ], expand_x=True
-            ),
-            sg.Column(
-                [
-                    [
-                        sg.Text('Urls used in testing'),
-                    ],
-                    [
-                        sg.Text('', expand_y=True),
-                    ],
-                    [
-                        sg.Listbox(values=database.retrieve_urls('urls_and_attributes'), enable_events=True,
-                                   k='-USER-URLS-', size=(20, 20))
-                    ]
-                ], k='layout_principal', expand_x=True),
-        ],
-        [
-            sg.Input("Yas", k='-INPUT-ANYTHING-'),
-            sg.Button("Save that", k='-SAVE-ANYTHING-'),
-            sg.Button("Add that", k='-ADD-ANYTHING-', button_color='green'),
-            sg.Button("Delete selected", k='-DELETE-SELECTED-', button_color='red')
-        ]
-    ]
+    layout = pb_configuration.get_layout()
     window = sg.Window("Configuration for testing", layout, resizable=True, finalize=True)
 
     while True:
@@ -52,7 +13,7 @@ def launch_configuration():
         print(event)
         if event == sg.WIN_CLOSED or event == "Exit":
             break
-        elif event == '-ADD-':
+        elif event == '-ADD-FROM-LISTBOX-TO-LISTBOX-':
             checked_url = window['-SCANNED-URLS-'].get()
             if not checked_url:
                 sg.popup("Not checked anything in scanned_urls section")
@@ -61,12 +22,12 @@ def launch_configuration():
                 print(urls)
                 print(checked_url)
                 if checked_url[0] in urls:
-                    sg.popup("Not checked anything in scanned_urls section")
+                    sg.popup("Url already exists")
                 else:
                     new_urls = urls + checked_url
                     window['-USER-URLS-'].update(new_urls)
-                    database.add_url(new_urls)
-        elif event == '-SAVE-ANYTHING-':
+                    database.add_url(checked_url[0])
+        elif event == '-SAVE-URL-FROM-INPUT-':
             url_input = window['-INPUT-ANYTHING-'].get()
             checked_url = window['-USER-URLS-'].get()
             if not checked_url:
@@ -81,7 +42,7 @@ def launch_configuration():
                     values[index] = url_input
                     window['-USER-URLS-'].update(values)
                     window['-USER-URLS-'].widget.selection_set(index)
-        elif event == '-ADD-ANYTHING-':
+        elif event == '-ADD-URL-FROM-INPUT-':
             url_input = window['-INPUT-ANYTHING-'].get()
             selected_index = window['-USER-URLS-'].get_indexes()
             selected = False
@@ -90,7 +51,9 @@ def launch_configuration():
                 selected = True
             values = window['-USER-URLS-'].get_list_values()
             if url_input in values:
-                sg.popup("Nope, that is already in used urls")
+                sg.popup_notify("Add url with another naming to that",
+                                icon=ERROR_PNG,
+                                title='That url already exists in listbox')
             else:
                 values.append(url_input)
                 window['-USER-URLS-'].update(values)
@@ -100,9 +63,14 @@ def launch_configuration():
         elif event == '-DELETE-SELECTED-':
             selected_index = window['-USER-URLS-'].get_indexes()
             if not selected_index:
-                sg.popup("Not checked anything in scanned_urls section")
+                sg.popup_notify("Not checked anything in scanned_urls section",
+                                icon=ERROR_PNG,
+                                title='Click on something first in used_url listbox')
             else:
                 values = window['-USER-URLS-'].get_list_values()
                 database.delete_url(values[selected_index[0]])
-                del values[selected_index[0]]
+                values.pop(selected_index[0])
                 window['-USER-URLS-'].update(values)
+                if len(values) != 0:
+                    index_to_select = len(values) - 1 if selected_index[0] >= len(values) else selected_index
+                    window['-USER-URLS-'].widget.selection_set(index_to_select)

@@ -1,8 +1,10 @@
 gui
 gui_handlers
+layouts
 models
 pb_testing
 preparation
 services
+shared_info
 sqlite
 url_importer
