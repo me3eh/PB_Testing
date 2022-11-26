@@ -29,4 +29,5 @@ def action_create(type_of_action,
     current_chosen.xpath = xpath
     current_chosen.value_for_bdd = type_of_action
     current_chosen.attribute = input_for_action
+    current_chosen.bdd_attribute = bdd_attribute
     return current_chosen

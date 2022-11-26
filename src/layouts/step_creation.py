@@ -17,7 +17,6 @@ def get_layout(domain,
                password_field,
                password_value,
                actions,
-               GIVEN_ATTRIBUTE_INFO,
                todo_actions_in_array,
                bruh
                ):
@@ -176,9 +175,9 @@ def get_layout(domain,
                                  enable_events=True),
                         sg.pin(sg.Combo(bruh, default_value=bruh[0], key='-SAVED-ACTIONS-', readonly=True,
                                         enable_events=True, visible=False)),
+                        sg.pin(sg.Button('Reload actions', key='-RELOAD-ACTIONS-', visible=False)),
                         sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-BDD-ATTRIBUTE-', readonly=True,
-                                 enable_events=True),
-                        sg.Text(GIVEN_ATTRIBUTE_INFO, key='-BDD-ATTRIBUTE-INFO-', enable_events=True)
+                                 enable_events=True)
                     ]
                 ]),
             ],

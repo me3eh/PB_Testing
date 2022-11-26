@@ -7,7 +7,7 @@ def import_actions():
     path = "steps/new_actions.py"
     file_exists = os.path.exists(path)
     if file_exists is False:
-        return None
+        return []
 
     with open(path, "r") as f:
         new_actions = f.read()

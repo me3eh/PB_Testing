@@ -10,7 +10,7 @@ def step_impl(context):
         then it should have an url https://youshstg.myshopify.com/
     ''')
 
-# @given ('sprawdzenie_strony_rails')
+#@given ('sprawdzenie_strony_rails')
 # def step(context):
 # 	context.execute_steps(u'''
 # 		Given visiting site http://localhost:3000
@@ -24,4 +24,31 @@ def step(context):
 	context.execute_steps(u'''
 		Given visiting site http://localhost:3000
 		Given clicking on element with xpath //input[@type='checkbox' and @id='vehicle3' and @name='vehicle3' and @value='Boat']
+	''')
+
+@given ('yieks')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+	''')
+
+@given ('looking if gonna go')
+def step(context):
+	context.execute_steps(u'''
+		Given  visit site gram.pl
+		Given  sleeping 6 seconds
+	''')
+
+@given ('Something')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site https://google.com
+		Then element with xpath //p should have text jkk
+	''')
+
+@given ('Something2')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site http://127.0.0.1:8000/
+		Then element with xpath //a[@href='/access'] should have text Deklaracja dostępności
 	''')

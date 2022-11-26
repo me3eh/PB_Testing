@@ -25,11 +25,11 @@ input_text = ''
 
 imported_actions = import_actions()
 
-def step_actions_to_select():
-    return list(map(lambda obj: obj.action_name, imported_actions))
+def step_actions_to_select(actions):
+    return list(map(lambda obj: obj.action_name, actions))
 
 # bruh = ['kekw', 'something else']
-imported_actions_as_string = step_actions_to_select()
+imported_actions_as_string = step_actions_to_select(imported_actions)
 
 given_when_actions = [
     ActionName('visiting site', attribute_needed=False),
@@ -48,7 +48,8 @@ then_actions = [ActionName('assert url of site', attribute_needed=False),
                 ActionName('assert title of site', attribute_needed=False),
                 ActionName('assert input is disabled', attribute_needed=False),
                 ActionName('assert input is not visible', attribute_needed=False),
-                ActionName('assert input is visible', attribute_needed=False)
+                ActionName('assert input is visible', attribute_needed=False),
+                ActionName('assert element has certain text', attribute_needed=False)
                 ]
 actions = given_when_actions
 
@@ -124,7 +125,6 @@ def create_step():
                                       password_field,
                                       password_value,
                                       get_string_from_action_names(),
-                                      GIVEN_ATTRIBUTE_INFO,
                                       create_todo_actions_for_listbox(),
                                       imported_actions_as_string
                                       )
@@ -164,6 +164,22 @@ def create_step():
             generate_plan_button.generate_plan(window, todo_actions, plan_is_an_action=False)
         elif event == '-GENERATE-PLAN-AS-ACTION-':
             generate_plan_button.generate_plan(window, todo_actions, plan_is_an_action=True)
+            new_actions = import_actions()
+            print(new_actions)
+            actions_as_string = step_actions_to_select(new_actions)
+            imported_actions.clear()
+            imported_actions.extend(new_actions)
+            window['-SAVED-ACTIONS-'].update(values=actions_as_string)
+            if len(actions_as_string) != 0:
+                window['-SAVED-ACTIONS-'].update(value=actions_as_string[0])
+        elif event == '-RELOAD-ACTIONS-':
+            new_actions = import_actions()
+            actions_as_string = step_actions_to_select(new_actions)
+            imported_actions.clear()
+            imported_actions.extend(new_actions)
+            window['-SAVED-ACTIONS-'].update(values=actions_as_string)
+            if len(actions_as_string) != 0:
+                window['-SAVED-ACTIONS-'].update(value=actions_as_string[0])
         # elif event == '-SAVE-ACTION-':
         #     save_action_button.save_action(window, values, current_tags, todo_actions)
         elif event == '-DELETE-ACTION-':

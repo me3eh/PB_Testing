@@ -44,8 +44,9 @@ class WebsiteTag:
         return ""
 
     def attributes_to_html(self):
+        full_xpath = f"//{self.type_of_tag}"
         if self.attrs is not None and len(self.attrs) > 0:
-            full_xpath = f"//{self.type_of_tag}"
+            # full_xpath = f"//{self.type_of_tag}"
             for index, a in enumerate(self.attrs.items()):
                 if index != 0:
                     full_xpath += ' and '
@@ -59,12 +60,11 @@ class WebsiteTag:
 
                 full_xpath += f"@{a[0]}={repr(attribute_in_string)}"
             full_xpath += ']'
-            return full_xpath
-        else:
-            return ''
+        return full_xpath
 
     def get_attribute_from_gui(self):
-        if self.value_for_bdd in ['clicking button', 'clicking link', 'clicking checkbox', 'clicking radio button']:
+        if self.value_for_bdd in ['clicking button', 'clicking link', 'clicking input', 'clicking checkbox',
+                                  'clicking radio button'] or self.this_is_saved_action is True:
             return ''
         elif self.value_for_bdd in ['visiting site']:
             return f' with url={self.attribute}'
@@ -79,7 +79,8 @@ class WebsiteTag:
             return f'{self.bdd_attribute} visiting site {self.attribute}'
         elif self.value_for_bdd == 'filling input':
             return f'{self.bdd_attribute} filling input with xpath {self.xpath} with text {self.attribute}'
-        elif self.value_for_bdd in ['clicking button', 'clicking link', 'clicking checkbox', 'clicking radio button']:
+        elif self.value_for_bdd in ['clicking button', 'clicking link', 'clicking input', 'clicking checkbox',
+                                    'clicking radio button']:
             return f'{self.bdd_attribute} clicking on element with xpath {self.xpath}'
         elif self.value_for_bdd == 'waiting for amount of seconds':
             return f'{self.bdd_attribute} waiting for amount of seconds {self.attribute}'
@@ -96,7 +97,9 @@ class WebsiteTag:
         elif self.value_for_bdd == 'assert input is visible':
             return f'{self.bdd_attribute} input with xpath {self.xpath} should be visible'
         elif self.this_is_saved_action is True:
-            return f'{self.bdd_attribute} {self.xpath}'
+            return f'{self.bdd_attribute} {self.value_for_bdd}'
+        elif self.value_for_bdd == 'assert element has certain text':
+            return f'{self.bdd_attribute} element with xpath {self.xpath} should have text {self.attribute}'
 
     def format_for_listbox_with_available_actions(self):
         return f"<{self.type_of_tag} {self._id()}{self.attrs}{self._text_inside()}>"

@@ -4,9 +4,22 @@ import os
 
 
 def copy_common_steps():
-    original = f'{pathlib.Path(__file__).parent.resolve()}/common_steps_copy.py'
-    target = f'{os.getcwd()}/steps/common_steps.py'
+    original = f'{pathlib.Path(__file__).parent.resolve()}/files_for_user/common_steps_copy.py'
+    target = f'{os.getcwd()}/steps/common_steps_pb_testing.py'
 
     shutil.copyfile(original, target)
     print("Copied common_steps from library!")
-    f'{os.getcwd()}/steps/common_steps.py'
+
+
+def create_new_action_file():
+    with open(f'{os.getcwd()}/steps/new_actions.py', "w") as f:
+        f.write('from behave import *\n')
+    print("Created new action file!")
+
+
+def copy_behave_environemnt_file():
+    original = f'{pathlib.Path(__file__).parent.resolve()}/files_for_user/environment_copy.py'
+    target = f'{os.getcwd()}/environemnt.py'
+
+    shutil.copyfile(original, target)
+    print("Created environment file!")

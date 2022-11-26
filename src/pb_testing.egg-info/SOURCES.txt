@@ -53,12 +53,14 @@ src/pb_testing.egg-info/dependency_links.txt
 src/pb_testing.egg-info/requires.txt
 src/pb_testing.egg-info/top_level.txt
 src/preparation/__init__.py
-src/preparation/common_steps_copy.py
 src/preparation/configuration_gui.py
 src/preparation/create_config_file.py
 src/preparation/create_directory.py
 src/preparation/site_attributes.py
 src/preparation/steps_files.py
+src/preparation/files_for_user/__init__.py
+src/preparation/files_for_user/common_steps_copy.py
+src/preparation/files_for_user/environment_copy.py
 src/services/__init__.py
 src/services/actions_to_steps_transform.py
 src/services/add_action.py

@@ -5,7 +5,8 @@ from shared_info.constants import ERROR_PNG
 def show_saved_actions(values, event, window):
     visibility = values[event] == 'use saved actions'
     window['-SAVED-ACTIONS-'].update(visible=visibility)
-    window['-SAVED-ACTIONS-'].update(visible=visibility)
+    window['-RELOAD-ACTIONS-'].update(visible=visibility)
+    window['-BDD-ATTRIBUTE-'].update(visible=(not visibility))
 
 
 def find_all_selections(window, values, event, site_info, current_tags):
@@ -53,6 +54,8 @@ def find_all_selections(window, values, event, site_info, current_tags):
         tag_attributes = {'type': 'file'}
     elif values[event] == 'selecting option from select':
         tag = 'select'
+    elif values[event] == 'assert element has certain text':
+        tag = None
 
     if need_to_search_for_tags is True:
         if values['-LOGGED-IN-']:
