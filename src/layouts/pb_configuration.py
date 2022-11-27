@@ -2,8 +2,15 @@ import PySimpleGUI as sg
 from sqlite import database
 
 
-def get_layout():
+def get_layout(project_path):
     return [
+        [
+            sg.Column([[]], expand_x=True),
+            sg.Text('Your project path:'),
+            sg.Input(key='_FILEBROWSE_', enable_events=True, visible=True, disabled=True, default_text=project_path),
+            sg.FolderBrowse('Choose folder of your project', initial_folder=project_path, target='_FILEBROWSE_'),
+            sg.Button('Scan for ', key='-SCAN-FOR-URLS-FROM-GIVEN-PATH-')
+        ],
         [
             sg.Column(
                 [

@@ -19,7 +19,7 @@ def create_new_action_file():
 
 def copy_behave_environemnt_file():
     original = f'{pathlib.Path(__file__).parent.resolve()}/files_for_user/environment_copy.py'
-    target = f'{os.getcwd()}/environemnt.py'
+    target = f'{os.getcwd()}/environment.py'
 
     shutil.copyfile(original, target)
     print("Created environment file!")

@@ -2,15 +2,18 @@ import PySimpleGUI as sg
 from layouts import pb_configuration
 from sqlite import database
 from shared_info.constants import ERROR_PNG
+from configparser import ConfigParser
 
 
 def launch_configuration():
-    layout = pb_configuration.get_layout()
+    project_path = get_project_path_from_config()
+    layout = pb_configuration.get_layout(project_path)
     window = sg.Window("Configuration for testing", layout, resizable=True, finalize=True)
 
     while True:
         event, values = window.read()
         print(event)
+        print(values)
         if event == sg.WIN_CLOSED or event == "Exit":
             break
         elif event == '-ADD-FROM-LISTBOX-TO-LISTBOX-':
@@ -74,3 +77,18 @@ def launch_configuration():
                 if len(values) != 0:
                     index_to_select = len(values) - 1 if selected_index[0] >= len(values) else selected_index
                     window['-USER-URLS-'].widget.selection_set(index_to_select)
+        elif event == '_FILEBROWSE_':
+            config = ConfigParser()
+            config.read('resources_for_testing/config.ini')
+            project_path = values[event]
+            config.set('main', 'project_path', project_path)
+
+            with open('resources_for_testing/config.ini', 'w') as f:
+                config.write(f)
+
+
+def get_project_path_from_config():
+    config = ConfigParser()
+    config.read('resources_for_testing/config.ini')
+    project_path = config.get('main', 'project_path')
+    return project_path
