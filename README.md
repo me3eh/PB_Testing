@@ -23,10 +23,8 @@ It will create:
 - __common_steps.py__ file in steps,`` consisting basic commands used in testing
 (selenium finding, clicking elements on site)
 - database for keeping urls from your project
-- scan your project for urls
 
-__This step is crucial, because it's creating all needed urls from your project,
-which will be used in creating tests and all needed files for seamless testing__
+__This step is crucial, because it will setup all directoreies for using this library__
 
 Available frameworks for url scan: rails, django
 <hr style="border:2px solid gray"/>
@@ -37,8 +35,7 @@ pb_configuration
 
 This method will pop gui with urls from your project and urls used in tests.
 It will look like this.
-![img_2.png](wip_files_for_readme/img_2.png)
-
+![img.png](wip_files_for_readme/how_pb_configuration_looks.png)
 On left we have urls scanned from project.
 On the right side there are urls that will be used in testing.
 
@@ -57,27 +54,6 @@ it will add url to the right column, to collection of urls used in testing with 
 <hr style="border:2px solid gray"/>
 
 ```bash
-scan_for_urls
-```
-
-To get all attributes located at your site with url in your project, type 
-<hr style="border:2px solid gray"/>
-
-```bash
 step_creator
 ```
 This gui is responsible for creating tests, using scanning urls and 
-
-<hr style="border:2px solid gray"/>
-When having problems with starting python test database with dumped data
-
-## Dumping data from 
-```bash
-python3 manage.py dumpdata auth.User --indent 4 > users.json
-```
-
-and after that to run server with date from fixtures
-
-```bash
-python3 manage.py testserver users.json groups.json --addrport 7000 & PID=$
-```

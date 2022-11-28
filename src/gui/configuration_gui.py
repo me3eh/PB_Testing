@@ -1,97 +1,35 @@
 import PySimpleGUI as sg
-from layouts import pb_configuration
+from layouts import configuration_gui
 from sqlite import database
 from shared_info.constants import ERROR_PNG
 from configparser import ConfigParser
-from url_importer import django, rails
-
+from gui_handlers.configuration_gui.buttons import project_path_scan_urls_button, browse_file_button, delete_button
+from gui_handlers.configuration_gui.buttons import move_from_listbox_to_listbox_button, save_url_from_input_button
+from gui_handlers.configuration_gui.buttons import add_url_from_input_button
 
 def launch_configuration():
     project_path = get_project_path_from_config()
-    layout = pb_configuration.get_layout(project_path)
+    layout = configuration_gui.get_layout(project_path)
     window = sg.Window("Configuration for testing", layout, resizable=True, finalize=True)
 
     while True:
         event, values = window.read()
-        print(event)
-        print(values)
+        # print(event)
+        # print(values)
         if event == sg.WIN_CLOSED or event == "Exit":
             break
         elif event == '-ADD-FROM-LISTBOX-TO-LISTBOX-':
-            checked_url = window['-SCANNED-URLS-'].get()
-            if not checked_url:
-                sg.popup("Not checked anything in scanned_urls section")
-            else:
-                urls = window['-USER-URLS-'].get_list_values()
-                print(urls)
-                print(checked_url)
-                if checked_url[0] in urls:
-                    sg.popup("Url already exists")
-                else:
-                    new_urls = urls + checked_url
-                    window['-USER-URLS-'].update(new_urls)
-                    database.add_url(checked_url[0])
+            move_from_listbox_to_listbox_button.move(window)
         elif event == '-SAVE-URL-FROM-INPUT-':
-            url_input = window['-INPUT-ANYTHING-'].get()
-            checked_url = window['-USER-URLS-'].get()
-            if not checked_url:
-                sg.popup("Not checked anything in scanned_urls section")
-            else:
-                index = window['-USER-URLS-'].get_indexes()[0]
-                values = window['-USER-URLS-'].get_list_values()
-                if url_input in values:
-                    sg.popup("Nope, that is already in used urls")
-                else:
-                    database.rename_url(values[index], url_input)
-                    values[index] = url_input
-                    window['-USER-URLS-'].update(values)
-                    window['-USER-URLS-'].widget.selection_set(index)
+            save_url_from_input_button.save(window=window)
         elif event == '-ADD-URL-FROM-INPUT-':
-            url_input = window['-INPUT-ANYTHING-'].get()
-            selected_index = window['-USER-URLS-'].get_indexes()
-            selected = False
-            if selected_index:
-                selected_index = selected_index[0]
-                selected = True
-            values = window['-USER-URLS-'].get_list_values()
-            if url_input in values:
-                sg.popup_notify("Add url with another naming to that",
-                                icon=ERROR_PNG,
-                                title='That url already exists in listbox')
-            else:
-                values.append(url_input)
-                window['-USER-URLS-'].update(values)
-                if selected:
-                    window['-USER-URLS-'].widget.selection_set(selected_index)
-                database.add_url(url_input)
+            add_url_from_input_button.save(window=window)
         elif event == '-DELETE-SELECTED-':
-            selected_index = window['-USER-URLS-'].get_indexes()
-            if not selected_index:
-                sg.popup_notify("Not checked anything in scanned_urls section",
-                                icon=ERROR_PNG,
-                                title='Click on something first in used_url listbox')
-            else:
-                values = window['-USER-URLS-'].get_list_values()
-                database.delete_url(values[selected_index[0]])
-                values.pop(selected_index[0])
-                window['-USER-URLS-'].update(values)
-                if len(values) != 0:
-                    index_to_select = len(values) - 1 if selected_index[0] >= len(values) else selected_index
-                    window['-USER-URLS-'].widget.selection_set(index_to_select)
+            delete_button.delete_selected(window)
         elif event == '_FILEBROWSE_':
-            config = ConfigParser()
-            config.read('resources_for_testing/config.ini')
-            project_path = values[event]
-            config.set('main', 'project_path', project_path)
-
-            with open('resources_for_testing/config.ini', 'w') as f:
-                config.write(f)
+            browse_file_button.browse_files(values=values, event=event)
         elif event == '-SCAN-FOR-URLS-FROM-GIVEN-PATH-':
-            ide_environments = [django, rails]
-            for ide in ide_environments:
-                if ide.import_urls() is True:
-                    break
-            database.retrieve_urls('original_urls')
+            project_path_scan_urls_button.scan_for_urls(window)
 
 
 def get_project_path_from_config():

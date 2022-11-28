@@ -16,6 +16,7 @@ def create_config_file():
     config.set('main', 'login_path', '/login')
     config.set('main', 'last_site', 'https://gram.pl')
     config.set('main', 'project_path', str(pathlib.Path(__file__).parent.parent.parent.resolve()))
+    config.set('main', 'program_for_opening_html', 'code')
 
     with open('resources_for_testing/config.ini', 'w') as f:
         config.write(f)

@@ -3,9 +3,8 @@ from setuptools import find_packages, setup
 setup(
     name='pb_testing',
     packages=find_packages(include=['pb_testing']),
-    version='0.1.5.2',
+    version='0.1.6',
     scripts=['bin/prepare',
-             'bin/scan_for_urls',
              'bin/extra_modules_for_pb_testing.py',
              'bin/pb_configuration',
              'bin/step_creator'],

@@ -1,7 +1,5 @@
-# import url_importer.shell_command as sc
 from sqlite.database import save_urls
 from configparser import ConfigParser
-import os
 import subprocess
 
 
@@ -20,7 +18,6 @@ def import_urls():
     print(f"{project_name} Project? Yes")
 
     urls = _execute_command(command=command, cwd=project_path)
-    # print(urls)
     save_urls(urls)
 
     return True
@@ -38,7 +35,6 @@ def _command_validity(cwd, command):
 
 def _execute_command(command, cwd):
     urls = []
-    # stream = subprocess.check_output(command, )
     p = subprocess.Popen(command, shell=True, env={'PYTHONPATH': cwd}, cwd=cwd,
                          stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     out, err = p.communicate()

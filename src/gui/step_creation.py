@@ -133,6 +133,8 @@ def create_step():
     window['-LOGIN-PATH-BOX-CONTAINER-'].update(visible=False)
     window['-LAST-SITE-BOX-CONTAINER-'].update(visible=False)
     window['-NOT-USED-ONLY-FOR-PROPER-LAYOUT-'].update(visible=False)
+    if len(imported_actions_as_string) > 0:
+        window['-SAVED-ACTIONS-'].update(value=imported_actions_as_string[0])
     while True:
         event, values = window.read()
         print(event)

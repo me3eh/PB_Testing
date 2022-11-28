@@ -1,8 +1,5 @@
-# import url_importer.shell_command as sc
 from configparser import ConfigParser
 from sqlite.database import save_urls
-
-# import os
 import subprocess
 
 
@@ -47,7 +44,6 @@ def _execute_command(command, cwd):
     out, err = p.communicate()
 
     # starting from second position, because there are headers in this command
-    breakpoint()
     for word in out.split('\n'.encode())[1:]:
         if len(word) > 0:
             checked_line = word.split()[2].decode()
