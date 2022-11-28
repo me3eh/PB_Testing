@@ -1,6 +1,7 @@
 from configparser import ConfigParser
 import pathlib
 
+
 def create_config_file():
     config = ConfigParser()
 

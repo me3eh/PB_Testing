@@ -3,6 +3,7 @@ from layouts import pb_configuration
 from sqlite import database
 from shared_info.constants import ERROR_PNG
 from configparser import ConfigParser
+from url_importer import django, rails
 
 
 def launch_configuration():
@@ -85,6 +86,12 @@ def launch_configuration():
 
             with open('resources_for_testing/config.ini', 'w') as f:
                 config.write(f)
+        elif event == '-SCAN-FOR-URLS-FROM-GIVEN-PATH-':
+            ide_environments = [django, rails]
+            for ide in ide_environments:
+                if ide.import_urls() is True:
+                    break
+            database.retrieve_urls('original_urls')
 
 
 def get_project_path_from_config():

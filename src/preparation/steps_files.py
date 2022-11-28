@@ -17,7 +17,7 @@ def create_new_action_file():
     print("Created new action file!")
 
 
-def copy_behave_environemnt_file():
+def copy_behave_environment_file():
     original = f'{pathlib.Path(__file__).parent.resolve()}/files_for_user/environment_copy.py'
     target = f'{os.getcwd()}/environment.py'
 
