@@ -1,12 +1,10 @@
-browser_scraper
 gui
 gui_handlers
-interface
+layouts
+models
 pb_testing
 preparation
-scenario_helper
-site_scraping
+services
+shared_info
 sqlite
-text_to_test_transform
 url_importer
-website_elements

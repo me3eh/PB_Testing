@@ -1,0 +1,10 @@
+[main]
+domain = http://localhost:3000
+username_field = username
+password_field = password
+username_value = jar
+password_value = jarjarjar
+last_site = /
+login_path = /login
+logged_in = False
+

@@ -6,6 +6,9 @@ input_width = 20
 number_items_to_show = 4
 
 
+# bdd_attributes = ['given', 'when', 'then']
+bdd_attributes = ['Given', 'When', 'Then']
+
 def get_layout(domain,
                login_path,
                last_site,
@@ -14,11 +17,10 @@ def get_layout(domain,
                password_field,
                password_value,
                actions,
-               bdd_attributes,
-               GIVEN_ATTRIBUTE_INFO,
-               todo_actions_in_array
+               todo_actions_in_array,
+               imported_actions
                ):
-    layout = [
+    return [
         [
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
@@ -35,48 +37,76 @@ def get_layout(domain,
             sg.Column(
                 [
                     [
-                        sg.Text("Main domain")
-                    ],
-                    [
-                        sg.Input(domain, key='-DOMAIN-', size=(20, 20))
-                    ],
-                    [
-                        sg.Text("Url for logging in")
-                    ],
-                    [
-                        sg.Input(login_path, key='-LOGIN-PATH-', size=(20, 20), disabled=True,
-                                 disabled_readonly_background_color='red', enable_events=True)
-                    ],
-                    [
-                        sg.Col(
+                        sg.Column([
+                            [
+                                sg.Text("Main domain"),
+                            ],
+                            [
+                                sg.Input(domain, key='-DOMAIN-', size=(30, 20)),
+                                sg.Column([[]], expand_y=True)
+                            ],
+                            [
+                                sg.Col(
+                                    [
+                                        [
+                                            sg.Listbox(values=[], size=(input_width, number_items_to_show),
+                                                       enable_events=True,
+                                                       select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                                                       no_scrollbar=True,
+                                                       background_color=sg.theme_background_color())
+                                        ]
+                                    ], key='-NOT-USED-ONLY-FOR-PROPER-LAYOUT-', pad=(0, 0), visible=True
+                                )
+                            ]
+                        ]),
+                        sg.Column(
                             [
                                 [
-                                    sg.Listbox(values=[], size=(input_width, number_items_to_show),
-                                               enable_events=True,
-                                               key='-LOGIN-PATH-BOX-', select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
-                                               no_scrollbar=True, background_color='#13445a')
+                                    sg.Text("Site for scraping"),
+                                ],
+                                [
+                                    sg.Input(last_site, key='-LAST-SITE-', size=(80, 20), enable_events=True)
+                                ],
+                                [
+                                    sg.Col(
+                                        [
+                                            [
+                                                sg.Listbox(values=[], size=(80, number_items_to_show),
+                                                           enable_events=True,
+                                                           key='-LAST-SITE-BOX-',
+                                                           select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                                                           no_scrollbar=True)
+                                            ]
+                                        ], key='-LAST-SITE-BOX-CONTAINER-', pad=(0, 0), visible=True
+                                    )
                                 ]
-                            ], key='-LOGIN-PATH-BOX-CONTAINER-', pad=(0, 0), visible=True
-                        )
-                    ],
-                    [
-                        sg.Text("Site for scraping")
-                    ],
-                    [
-                        sg.Input(last_site, key='-LAST-SITE-', size=(20, 20), enable_events=True)
-                    ],
-                    [
-                        sg.Col(
+                            ]
+                        ),
+                        sg.Column(
                             [
                                 [
-                                    sg.Listbox(values=[], size=(input_width, number_items_to_show),
-                                               enable_events=True,
-                                               key='-LAST-SITE-BOX-', select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
-                                               no_scrollbar=True, background_color='#13445a')
-                                ]
-                            ], key='-LAST-SITE-BOX-CONTAINER-', pad=(0, 0), visible=True
+                                    sg.Text("Url for logging in")
+                                ],
+                                [
+                                    sg.Input(login_path, key='-LOGIN-PATH-', size=(20, 20), disabled=True,
+                                             disabled_readonly_background_color='red', enable_events=True)
+                                ],
+                                [
+                                    sg.Col(
+                                        [
+                                            [
+                                                sg.Listbox(values=[], size=(input_width, number_items_to_show),
+                                                           enable_events=True,
+                                                           key='-LOGIN-PATH-BOX-',
+                                                           select_mode=sg.LISTBOX_SELECT_MODE_SINGLE,
+                                                           no_scrollbar=True)
+                                            ]
+                                        ], key='-LOGIN-PATH-BOX-CONTAINER-', pad=(0, 0), visible=True
+                                    )
+                                ],
+                            ]
                         )
-                    ]
+                    ],
                 ]
             ),
             sg.Column(
@@ -85,14 +115,14 @@ def get_layout(domain,
                         sg.Text("Username input name for logging in")
                     ],
                     [
-                        sg.Input(username_field, key='-USERNAME-FIELD-', disabled=True,
+                        sg.Input(username_field, key='-USERNAME-FIELD-', disabled=True, size=(15, 1),
                                  disabled_readonly_background_color='red')
                     ],
                     [
                         sg.Text("Username value for logging in")
                     ],
                     [
-                        sg.Input(username_value, key='-USERNAME-VALUE-', disabled=True,
+                        sg.Input(username_value, key='-USERNAME-VALUE-', disabled=True, size=(15, 1),
                                  disabled_readonly_background_color='red')
                     ]
                 ]
@@ -103,14 +133,14 @@ def get_layout(domain,
                         sg.Text("Password input name for logging in")
                     ],
                     [
-                        sg.Input(password_field, key='-PASSWORD-FIELD-', disabled=True,
+                        sg.Input(password_field, key='-PASSWORD-FIELD-', disabled=True, size=(15, 1),
                                  disabled_readonly_background_color='red')
                     ],
                     [
                         sg.Text("Password value for logging in")
                     ],
                     [
-                        sg.Input(password_value, key='-PASSWORD-VALUE-', disabled=True,
+                        sg.Input(password_value, key='-PASSWORD-VALUE-', disabled=True, size=(15, 1),
                                  disabled_readonly_background_color='red')
                     ]
                 ]
@@ -143,14 +173,18 @@ def get_layout(domain,
                         sg.Text("Available actions for your plan"),
                         sg.Combo(actions, default_value=actions[0], key='-ACTIONS-CHOICE-', readonly=True,
                                  enable_events=True),
+                        sg.pin(sg.Combo(imported_actions, key='-SAVED-ACTIONS-', readonly=True,
+                                        enable_events=True, visible=False)),
+                        sg.pin(sg.Button('Reload actions', key='-RELOAD-ACTIONS-', visible=False)),
                         sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-BDD-ATTRIBUTE-', readonly=True,
-                                 enable_events=True),
-                        sg.Text(GIVEN_ATTRIBUTE_INFO, key='-BDD-ATTRIBUTE-INFO-', enable_events=True)
-                    ],
-                    [
-                        sg.Listbox([], size=(40, 20), k='-TAG-LIST-', enable_events=True)
+                                 enable_events=True)
                     ]
                 ]),
+            ],
+            [
+                sg.Column([[]], expand_x=True),
+                sg.Listbox([], size=(40, 19), k='-TAG-LIST-', enable_events=True),
+                sg.Column([[]], expand_x=True),
                 sg.Column([
                     [
                         sg.Text("Tag description:")
@@ -172,11 +206,11 @@ def get_layout(domain,
                         sg.Column(
                             [
                                 [
-                                    sg.Button('Show whole html in external app', button_color='orange',
+                                    sg.Button('Show whole html in external app', button_color='green',
                                               key='-SHOW-HTML-')
                                 ],
                                 [
-                                    sg.Button('Copy whole html', button_color='black', key='-COPY-HTML-')
+                                    sg.Button('Copy whole html', button_color='green', key='-COPY-HTML-')
                                 ],
                                 [
                                     sg.Button('Check if xpath exists in html', button_color='blue',
@@ -195,7 +229,7 @@ def get_layout(domain,
             ],
             [
                 sg.Button("Add new action", k='-ADD-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
-                sg.Button("Save action", k='-SAVE-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
+                # sg.Button("Save action", k='-SAVE-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
                 sg.Button("Delete selected action", k='-DELETE-ACTION-', button_color='red'),
                 sg.Column([[]], expand_x=True),
                 sg.Column([
@@ -216,7 +250,7 @@ def get_layout(domain,
             ],
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
-                sg.Listbox(todo_actions_in_array, size=(20, 20), k='-ACTION-LIST-', expand_x=True, enable_events=True),
+                sg.Listbox(todo_actions_in_array, size=(20, 18), k='-ACTION-LIST-', expand_x=True, enable_events=True),
                 sg.Column([[]], k='layout_principal'),
                 sg.Column([
                     [
@@ -231,9 +265,10 @@ def get_layout(domain,
                 sg.Column([[]], k='layout_principal', expand_x=True),
                 [
                     sg.Column([[]], expand_x=True),
+                    sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-ACTION-BDD-ATTRIBUTE-', readonly=True),
+                    sg.Button("Generate plan as action", k='-GENERATE-PLAN-AS-ACTION-', button_color='green'),
                     sg.Button("Generate plan", k='-GENERATE-PLAN-', button_color='purple')
                 ]
             ]
         ]
     ]
-    return layout

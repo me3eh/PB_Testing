@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 
 def setup():
@@ -22,10 +23,7 @@ def setup():
     if not table_with_user_data_exists:
         print('Creating table for user data in database')
         c.execute('''CREATE TABLE urls_and_attributes
-                                (url VARCHAR,
-                                ids TEXT,
-                                input_names TEXT,
-                                css_classes TEXT)''')
+                                (url VARCHAR)''')
         conn.commit()
     else:
         print('Table for user data exists')
@@ -37,6 +35,10 @@ def save_urls(objects):
     conn = sqlite3.connect('resources_for_testing/handy.sqlite')
 
     c = conn.cursor()
+    c.execute("""DELETE FROM urls_and_attributes""")
+    c.execute("""DELETE FROM original_urls""")
+
+    conn.commit()
     for object in objects:
         c.execute("""insert into urls_and_attributes(url) values(?)""", [object])
         c.execute("""insert into original_urls(url) values(?)""", [object])
@@ -101,6 +103,12 @@ def rename_url(url, new_url):
     c.execute(f'UPDATE urls_and_attributes set url=\'{new_url}\' where url=\'{url}\'')
     conn.commit()
     conn.close()
+#
+# def path_to_database():
+#     print(os.path.dirname(os.path.realpath(__file__)))
+
 # c = database_retrieve_urls('urls_and_attributes')
 # print(c)
 # database_save_attributes("/spanie", ids=["less go"], css_classes=['cos innego'], input_names=['lecim', 'na', 'szczecin'])
+# retrieve_urls('da')
+# path_to_database()
