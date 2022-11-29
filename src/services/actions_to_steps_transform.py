@@ -11,9 +11,3 @@ def create(plan, title, bdd_attribute='given'):
     whole_plan += "\t''')"
 
     return whole_plan
-    # if plan_is_an_action is True:
-    #     with open("steps/new_actions.py", "a") as f:
-    #         f.write(whole_plan)
-    # else:
-    #     with open("steps/new_steps.py", "a") as f:
-    #         f.write(whole_plan)

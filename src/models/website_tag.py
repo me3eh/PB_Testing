@@ -29,17 +29,17 @@ class WebsiteTag:
         self.whole_html = whole_html
 
     def _id(self):
-        if self.id != None:
+        if self.id is not None:
             return f"id = {self.id} "
         return ""
 
     def _css_class(self):
-        if self.css_class != None:
+        if self.css_class is not None:
             return f"css_class='{self.css_class}' "
         return ""
 
     def _text_inside(self):
-        if self.text != None:
+        if self.text is not None:
             return f"text = {self.text}"
         return ""
 

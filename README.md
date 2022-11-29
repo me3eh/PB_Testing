@@ -35,7 +35,7 @@ pb_configuration
 
 This method will pop gui with urls from your project and urls used in tests.
 It will look like this.
-![img.png](wip_files_for_readme/how_pb_configuration_looks.png)
+![img.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/how_pb_configuration_looks.png)
 On left we have urls scanned from project.
 On the right side there are urls that will be used in testing.
 
@@ -50,7 +50,7 @@ and clicking button with arrow pointing to the right
 it will add url to the right column, to collection of urls used in testing with the help of my application.
 
 
-![](wip_files_for_readme/how_app_works.gif)
+![](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/how_app_works.gif)
 <hr style="border:2px solid gray"/>
 
 ```bash
