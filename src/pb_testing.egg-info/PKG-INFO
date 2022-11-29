@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.6
+Version: 0.1.6.3
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -26,7 +26,7 @@ source venv/bin/activate
 ```
 It will look like this. venv will show up next to your name
 and command prompt
-![img_5.png](wip_files_for_readme/img_5.png)
+![source_venv.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/source_venv.png)
 <hr style="border:2px solid gray"/>
 
 ```bash
@@ -50,23 +50,17 @@ pb_configuration
 ```
 
 This method will pop gui with urls from your project and urls used in tests.
-It will look like this.
-![img.png](wip_files_for_readme/how_pb_configuration_looks.png)
+It will look like this:
+![how_pb_configuration_looks.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/how_pb_configuration_looks.png)
+
 On left we have urls scanned from project.
 On the right side there are urls that will be used in testing.
 
-After clicking one of choices here
+Between listboxes is arrow, which let user pass value from one listbox to another
+and at the bottom there are buttons, which also allow user to include new urls into testing.
 
-![img_3.png](wip_files_for_readme/img_3.png)
-
-and clicking button with arrow pointing to the right
-
-![img_4.png](wip_files_for_readme/img_4.png)
-
-it will add url to the right column, to collection of urls used in testing with the help of my application.
-
-
-![](wip_files_for_readme/how_app_works.gif)
+Overall working:
+![how_pb_configuration_works.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/pb_configuration_working.gif)
 <hr style="border:2px solid gray"/>
 
 ```bash

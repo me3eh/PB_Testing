@@ -21,7 +21,7 @@ def get_layout(project_path):
                         sg.Text('', expand_y=True),
                     ],
                     [
-                        sg.Listbox(values=database.retrieve_urls('original_urls'), k='-SCANNED-URLS-', size=(20, 20))
+                        sg.Listbox(values=database.retrieve_urls('original_urls'), k='-SCANNED-URLS-', size=(80, 20))
                     ]
                 ], k='layout_principal', expand_x=True),
             sg.Column(
@@ -41,7 +41,7 @@ def get_layout(project_path):
                     ],
                     [
                         sg.Listbox(values=database.retrieve_urls('urls_and_attributes'), enable_events=True,
-                                   k='-USER-URLS-', size=(20, 20))
+                                   k='-USER-URLS-', size=(80, 20))
                     ]
                 ], k='layout_principal', expand_x=True),
         ],
