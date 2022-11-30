@@ -4,3 +4,5 @@ PySimpleGUI>=4.60.4
 pyperclip>=1.8.2
 mechanize>=0.4.8
 selenium>=4.6.0
+requests>=2.28.1
+lxml>=4.9.1

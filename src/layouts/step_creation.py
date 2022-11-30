@@ -161,7 +161,8 @@ def get_layout(domain,
         ],
         [
             sg.Column([[]], k='layout_principal', expand_x=True),
-            sg.Checkbox('Logged in', default=False, expand_x=True, enable_events=True, k='-LOGGED-IN-')
+            sg.Checkbox('Logged in', default=False, enable_events=True, k='-LOGGED-IN-'),
+            sg.Column([[]], k='layout_principal', expand_x=True)
         ],
         [
             sg.HorizontalSeparator()
@@ -210,7 +211,16 @@ def get_layout(domain,
                                               key='-SHOW-HTML-')
                                 ],
                                 [
-                                    sg.Button('Copy whole html', button_color='green', key='-COPY-HTML-')
+                                    sg.Column(
+                                        [
+                                            [
+                                                sg.Button('Copy whole html', button_color='green',
+                                                          key='-COPY-HTML-ELEMENT-'),
+                                                sg.Button('Copy html of element', button_color=('black', 'yellow'),
+                                                          key='-COPY-HTML-')
+                                            ]
+                                        ]
+                                    )
                                 ],
                                 [
                                     sg.Button('Check if xpath exists in html', button_color='blue',

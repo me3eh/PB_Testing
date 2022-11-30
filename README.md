@@ -1,6 +1,15 @@
 # PB TESTING
 Library for testing using Page Object Pattern and Behaviour Driven Development.
 
+## Usage
+This application is experimental and is used mainly for Engineer's Thesis.
+
+It will be maintained for errors and probably in near future might get some new features.
+## Before using
+You will need Geckodriver for running tests using behave (which is based on selenium)
+https://github.com/mozilla/geckodriver/releases - link for geckodriver browsing.
+
+Probably you will need also to put it into /usr/local/bin/ (as for linux)
 ## Commands
 All commands are typed into terminal, using venv
 

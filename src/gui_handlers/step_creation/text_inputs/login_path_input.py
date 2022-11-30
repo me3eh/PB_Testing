@@ -1,10 +1,12 @@
-from services import url_autocompletion
+from services.url_autocompletion import UrlAutocompletion
+
+url_autocomplete = UrlAutocompletion()
 
 
 def autocomplete(values, window, urls_from_project):
     text = values['-LOGIN-PATH-'].lower()
 
-    prediction_list = url_autocompletion.find_occurences(text_to_find=text, collection=urls_from_project)
+    prediction_list = url_autocomplete.find_occurences(text_to_find=text, collection=urls_from_project)
 
     window['-LOGIN-PATH-BOX-'].update(values=prediction_list)
     window['-LOGIN-PATH-BOX-'].update(set_to_index=0)

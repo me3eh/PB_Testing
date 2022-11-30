@@ -1,6 +1,6 @@
 import PySimpleGUI as sg
 from configparser import ConfigParser
-from services import site_info
+from services.site_info import SiteInfo
 from models.website_tag import WebsiteTag
 from layouts import step_creation
 from models.action_name import ActionName
@@ -22,7 +22,7 @@ GIVEN_ATTRIBUTE_INFO = "Template"
 # THEN_ATTRIBUTE_INFO = "<-- Then - asserting that action took place (title was revealed after visiting site)"
 urls_from_project = database.retrieve_urls('urls_and_attributes')
 input_text = ''
-
+site_info = SiteInfo()
 imported_actions = import_actions()
 
 def step_actions_to_select(actions):
