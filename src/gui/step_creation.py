@@ -12,7 +12,7 @@ from gui_handlers.step_creation.listboxes import *
 from gui_handlers.step_creation.selects import *
 from gui_handlers.step_creation.buttons import *
 from sqlite import database
-from shared_info.constants import ERROR_PNG
+from shared_info.constants import ERROR_PNG, OK_PNG
 from object_collections_to_string import *
 
 urls_from_project = database.retrieve_urls('urls_and_attributes')
@@ -113,20 +113,21 @@ def create_step():
         if event == sg.WIN_CLOSED or event == "Exit":
             values = get_values_for_configuration(window)
             save_configuration(config, values)
-            sg.popup_notify("Saved your configuration", Ti)
+            sg.popup_notify("Saved your configuration", title='Saved', icon=OK_PNG)
             break
         elif event == '-ADD-ACTION-':
             add_action_button.add_action(window, values, todo_actions, current_tags, imported_actions)
         elif event == '-SAVE-CHANGES-TO-CONFIG-':
             values = get_values_for_configuration(window)
             save_configuration(config, values)
-            sg.popup_notify("Saved your configuration")
+            sg.popup_notify("Saved your configuration", title='Saved', icon=OK_PNG)
         elif event == '-LOGGED-IN-':
             value_of_checkbox = not values[event]
             login_inputs.disabling(window=window, value_for_disabling=value_of_checkbox)
         elif event == '-ACTIONS-CHOICE-':
             actions_choice_select.find_all_selections(window, values, event, site_info, current_tags)
             actions_choice_select.show_saved_actions(values, event, window)
+            choosing_action_selects.change(event=event, values=values, window=window)
         elif event == '-TAG-LIST-':
             tag_list_listbox.pick_tag(window=window, current_tags=current_tags,
                                       last_used_html=site_info.get_last_used_html())
@@ -135,7 +136,6 @@ def create_step():
             save_configuration_button.save_configuration(window, values, event, todo_actions)
         elif event == '-LOAD-CONFIGURATION-':
             load_configuration_button.load_configuration(window, values, event, todo_actions)
-                                                                 # method_to_disable_inputs=login_inputs_disabled)
         elif event == '-GENERATE-PLAN-':
             generate_plan_button.generate_plan(window, todo_actions, plan_is_an_action=False)
         elif event == '-GENERATE-PLAN-AS-ACTION-':
@@ -147,6 +147,7 @@ def create_step():
             delete_action_button.delete_action(window, todo_actions)
         elif event == '-BDD-ATTRIBUTE-':
             bdd_attribute_select.change_bdd_attribute(values, event, window, given_when_actions, then_actions)
+            choosing_action_selects.change(event=event, values=values, window=window)
         elif event in ['-MOVE-UP-', '-MOVE-DOWN-']:
             move_action_arrows_buttons.move_action(event=event, window=window, sg=sg,
                                                    error_picture=ERROR_PNG, todo_actions=todo_actions)
@@ -159,6 +160,8 @@ def create_step():
             show_html_button.show_html_in_external_app(site_info.get_last_used_html())
         elif event == '-COPY-HTML-':
             copy_html_button.copy_html_to_clipboard(site_info.get_last_used_html())
+        elif event == '-COPY-HTML-ELEMENT-':
+            copy_html_button.copy_element_html_to_clipboard(window)
         elif event == '-LAST-SITE-':
             autocomplete_input.autocomplete(values, window, urls_from_project, layout_key=event)
         elif event == '-LOGIN-PATH-':

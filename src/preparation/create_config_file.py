@@ -8,6 +8,7 @@ def create_config_file():
     config.read('resources_for_testing/config.ini')
     if 'main' not in config:
         config.add_section('main')
+    config.set('main', 'actual_plan_name', 'Something')
     config.set('main', 'domain', 'http://localhost:3000')
     config.set('main', 'username_field', 'username')
     config.set('main', 'password_field', 'password')

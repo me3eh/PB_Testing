@@ -9,6 +9,7 @@ def load_configuration(window, values, event, todo_actions):
     config.read(values[event])
 
     domain = config.get('main', 'domain')
+    actual_plan_name = config.get('main', 'actual_plan_name')
     username_field = config.get('main', 'username_field')
     username_value = config.get('main', 'username_value')
     password_field = config.get('main', 'password_field')
@@ -17,6 +18,7 @@ def load_configuration(window, values, event, todo_actions):
     last_site = config.get('main', 'last_site')
     logged_in = config.get('main', 'logged_in')
 
+    window['-TITLE-OF-TEST-'].update(actual_plan_name)
     window['-DOMAIN-'].update(domain)
     window['-USERNAME-FIELD-'].update(username_field)
     window['-USERNAME-VALUE-'].update(username_value)
@@ -30,8 +32,8 @@ def load_configuration(window, values, event, todo_actions):
 
     login_inputs.disabling(window=window, value_for_disabling=(not eval(logged_in)))
 
-    with open('resources_for_testing/config.ini', 'w') as f:
-        config.write(f)
+    # with open('resources_for_testing/config.ini', 'w') as f:
+    #     config.write(f)
 
     pickled = None
     with open(f'{values[event]}.pickle', 'rb') as f:

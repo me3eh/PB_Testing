@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+import os
 
 INFORMATION_ABOUT_UNIQUENESS = 'To have your save buttons enabled, you need to have xpath of your element unique :D'
 
@@ -20,6 +21,7 @@ def get_layout(domain,
                todo_actions,
                imported_actions
                ):
+    path_of_project = os.getcwd()
     return [
         [
             [
@@ -151,11 +153,16 @@ def get_layout(domain,
                 ],
                 [
                     sg.FileSaveAs("Save configuration", key='-SAVE-CONFIGURATION-', enable_events=True,
+                                  initial_folder=f'{path_of_project}/resources_for_testing/saved_plans',
                                   file_types=[((("PB_CONFIG"), ("*.pb_config")))])
                 ],
                 [
                     sg.FileBrowse("Load configuration", key='-LOAD-CONFIGURATION-', enable_events=True,
+                                  initial_folder=f'{path_of_project}/resources_for_testing/saved_plans',
                                   file_types=[((("PB_CONFIG"), ("*.pb_config")))])
+                ],
+                [
+                    sg.Button("Erase saved htmls", key='-RESET-SAVED-HTMLS-', button_color='black')
                 ]
             ])
         ],
@@ -214,10 +221,10 @@ def get_layout(domain,
                                     sg.Column(
                                         [
                                             [
-                                                sg.Button('Copy whole html', button_color='green',
-                                                          key='-COPY-HTML-ELEMENT-'),
                                                 sg.Button('Copy html of element', button_color=('black', 'yellow'),
-                                                          key='-COPY-HTML-')
+                                                          key='-COPY-HTML-ELEMENT-'),
+                                                sg.Button('Copy html of whole site', button_color='green',
+                                                          key='-COPY-HTML-'),
                                             ]
                                         ]
                                     )
@@ -226,9 +233,6 @@ def get_layout(domain,
                                     sg.Button('Check if xpath exists in html', button_color='blue',
                                               key='-XPATH-EXISTS-')
                                 ],
-                                [
-                                    sg.Button('Save xpath', button_color='red', key='-XPATH-SAVE-')
-                                ]
                             ]
                         )
                     ],
@@ -247,7 +251,7 @@ def get_layout(domain,
                         sg.Text("Write here your info for input", key='-HELPER-INPUT-LABEL-')
                     ],
                     [
-                        sg.Input("Additional", key='-HELPER-INPUT-')
+                        sg.pin(sg.Input("Additional", key='-HELPER-INPUT-'))
                     ]
                 ], expand_x=True)
             ],

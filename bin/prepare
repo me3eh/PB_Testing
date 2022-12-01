@@ -6,7 +6,7 @@ from preparation.create_config_file import create_config_file
 from preparation.steps_files import copy_common_steps, create_new_action_file, copy_behave_environment_file
 from sqlite.database import setup
 
-create_dir(['features', 'steps', 'resources_for_testing'])
+create_dir(['features', 'steps', 'resources_for_testing', 'resources_for_testing/saved_plans'])
 
 create_config_file()
 
