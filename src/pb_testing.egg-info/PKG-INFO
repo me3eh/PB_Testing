@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.1.6.5
+Version: 0.1.6.6
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -76,3 +76,6 @@ Overall working:
 step_creator
 ```
 This gui is responsible for creating tests, using scanning urls and 
+## OK, application is fine, but how to do testing?
+
+Testing in this application is based on BDD. This means

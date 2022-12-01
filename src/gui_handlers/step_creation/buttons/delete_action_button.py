@@ -1,6 +1,5 @@
 def delete_action(window, plan):
     selected_action = window['-ACTION-LIST-'].get_indexes()
-    print(selected_action)
 
     if len(selected_action) == 0:
         return False

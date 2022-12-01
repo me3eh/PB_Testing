@@ -1,7 +1,7 @@
 from gui_handlers.step_creation.buttons import save_action_buttons
 import PySimpleGUI as sg
 from shared_info.constants import ERROR_PNG
-
+from services.helper_methods import get_full_url
 
 def show_saved_actions(values, event, window):
     visibility = values[event] == 'use saved actions'
@@ -19,10 +19,7 @@ def find_all_selections(window, values, event, site_info, current_tags):
     login_path = window['-LOGIN-PATH-'].get()
     target_site = window['-LAST-SITE-'].get()
 
-    if domain.endswith('/') and target_site.startswith('/'):
-        site = domain + target_site[1:]
-    else:
-        site = domain + target_site
+    site = get_full_url(domain, target_site)
 
     window['-XPATH-INPUT-'].update('', background_color='white')
     window['-TAG-DESCRIPTION-'].update('')

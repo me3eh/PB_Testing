@@ -31,8 +31,3 @@ def _get_string_between_two_characters(whole_string, start, end):
     except AttributeError:
         str_found = 'Nothing found between two markers'
         return None
-
-# kk = import_actions()
-# for k in kk:
-#     print('bdd atrybut', k.bdd_attribute)
-#     print('nazwa atrybutu', k.action_name)

@@ -14,8 +14,6 @@ def launch_configuration():
 
     while True:
         event, values = window.read()
-        # print(event)
-        # print(values)
         if event == sg.WIN_CLOSED or event == "Exit":
             break
         elif event == '-ADD-FROM-LISTBOX-TO-LISTBOX-':

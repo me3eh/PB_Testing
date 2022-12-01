@@ -24,6 +24,7 @@ imported_actions = []
 imported_actions_as_string = []
 
 given_when_actions = [
+    ActionName('waiting for amount of seconds', attribute_needed=True),
     ActionName('visiting site', attribute_needed=False),
     ActionName('filling input', attribute_needed=True),
     ActionName('clicking button', attribute_needed=True),
@@ -33,7 +34,6 @@ given_when_actions = [
     ActionName('clicking radio button', attribute_needed=True),
     ActionName('attaching file to file input', attribute_needed=True),
     ActionName('selecting option from select', attribute_needed=True),
-    ActionName('waiting for amount of seconds', attribute_needed=True),
     ActionName('use saved actions', attribute_needed=False)
 ]
 then_actions = [
@@ -108,7 +108,7 @@ def create_step():
     # reload_actions_button.reload(window, imported_actions)
     while True:
         event, values = window.read()
-        print(event)
+        # print(event)
         # print(values)
         if event == sg.WIN_CLOSED or event == "Exit":
             values = get_values_for_configuration(window)
@@ -172,3 +172,9 @@ def create_step():
         elif event == '-LAST-SITE-BOX-':
             window['-LAST-SITE-'].update(value=values['-LAST-SITE-BOX-'][0])
             window['-LAST-SITE-BOX-CONTAINER-'].update(visible=False)
+        elif event == '-HELPER-INPUT-CURRENT-DOMAIN-':
+            current_domain_helper_button.insert_current_domain(window)
+        elif event == '-HELPER-INPUT-CURRENT-DOMAIN-WITH-ENDPOINT-':
+            current_domain_helper_button.insert_current_domain_with_endpoint(window)
+        elif event == '-RESET-SAVED-HTMLS-':
+            site_info.clear_saved_htmls()

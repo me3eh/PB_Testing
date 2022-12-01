@@ -1,5 +1,5 @@
 import pytest
-from services.site_info import get_tag
+from services.site_info import SiteInfo
 
 @pytest.fixture
 def html():
@@ -27,5 +27,5 @@ def html():
                           ("tr", None, 0)
                           ])
 def test_get_tag(html, tag, tag_attributes, expected):
-    tags = get_tag(html, tag, tag_attributes=tag_attributes)
+    tags = SiteInfo().get_tag(html, tag, tag_attributes=tag_attributes)
     assert len(tags) == expected

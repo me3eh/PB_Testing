@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import mechanize
 from models.website_tag import WebsiteTag
 from models.saved_html import SavedHtml
-
+from services.helper_methods import get_full_url
 
 class SiteInfo:
     def __init__(self):
@@ -20,12 +20,14 @@ class SiteInfo:
         try:
             reqs = requests.get(site)
         except requests.exceptions.ConnectionError:
-            return 'Could not connect to this url. Probably wrong endpoint', True
+            return 'Could not connect to this url. Probably wrong endpoint or server is not up', True
 
         soup = BeautifulSoup(reqs.text, features='lxml')
         self.saved_htmls_anonymous[site] = soup.prettify()
         self.last_used_html = self.saved_htmls_anonymous[site]
         print("returned newly pinged site")
+        print(self.saved_htmls_anonymous)
+        print(self.saved_htmls_logged_in)
 
         return reqs.text, False
 
@@ -39,15 +41,13 @@ class SiteInfo:
                     return self.last_used_html, False
 
         browser = mechanize.Browser()
-        if domain.endswith('/') and login_path.startswith("/"):
-            full_login_path = domain + login_path[1:]
-        else:
-            full_login_path = domain + login_path
+
+        full_login_path = get_full_url(domain, login_path)
 
         try:
             ad = browser.open(f"{full_login_path}")
         except mechanize.HTTPError:
-            return 'Could not connect to this url. Probably wrong endpoint', True
+            return 'Could not connect to this url. Probably wrong endpoint or server is not up', True
 
         browser.select_form(nr=0) #probably not a wise choice, but most of sites have only one form in login :D
         try:
@@ -69,6 +69,8 @@ class SiteInfo:
 
         self.last_used_html = html_from_site
         print("returned newly pinged site")
+        print(self.saved_htmls_anonymous)
+        print(self.saved_htmls_logged_in)
 
         return request_from_site, False
 
@@ -107,3 +109,7 @@ class SiteInfo:
         tags = self.get_tag(html, tag=tag, tag_attributes=tag_attributes)
 
         return tags, thrown_exception
+
+    def clear_saved_htmls(self):
+        self.saved_htmls_anonymous.clear()
+        self.saved_htmls_logged_in.clear()

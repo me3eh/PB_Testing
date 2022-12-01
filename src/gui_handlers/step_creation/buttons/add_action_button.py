@@ -8,11 +8,10 @@ def add_action(window, values, todo_actions, current_tags, saved_actions):
     type_of_action = values['-ACTIONS-CHOICE-']
     input_for_action = values['-HELPER-INPUT-']
     saved_actions_index = window['-SAVED-ACTIONS-'].widget.current()
-    print("index zapisanej akcji :D", saved_actions_index)
     selected_action_index = window['-ACTION-LIST-'].get_indexes()
     selected_tag = window['-TAG-LIST-'].get_indexes()
     xpath_of_element = window['-XPATH-INPUT-'].get()
-    print(xpath_of_element)
+
     new_action = action_create(type_of_action,
                                input_for_action,
                                bdd_attribute,
