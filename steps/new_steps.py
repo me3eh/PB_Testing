@@ -45,10 +45,3 @@ def step(context):
 		Given visiting site https://google.com
 		Then element with xpath //p should have text jkk
 	''')
-
-@given ('Something2')
-def step(context):
-	context.execute_steps(u'''
-		Given visiting site http://127.0.0.1:8000/
-		Then element with xpath //a[@href='/access'] should have text Deklaracja dostępności
-	''')
