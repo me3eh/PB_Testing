@@ -29,7 +29,7 @@ def _check_if_found_in_file(whole_text, bdd_attribute, name_of_actions):
 def delete_already_existing_step(index, file):
     with open(f"steps/{file}.py", "r") as f:
         file_inside = f.read()
-    regex_getting_whole_steps_from_file = '(from.*?\n)|(@given.*?\'{3}\))|(@when.*?\'{3}\))|(@then.*?\'{3}\))'
+    regex_getting_whole_steps_from_file = '(from.*?\n)|([#]?.*?@given.*?\'{3}\))|([#]?.*?@when.*?\'{3}\))|([#]?.*?@then.*?\'{3}\))'
     steps_in_array = re.findall(regex_getting_whole_steps_from_file, file_inside, flags=re.DOTALL)
 
     # index + 1 because we split file with from behave import library

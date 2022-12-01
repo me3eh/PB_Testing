@@ -1,7 +1,10 @@
 from configparser import ConfigParser
 import pickle
+from services.object_collections_to_string import convert_collection_to_string_using_method
+from gui_handlers.step_creation.text_inputs import login_inputs
 
-def load_configuration(window, values, event, todo_actions, method_to_disable_inputs):
+
+def load_configuration(window, values, event, todo_actions):
     config = ConfigParser()
     config.read(values[event])
 
@@ -23,7 +26,9 @@ def load_configuration(window, values, event, todo_actions, method_to_disable_in
     window['-LAST-SITE-'].update(last_site)
     window['-LOGIN-PATH-'].update(login_path)
     window['-LOGGED-IN-'].update(eval(logged_in))
-    method_to_disable_inputs(window, not eval(logged_in))
+    # method_to_disable_inputs(window, not eval(logged_in))
+
+    login_inputs.disabling(window=window, value_for_disabling=(not eval(logged_in)))
 
     with open('resources_for_testing/config.ini', 'w') as f:
         config.write(f)
@@ -34,6 +39,6 @@ def load_configuration(window, values, event, todo_actions, method_to_disable_in
     new_todo_actions = pickle.loads(pickled)
     todo_actions.clear()
     todo_actions.extend(new_todo_actions)
-    window['-ACTION-LIST-'].update(list(map(lambda obj: obj.format_for_todo_listbox(), todo_actions)))
-
-
+    collection_as_string = convert_collection_to_string_using_method(collection=todo_actions,
+                                                                     method_name='format_for_todo_listbox')
+    window['-ACTION-LIST-'].update(collection_as_string)

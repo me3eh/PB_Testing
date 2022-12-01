@@ -14,20 +14,20 @@ class SiteInfo:
     def get_saved_site_anonymous(self, site):
         if site in self.saved_htmls_anonymous:
             self.last_used_html = self.saved_htmls_anonymous[site]
-            print("oddano zapisaną")
+            print("returned html from saved site")
             return self.last_used_html, False
 
         try:
             reqs = requests.get(site)
         except requests.exceptions.ConnectionError:
-            return "Oops!  That was no valid number.  Try again...", True
+            return 'Could not connect to this url. Probably wrong endpoint', True
 
         soup = BeautifulSoup(reqs.text, features='lxml')
         self.saved_htmls_anonymous[site] = soup.prettify()
         self.last_used_html = self.saved_htmls_anonymous[site]
-        print("oddano stronę, którą trzeba było wyszukać")
-        return reqs.text, False
+        print("returned newly pinged site")
 
+        return reqs.text, False
 
     def get_saved_site_logged_in(self, site, username_field, username_value, password_field, password_value, login_path, domain):
         # global last_used_html
@@ -46,13 +46,16 @@ class SiteInfo:
 
         try:
             ad = browser.open(f"{full_login_path}")
-        except:
-            return 'Could not connect to server', True
+        except mechanize.HTTPError:
+            return 'Could not connect to this url. Probably wrong endpoint', True
 
-        browser.select_form(nr=0)
-        browser[username_field] = username_value
-        browser[password_field] = password_value
-        browser.submit()
+        browser.select_form(nr=0) #probably not a wise choice, but most of sites have only one form in login :D
+        try:
+            browser[username_field] = username_value
+            browser[password_field] = password_value
+            browser.submit()
+        except mechanize._form_controls.ControlNotFoundError:
+            return 'Could not use given credentials. Probably username input name or password input name is wrong', True
 
         ad = browser.open(site)
         request_from_site = ad.read()
@@ -65,7 +68,8 @@ class SiteInfo:
             self.saved_htmls_logged_in[site] = [SavedHtml(site, username_value, password_value, html_from_site)]
 
         self.last_used_html = html_from_site
-        print("oddano stronę, którą trzeba było wyszukać")
+        print("returned newly pinged site")
+
         return request_from_site, False
 
     def get_last_used_html(self):

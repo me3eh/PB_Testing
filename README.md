@@ -60,3 +60,6 @@ Overall working:
 step_creator
 ```
 This gui is responsible for creating tests, using scanning urls and 
+## OK, application is fine, but how to do testing?
+
+Testing in this application is based on BDD. This means

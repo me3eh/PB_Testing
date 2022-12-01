@@ -17,7 +17,7 @@ def get_layout(domain,
                password_field,
                password_value,
                actions,
-               todo_actions_in_array,
+               todo_actions,
                imported_actions
                ):
     return [
@@ -175,7 +175,7 @@ def get_layout(domain,
                         sg.Combo(actions, default_value=actions[0], key='-ACTIONS-CHOICE-', readonly=True,
                                  enable_events=True),
                         sg.pin(sg.Combo(imported_actions, key='-SAVED-ACTIONS-', readonly=True,
-                                        enable_events=True, visible=False)),
+                                        enable_events=True, visible=False, size=(40, 1))),
                         sg.pin(sg.Button('Reload actions', key='-RELOAD-ACTIONS-', visible=False)),
                         sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-BDD-ATTRIBUTE-', readonly=True,
                                  enable_events=True)
@@ -260,7 +260,7 @@ def get_layout(domain,
             ],
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
-                sg.Listbox(todo_actions_in_array, size=(20, 18), k='-ACTION-LIST-', expand_x=True, enable_events=True),
+                sg.Listbox(todo_actions, size=(20, 18), k='-ACTION-LIST-', expand_x=True, enable_events=True),
                 sg.Column([[]], k='layout_principal'),
                 sg.Column([
                     [

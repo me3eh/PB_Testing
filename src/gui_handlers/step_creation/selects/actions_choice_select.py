@@ -2,6 +2,7 @@ from gui_handlers.step_creation.buttons import save_action_buttons
 import PySimpleGUI as sg
 from shared_info.constants import ERROR_PNG
 
+
 def show_saved_actions(values, event, window):
     visibility = values[event] == 'use saved actions'
     window['-SAVED-ACTIONS-'].update(visible=visibility)
@@ -66,8 +67,7 @@ def find_all_selections(window, values, event, site_info, current_tags):
         else:
             tags_found, thrown_exception = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
     if thrown_exception is True:
-        sg.popup_notify("No connection to the server with given path. " +
-                        "Try to start local server or check if path is available, then try again.", icon=ERROR_PNG,
+        sg.popup_notify(tags_found, icon=ERROR_PNG,
                         title='No connection')
         return
 
@@ -75,14 +75,3 @@ def find_all_selections(window, values, event, site_info, current_tags):
     current_tags.extend(tags_found)
     listed = list(map(lambda obj: obj.format_for_listbox_with_available_actions(), tags_found))
     window['-TAG-LIST-'].update(listed)
-
-# def search_for_tags(site, username_field, username_value, password_field, password_value, login_path, domain, tag,
-#                     tag_attributes, site_info, values):
-#     tags_found = []
-#     if values['-LOGGED-IN-']:
-#         tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-#                                                  password_value, login_path, domain=domain,
-#                                                  tag=tag, tag_attributes=tag_attributes)
-#     else:
-#         tags_found = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
-#     return tags_found
