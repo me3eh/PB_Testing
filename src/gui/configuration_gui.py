@@ -7,6 +7,7 @@ from gui_handlers.configuration_gui.buttons import project_path_scan_urls_button
 from gui_handlers.configuration_gui.buttons import move_from_listbox_to_listbox_button, save_url_from_input_button
 from gui_handlers.configuration_gui.buttons import add_url_from_input_button
 
+
 def launch_configuration():
     project_path = get_project_path_from_config()
     layout = configuration_gui.get_layout(project_path)

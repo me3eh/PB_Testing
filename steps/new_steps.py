@@ -45,3 +45,13 @@ def step(context):
 		Given visiting site https://google.com
 		Then element with xpath //p should have text jkk
 	''')
+
+@given ('logging as admin with credentials jar pass')
+def step(context):
+	context.execute_steps(u'''
+		Given visiting site http://127.0.0.1:8000/
+		Given filling input with xpath //input[@class='form-control' and @name='username' and @id='user-name' and @type='text'] with text jar
+		Given filling input with xpath //input[@class='form-control' and @name='password' and @id='user-password' and @type='password'] with text jarjarjar
+		Given clicking on element with xpath //input[@class='btn btn-xs btn-primary' and @type='submit' and @value='Zaloguj']
+		Then it should have an url http://127.0.0.1:8000/admin
+	''')

@@ -12,11 +12,9 @@ class WebsiteTag:
 
         if whole_html is not None:
             self.attrs = whole_html.attrs
-            self.id = self.attrs['id'] if 'id' in self.attrs else None
-            self.css_class = ' '.join(self.attrs['class']) if 'class' in self.attrs else None
-            self.text = whole_html.text if whole_html.text != '' else None
             self.whole_html = whole_html
             self.xpath = self.attributes_to_html()
+            self.text = whole_html.text if whole_html.text != '' else None
         self.bdd_attribute = bdd_attribute
         self.value_for_bdd = value_for_bdd
         self.attribute = attribute
@@ -29,13 +27,13 @@ class WebsiteTag:
         self.whole_html = whole_html
 
     def _id(self):
-        if self.id is not None:
+        if 'id' in self.attrs:
             return f"id = {self.id} "
         return ""
 
     def _css_class(self):
-        if self.css_class is not None:
-            return f"css_class='{self.css_class}' "
+        if 'class' in self.attrs:
+            return f"css_class='{' '.join(self.attrs['class'])} "
         return ""
 
     def _text_inside(self):

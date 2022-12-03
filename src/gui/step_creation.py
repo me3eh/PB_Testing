@@ -105,7 +105,8 @@ def create_step():
     window['-NOT-USED-ONLY-FOR-PROPER-LAYOUT-'].update(visible=False)
     if len(imported_actions_as_string) > 0:
         window['-SAVED-ACTIONS-'].update(value=imported_actions_as_string[0])
-    # reload_actions_button.reload(window, imported_actions)
+    reload_actions_button.reload(window, imported_actions)
+
     while True:
         event, values = window.read()
         # print(event)

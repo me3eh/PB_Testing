@@ -11,7 +11,6 @@ def action_create(type_of_action,
                   saved_action_selected,
                   saved_actions,
                   xpath):
-    # print("huhi")
     if type_of_action in ['visiting site', 'assert url of site',
                           'assert title of site', 'waiting for amount of seconds']:
         return WebsiteTag(value_for_bdd=type_of_action,

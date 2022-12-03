@@ -246,20 +246,22 @@ def get_layout(domain,
                 # sg.Button("Save action", k='-SAVE-ACTION-', tooltip=INFORMATION_ABOUT_UNIQUENESS),
                 sg.Button("Delete selected action", k='-DELETE-ACTION-', button_color='red'),
                 sg.Column([[]], expand_x=True),
-                sg.Column([
-                    [
-                        sg.Text("Write here your info for input", key='-HELPER-INPUT-LABEL-')
-                    ],
-                    [
-                        sg.Input("Additional", key='-HELPER-INPUT-'),
-                        sg.FileBrowse('Choose folder of your project', target='-HELPER-INPUT-', visible=False,
-                                      key='-HELPER-INPUT-FILE-BROWSE-'),
-                        sg.Button('Insert in input current domain', visible=False, button_color='#007373',
-                                  key='-HELPER-INPUT-CURRENT-DOMAIN-'),
-                        sg.Button('Insert in input current domain with endpoint', visible=False, button_color='#008080',
-                                  key='-HELPER-INPUT-CURRENT-DOMAIN-WITH-ENDPOINT-')
-                    ]
-                ], expand_x=True)
+                sg.pin(
+                    sg.Column([
+                        [
+                            sg.Text("Write here your info for input", key='-HELPER-INPUT-LABEL-')
+                        ],
+                        [
+                            sg.Input("Additional", key='-HELPER-INPUT-'),
+                            sg.FileBrowse('Choose folder of your project', target='-HELPER-INPUT-', visible=False,
+                                          key='-HELPER-INPUT-FILE-BROWSE-'),
+                            sg.Button('Insert in input current domain', visible=False, button_color='#007373',
+                                      key='-HELPER-INPUT-CURRENT-DOMAIN-'),
+                            sg.Button('Insert in input current domain with endpoint', visible=False, button_color='#008080',
+                                      key='-HELPER-INPUT-CURRENT-DOMAIN-WITH-ENDPOINT-')
+                        ]
+                    ], expand_x=True, key='-INPUT-WRAPPER-')
+                )
             ],
             [
               sg.HorizontalSeparator()
