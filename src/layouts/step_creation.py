@@ -26,10 +26,11 @@ def get_layout(domain,
         [
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
-                sg.Text("Plan name", expand_x=True)
+                sg.Text("Plan name", expand_x=True),
             ],
             [
                 sg.Column([[]], k='layout_principal', expand_x=True),
+                sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-ACTION-BDD-ATTRIBUTE-', readonly=True),
                 sg.Input("Something", key='-TITLE-OF-TEST-'),
                 sg.Column([[]], k='layout_principal', expand_x=True),
             ],
@@ -160,9 +161,14 @@ def get_layout(domain,
                     sg.FileBrowse("Load configuration", key='-LOAD-CONFIGURATION-', enable_events=True,
                                   initial_folder=f'{path_of_project}/resources_for_testing/saved_plans',
                                   file_types=[((("PB_CONFIG"), ("*.pb_config")))])
-                ],
+                ]
+            ]),
+            sg.Column([
                 [
                     sg.Button("Erase saved htmls", key='-RESET-SAVED-HTMLS-', button_color='black')
+                ],
+                [
+                    sg.Button("Create new test", key='-CREATE-NEW-TEST-', button_color='red')
                 ]
             ])
         ],
@@ -260,7 +266,7 @@ def get_layout(domain,
                             sg.Button('Insert in input current domain with endpoint', visible=False, button_color='#008080',
                                       key='-HELPER-INPUT-CURRENT-DOMAIN-WITH-ENDPOINT-')
                         ]
-                    ], expand_x=True, key='-INPUT-WRAPPER-')
+                    ],  key='-INPUT-WRAPPER-'), expand_x=True
                 )
             ],
             [
@@ -287,7 +293,6 @@ def get_layout(domain,
                 sg.Column([[]], k='layout_principal', expand_x=True),
                 [
                     sg.Column([[]], expand_x=True),
-                    sg.Combo(bdd_attributes, default_value=bdd_attributes[0], key='-ACTION-BDD-ATTRIBUTE-', readonly=True),
                     sg.Button("Generate plan as action", k='-GENERATE-PLAN-AS-ACTION-', button_color='green'),
                     sg.Button("Generate plan", k='-GENERATE-PLAN-', button_color='purple')
                 ]

@@ -3,7 +3,6 @@ import sys
 from configparser import ConfigParser
 
 from services.site_info import SiteInfo
-from models.website_tag import WebsiteTag
 from layouts import step_creation
 from models.action_name import ActionName
 
@@ -46,7 +45,7 @@ then_actions = [
 ]
 actions = given_when_actions
 
-todo_actions = [WebsiteTag(bdd_attribute='Given', value_for_bdd='visiting site', attribute='https://google.com')]
+todo_actions = []
 
 
 def get_values_for_configuration(window):
@@ -69,7 +68,7 @@ def save_configuration(config, values_for_config):
 
 
 def create_step():
-    sys.setrecursionlimit(6000)
+    sys.setrecursionlimit(10000)
     global actions, input_text
 
     config = ConfigParser()
@@ -114,7 +113,7 @@ def create_step():
         if event == sg.WIN_CLOSED or event == "Exit":
             values = get_values_for_configuration(window)
             save_configuration(config, values)
-            sg.popup_notify("Saved your configuration", title='Saved', icon=OK_PNG)
+            sg.popup_notify("Also saved your configuration", title='Bye bye :D', icon=OK_PNG)
             break
         elif event == '-ADD-ACTION-':
             add_action_button.add_action(window, values, todo_actions, current_tags, imported_actions)
@@ -178,4 +177,6 @@ def create_step():
         elif event == '-HELPER-INPUT-CURRENT-DOMAIN-WITH-ENDPOINT-':
             current_domain_helper_button.insert_current_domain_with_endpoint(window)
         elif event == '-RESET-SAVED-HTMLS-':
-            site_info.clear_saved_htmls()
+            reset_saved_htmls_button.reset(site_info_module=site_info)
+        elif event == '-CREATE-NEW-TEST-':
+            create_new_test_button.create(window=window, todo_actions=todo_actions)

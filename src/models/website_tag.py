@@ -98,6 +98,8 @@ class WebsiteTag:
             return f'{self.bdd_attribute} {self.value_for_bdd}'
         elif self.value_for_bdd == 'assert element has certain text':
             return f'{self.bdd_attribute} element with xpath {self.xpath} should have text {self.attribute}'
+        elif self.value_for_bdd == 'attaching file to file input':
+            return f'{self.bdd_attribute} attaching file input with xpath {self.xpath} with file {self.attribute}'
 
     def format_for_listbox_with_available_actions(self):
         return f"<{self.type_of_tag} {self._id()}{self.attrs}{self._text_inside()}>"
