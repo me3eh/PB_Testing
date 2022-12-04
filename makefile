@@ -8,3 +8,5 @@ push_test:
 	python3 -m twine upload --repository testpypi dist/*
 push_prod:
 	python3 -m twine upload --repository pypi dist/*
+pycache:
+	git clean -df *pycache*
