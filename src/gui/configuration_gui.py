@@ -3,9 +3,9 @@ from layouts import configuration_gui
 from sqlite import database
 from shared_info.constants import ERROR_PNG
 from configparser import ConfigParser
-from gui_handlers.configuration_gui.buttons import project_path_scan_urls_button, browse_file_button, delete_button
-from gui_handlers.configuration_gui.buttons import move_from_listbox_to_listbox_button, save_url_from_input_button
-from gui_handlers.configuration_gui.buttons import add_url_from_input_button
+from gui_handlers.configuration_gui.buttons import *
+from gui_handlers.configuration_gui.listboxes import *
+
 
 
 def launch_configuration():
@@ -29,6 +29,10 @@ def launch_configuration():
             browse_file_button.browse_files(values=values, event=event)
         elif event == '-SCAN-FOR-URLS-FROM-GIVEN-PATH-':
             project_path_scan_urls_button.scan_for_urls(window)
+        elif event in ['-SCANNED-URLS-', '-USER-URLS-']:
+            change_selected_checkbox.change(window=window, event=event, values=values)
+
+
 
 
 def get_project_path_from_config():

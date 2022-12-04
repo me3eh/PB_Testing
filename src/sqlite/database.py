@@ -39,7 +39,7 @@ def save_urls(urls):
 
     conn.commit()
     for url in urls:
-        c.execute("""insert into urls_and_attributes(url) values(?)""", url)
+        c.execute("""insert into urls_and_attributes(url) values(?)""", [url])
         c.execute("""insert into original_urls(url) values(?)""", [url])
     conn.commit()
     conn.close()

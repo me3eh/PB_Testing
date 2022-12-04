@@ -17,7 +17,7 @@
 #     new_action = action_create(type_of_action, selected_action_index, input_for_action,
 #                                bdd_attribute, window, selected_tag, current_tags, xpath=xpath_of_element)
 #     if not new_action:
-#         sg.popup_notify("You didnt chose anything from todo actions listbox to change",
+#         sg.popup_notify("You didnt chose anything fromtodo actions listbox to change",
 #                         icon=ERROR_PNG)
 #         return
 #
