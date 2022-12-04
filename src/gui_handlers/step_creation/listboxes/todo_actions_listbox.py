@@ -1,4 +1,4 @@
-def pick_tag(window, todo_actions):
+def pick_tag_in_actions(window, todo_actions):
     index = window['-ACTION-LIST-'].get_indexes()
     if len(index) == 0:
         print("yups")

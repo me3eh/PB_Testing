@@ -7,7 +7,6 @@ input_width = 20
 number_items_to_show = 4
 
 
-# bdd_attributes = ['given', 'when', 'then']
 bdd_attributes = ['Given', 'When', 'Then']
 
 def get_layout(domain,

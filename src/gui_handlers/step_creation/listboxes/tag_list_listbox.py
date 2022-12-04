@@ -3,7 +3,7 @@ from shared_info.constants import ERROR_PNG
 import PySimpleGUI as sg
 
 
-def pick_tag(window, current_tags, last_used_html):
+def pick_tag_in_tags(window, current_tags, last_used_html):
     index = window['-TAG-LIST-'].get_indexes()
     if len(index) == 0:
         sg.popup_notify("Click on select next to label Available actions for your plan and find your desirable tag to find",

@@ -129,7 +129,7 @@ def create_step():
             actions_choice_select.show_saved_actions(values, event, window)
             choosing_action_selects.change(event=event, values=values, window=window)
         elif event == '-TAG-LIST-':
-            tag_list_listbox.pick_tag(window=window, current_tags=current_tags,
+            tag_list_listbox.pick_tag_in_tags(window=window, current_tags=current_tags,
                                       last_used_html=site_info.get_last_used_html())
             todo_actions_and_tag_listboxes.only_one_selected(event, window)
         elif event == '-SAVE-CONFIGURATION-':
@@ -146,7 +146,8 @@ def create_step():
         elif event == '-DELETE-ACTION-':
             delete_action_button.delete_action(window, todo_actions)
         elif event == '-BDD-ATTRIBUTE-':
-            bdd_attribute_select.change_bdd_attribute(values, event, window, given_when_actions, then_actions)
+            bdd_attribute_select.change_bdd_attribute(values, event, window, given_when_actions, then_actions,
+                                                      current_tags=current_tags)
             choosing_action_selects.change(event=event, values=values, window=window)
         elif event in ['-MOVE-UP-', '-MOVE-DOWN-']:
             move_action_arrows_buttons.move_action(event=event, window=window, sg=sg,
@@ -154,7 +155,7 @@ def create_step():
         elif event == '-XPATH-EXISTS-':
             xpath_viewer_input.check_if_xpath_unique(last_used_html=site_info.get_last_used_html(), window=window)
         elif event == '-ACTION-LIST-':
-            todo_actions_listbox.pick_tag(window=window, todo_actions=todo_actions)
+            todo_actions_listbox.pick_tag_in_actions(window=window, todo_actions=todo_actions)
             todo_actions_and_tag_listboxes.only_one_selected(event, window)
         elif event == '-SHOW-HTML-':
             show_html_button.show_html_in_external_app(site_info.get_last_used_html())

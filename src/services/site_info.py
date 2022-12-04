@@ -13,11 +13,11 @@ class SiteInfo:
     def get_saved_site_anonymous(self, site):
         if site in self.saved_htmls_anonymous:
             self.last_used_html = self.saved_htmls_anonymous[site]
-            print("returned html from saved site")
+
             return self.last_used_html, False
+
         browser = mechanize.Browser()
         try:
-            # reqs = requests.get(site)
             ad = browser.open(site)
         except mechanize.HTTPError:
             return 'Could not connect to this url. Probably wrong endpoint or server is not up', True
@@ -26,14 +26,11 @@ class SiteInfo:
         soup = BeautifulSoup(response, features='lxml')
         self.saved_htmls_anonymous[site] = soup.prettify()
         self.last_used_html = self.saved_htmls_anonymous[site]
-        print("returned newly pinged site")
-        print(self.saved_htmls_anonymous)
-        print(self.saved_htmls_logged_in)
 
         return response, False
 
-    def get_saved_site_logged_in(self, site, username_field, username_value, password_field, password_value, login_path, domain):
-        # global last_used_html
+    def get_saved_site_logged_in(self, site, username_field, username_value, password_field, password_value,
+                                 login_path, domain):
         if site in self.saved_htmls_logged_in:
             htmls = self.saved_htmls_logged_in[site]
             for saved_html in htmls:
@@ -62,16 +59,12 @@ class SiteInfo:
         request_from_site = ad.read()
         soup = BeautifulSoup(request_from_site, features='lxml')
         html_from_site = soup.prettify()
-
         if site in self.saved_htmls_logged_in:
             self.saved_htmls_logged_in[site].append(SavedHtml(site, username_value, password_value, html_from_site))
         else:
             self.saved_htmls_logged_in[site] = [SavedHtml(site, username_value, password_value, html_from_site)]
 
         self.last_used_html = html_from_site
-        print("returned newly pinged site")
-        print(self.saved_htmls_anonymous)
-        print(self.saved_htmls_logged_in)
 
         return request_from_site, False
 
@@ -114,3 +107,14 @@ class SiteInfo:
     def clear_saved_htmls(self):
         self.saved_htmls_anonymous.clear()
         self.saved_htmls_logged_in.clear()
+
+    # def information_about_saved_sites(self):
+    #     print('Saved sites, when user not logged in', list(self.saved_htmls_anonymous.keys()))
+    #
+    #     if len(self.saved_htmls_logged_in.values()) != 0:
+    #         breakpoint()
+    #         print('Saved sites, when user logged in',
+    #               list(map(lambda obj: obj.to_string(), list(self.saved_htmls_logged_in.values()))),
+    #               '\n')
+    #     else:
+    #         print('Saved sites, when user logged in', [], '\n')

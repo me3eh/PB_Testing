@@ -64,8 +64,7 @@ def find_all_selections(window, values, event, site_info, current_tags):
         else:
             tags_found, thrown_exception = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
     if thrown_exception is True:
-        sg.popup_notify(tags_found, icon=ERROR_PNG,
-                        title='No connection')
+        sg.popup_notify(tags_found, icon=ERROR_PNG, title='No connection')
         return
 
     current_tags.clear()
