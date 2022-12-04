@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='pb_testing',
     packages=find_packages(include=['pb_testing']),
-    version='0.1.6.7',
+    version='0.1.6.8',
     scripts=['bin/prepare',
              'bin/extra_modules_for_pb_testing.py',
              'bin/pb_configuration',
@@ -18,7 +18,6 @@ setup(
         'pyperclip >= 1.8.2',
         'mechanize >= 0.4.8',
         'selenium >= 4.6.0',
-        'requests >= 2.28.1',
         'lxml >= 4.9.1'
     ],
     setup_requires=['pytest-runner'],

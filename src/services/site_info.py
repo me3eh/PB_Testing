@@ -1,4 +1,3 @@
-import requests
 from bs4 import BeautifulSoup
 import mechanize
 from models.website_tag import WebsiteTag
@@ -16,20 +15,22 @@ class SiteInfo:
             self.last_used_html = self.saved_htmls_anonymous[site]
             print("returned html from saved site")
             return self.last_used_html, False
-
+        browser = mechanize.Browser()
         try:
-            reqs = requests.get(site)
-        except requests.exceptions.ConnectionError:
+            # reqs = requests.get(site)
+            ad = browser.open(site)
+        except mechanize.HTTPError:
             return 'Could not connect to this url. Probably wrong endpoint or server is not up', True
 
-        soup = BeautifulSoup(reqs.text, features='lxml')
+        response = ad.read()
+        soup = BeautifulSoup(response, features='lxml')
         self.saved_htmls_anonymous[site] = soup.prettify()
         self.last_used_html = self.saved_htmls_anonymous[site]
         print("returned newly pinged site")
         print(self.saved_htmls_anonymous)
         print(self.saved_htmls_logged_in)
 
-        return reqs.text, False
+        return response, False
 
     def get_saved_site_logged_in(self, site, username_field, username_value, password_field, password_value, login_path, domain):
         # global last_used_html

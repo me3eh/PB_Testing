@@ -1,5 +1,4 @@
 import lxml.html as PARSER
-import requests
 
 
 def get_number_of_match(html, xpath):
@@ -11,4 +10,3 @@ def get_number_of_match(html, xpath):
             return exists, len(exists)
         else:
             return 0, 0
-

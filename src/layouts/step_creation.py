@@ -220,8 +220,7 @@ def get_layout(domain,
                         sg.Column(
                             [
                                 [
-                                    sg.Button('Show whole html in external app', button_color='green',
-                                              key='-SHOW-HTML-')
+                                    sg.Button('Show whole html in external app', key='-SHOW-HTML-')
                                 ],
                                 [
                                     sg.Column(

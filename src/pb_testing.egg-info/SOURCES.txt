@@ -24,12 +24,14 @@ src/gui_handlers/step_creation/__init__.py
 src/gui_handlers/step_creation/buttons/__init__.py
 src/gui_handlers/step_creation/buttons/add_action_button.py
 src/gui_handlers/step_creation/buttons/copy_html_button.py
+src/gui_handlers/step_creation/buttons/create_new_test_button.py
 src/gui_handlers/step_creation/buttons/current_domain_helper_button.py
 src/gui_handlers/step_creation/buttons/delete_action_button.py
 src/gui_handlers/step_creation/buttons/generate_plan_button.py
 src/gui_handlers/step_creation/buttons/load_configuration_button.py
 src/gui_handlers/step_creation/buttons/move_action_arrows_buttons.py
 src/gui_handlers/step_creation/buttons/reload_actions_button.py
+src/gui_handlers/step_creation/buttons/reset_saved_htmls_button.py
 src/gui_handlers/step_creation/buttons/save_action_button.py
 src/gui_handlers/step_creation/buttons/save_action_buttons.py
 src/gui_handlers/step_creation/buttons/save_configuration_button.py

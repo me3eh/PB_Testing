@@ -31,7 +31,3 @@ def add_action(window, values, todo_actions, current_tags, saved_actions):
     todo_actions.append(new_action)
     window['-ACTION-LIST-'].update(convert_collection_to_string_using_method(collection=todo_actions,
                                                                              method_name='format_for_todo_listbox'))
-
-
-# def create_todo_actions_for_listbox(todo_actions):
-#     return list(map(lambda obj: obj.format_for_todo_listbox(), todo_actions))

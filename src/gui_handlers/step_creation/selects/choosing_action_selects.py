@@ -13,3 +13,9 @@ def change(event, values, window):
     window['-HELPER-INPUT-CURRENT-DOMAIN-'].update(visible=autocomplete_with_current_domain_visible)
     window['-HELPER-INPUT-CURRENT-DOMAIN-WITH-ENDPOINT-'].update(visible=autocomplete_with_current_domain_visible)
     # window['-INPUT-WRAPPER-'].update(visible=False)
+    # _hide_input(window)
+
+
+# def _hide_input(window):
+#     window['-TAG-LIST-'].widget.get_
+

@@ -30,7 +30,7 @@ def setup():
     conn.close()
 
 
-def save_urls(objects):
+def save_urls(urls):
     conn = sqlite3.connect('resources_for_testing/handy.sqlite')
 
     c = conn.cursor()
@@ -38,9 +38,9 @@ def save_urls(objects):
     c.execute("""DELETE FROM original_urls""")
 
     conn.commit()
-    for object in objects:
-        c.execute("""insert into urls_and_attributes(url) values(?)""", [object])
-        c.execute("""insert into original_urls(url) values(?)""", [object])
+    for url in urls:
+        c.execute("""insert into urls_and_attributes(url) values(?)""", url)
+        c.execute("""insert into original_urls(url) values(?)""", [url])
     conn.commit()
     conn.close()
 
