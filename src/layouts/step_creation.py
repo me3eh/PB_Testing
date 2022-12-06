@@ -197,6 +197,14 @@ def get_layout(domain,
             [
                 sg.Column([[]], expand_x=True),
                 sg.Listbox([], size=(40, 19), k='-TAG-LIST-', enable_events=True),
+                sg.Column([
+                    [
+                        sg.Button("\u25B3", key='-MOVE-UP-TAG-'),
+                    ],
+                    [
+                        sg.Button("\u25BD", key='-MOVE-DOWN-TAG-'),
+                    ]
+                ]),
                 sg.Column([[]], expand_x=True),
                 sg.Column([
                     [
@@ -215,7 +223,7 @@ def get_layout(domain,
                         sg.Text("Xpath of element:", key='-XPATH-INFO-')
                     ],
                     [
-                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 15)),
+                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 15), enable_events=True),
                         sg.Column(
                             [
                                 [
@@ -237,6 +245,9 @@ def get_layout(domain,
                                     sg.Button('Check if xpath exists in html', button_color='blue',
                                               key='-XPATH-EXISTS-')
                                 ],
+                                [
+                                    sg.pin(sg.Button("Save changed xpath", k='-DELETE-ACTION-', visible=False))
+                                ]
                             ]
                         )
                     ],

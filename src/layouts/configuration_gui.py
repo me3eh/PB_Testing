@@ -47,7 +47,7 @@ def get_layout(project_path):
                 ], k='layout_principal', expand_x=True),
         ],
         [
-            sg.Input("Yas", k='-INPUT-ANYTHING-', size=(80, 20)),
+            sg.Input("/yas", k='-INPUT-ANYTHING-', size=(80, 20)),
             sg.Button("Save that", k='-SAVE-URL-FROM-INPUT-'),
             sg.Button("Add that", k='-ADD-URL-FROM-INPUT-', button_color='green'),
             sg.Button("Delete selected", k='-DELETE-SELECTED-', button_color='red'),

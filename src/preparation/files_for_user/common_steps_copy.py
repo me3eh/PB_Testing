@@ -12,9 +12,14 @@ from selenium.webdriver.support.ui import Select
 @given('visiting site {url}')
 @when('visiting site {url}')
 def step(context, url):
+    print("kekw")
+    print(url)
+
     if "https://" in url or 'http://' in url:
+        print("drugie lol")
         context.driver.get(url)
     else:
+        print("rzecie")
         context.driver.get(f'https://{url}')
 
 

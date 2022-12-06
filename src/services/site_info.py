@@ -3,6 +3,8 @@ import mechanize
 from models.website_tag import WebsiteTag
 from models.saved_html import SavedHtml
 from services.helper_methods import get_full_url
+import urllib
+
 
 class SiteInfo:
     def __init__(self):
@@ -21,6 +23,9 @@ class SiteInfo:
             ad = browser.open(site)
         except mechanize.HTTPError:
             return 'Could not connect to this url. Probably wrong endpoint or server is not up', True
+        except mechanize._mechanize.BrowserStateError:
+            return 'Could not connect to this url. Check if domain name checks outs :D', True
+
 
         response = ad.read()
         soup = BeautifulSoup(response, features='lxml')
@@ -46,6 +51,8 @@ class SiteInfo:
             ad = browser.open(f"{full_login_path}")
         except mechanize.HTTPError:
             return 'Could not connect to this url. Probably wrong endpoint or server is not up', True
+        except mechanize._mechanize.BrowserStateError:
+            return 'Could not connect to this url. Check if domain name checks outs :D', True
 
         browser.select_form(nr=0) #probably not a wise choice, but most of sites have only one form in login :D
         try:
@@ -54,6 +61,8 @@ class SiteInfo:
             browser.submit()
         except mechanize._form_controls.ControlNotFoundError:
             return 'Could not use given credentials. Probably username input name or password input name is wrong', True
+        except mechanize._mechanize.BrowserStateError:
+            return 'Could not connect to this url. Check if domain name checks outs :D', True
 
         ad = browser.open(site)
         request_from_site = ad.read()

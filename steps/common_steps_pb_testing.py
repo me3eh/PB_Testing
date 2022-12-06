@@ -12,14 +12,9 @@ from selenium.webdriver.support.ui import Select
 @given('visiting site {url}')
 @when('visiting site {url}')
 def step(context, url):
-    print("kekw")
-    print(url)
-
     if "https://" in url or 'http://' in url:
-        print("drugie lol")
         context.driver.get(url)
     else:
-        print("rzecie")
         context.driver.get(f'https://{url}')
 
 
@@ -28,7 +23,6 @@ def step(context, url):
 @given('attaching file input with xpath {xpath} with file {text}')
 @when('attaching file input with xpath {xpath} with file {text}')
 def step(context, xpath, text):
-    print("weszlo")
     context.driver.find_element(By.XPATH, xpath).send_keys(text)
 
 

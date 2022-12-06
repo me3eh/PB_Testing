@@ -1,6 +1,7 @@
 import PySimpleGUI as sg
 import sys
 from configparser import ConfigParser
+import pickle
 
 from services.site_info import SiteInfo
 from layouts import step_creation
@@ -67,6 +68,22 @@ def save_configuration(config, values_for_config):
         config.write(f)
 
 
+def save_todo_actions(todo_actions_copy):
+    pickled = pickle.dumps(todo_actions_copy)
+    with open(f'resources_for_testing/config.ini.pickle', 'wb') as f:
+        f.write(pickled)
+
+def read_todo_actions(todo_actions_copy):
+    try:
+        with open(f'resources_for_testing/config.ini.pickle', 'rb') as f:
+            pickled = f.read()
+    except FileNotFoundError:
+        return []
+
+    todo_actions_copy.clear()
+    todo_actions_copy.extend(pickle.loads(pickled))
+
+
 def create_step():
     sys.setrecursionlimit(10000)
     global actions, input_text
@@ -80,6 +97,7 @@ def create_step():
     password_value = config.get('main', 'password_value')
     last_site = config.get('main', 'last_site')
     login_path = config.get('main', 'login_path')
+    read_todo_actions(todo_actions)
 
     current_tags = []
     actions_for_layout = convert_collection_to_string_using_variable(collection=actions,
@@ -113,13 +131,16 @@ def create_step():
         if event == sg.WIN_CLOSED or event == "Exit":
             values = get_values_for_configuration(window)
             save_configuration(config, values)
+            save_todo_actions(todo_actions)
             sg.popup_notify("Also saved your configuration", title='Bye bye :D', icon=OK_PNG)
             break
         elif event == '-ADD-ACTION-':
-            add_action_button.add_action(window, values, todo_actions, current_tags, imported_actions)
+            add_action_button.add_action(window, values, todo_actions, current_tags, imported_actions,
+                                         last_site_saved=site_info.get_last_used_html())
         elif event == '-SAVE-CHANGES-TO-CONFIG-':
             values = get_values_for_configuration(window)
             save_configuration(config, values)
+            save_todo_actions(todo_actions)
             sg.popup_notify("Saved your configuration", title='Saved', icon=OK_PNG)
         elif event == '-LOGGED-IN-':
             value_of_checkbox = not values[event]
@@ -130,7 +151,8 @@ def create_step():
             choosing_action_selects.change(event=event, values=values, window=window)
         elif event == '-TAG-LIST-':
             tag_list_listbox.pick_tag_in_tags(window=window, current_tags=current_tags,
-                                      last_used_html=site_info.get_last_used_html())
+                                              last_used_html=site_info.get_last_used_html(),
+                                              todo_actions=todo_actions)
             todo_actions_and_tag_listboxes.only_one_selected(event, window)
         elif event == '-SAVE-CONFIGURATION-':
             save_configuration_button.save_configuration(window, values, event, todo_actions)
@@ -152,8 +174,15 @@ def create_step():
         elif event in ['-MOVE-UP-', '-MOVE-DOWN-']:
             move_action_arrows_buttons.move_action(event=event, window=window, sg=sg,
                                                    error_picture=ERROR_PNG, todo_actions=todo_actions)
+        elif event in ['-MOVE-UP-TAG-', '-MOVE-DOWN-TAG-']:
+            tag_positions_buttons_check_tag.check(window, event)
+            tag_list_listbox.pick_tag_in_tags(window=window, current_tags=current_tags,
+                                              last_used_html=site_info.get_last_used_html(),
+                                              todo_actions=todo_actions)
+            # todo_actions_and_tag_listboxes.only_one_selected(event, window)
         elif event == '-XPATH-EXISTS-':
-            xpath_viewer_input.check_if_xpath_unique(last_used_html=site_info.get_last_used_html(), window=window)
+            xpath_viewer_input.check_if_xpath_unique(last_used_html=site_info.get_last_used_html(), window=window,
+                                                     todo_actions=todo_actions)
         elif event == '-ACTION-LIST-':
             todo_actions_listbox.pick_tag_in_actions(window=window, todo_actions=todo_actions)
             todo_actions_and_tag_listboxes.only_one_selected(event, window)

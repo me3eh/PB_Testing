@@ -55,3 +55,11 @@ def step(context):
 		Given clicking on element with xpath //input[@class='btn btn-xs btn-primary' and @type='submit' and @value='Zaloguj']
 		Then it should have an url http://127.0.0.1:8000/admin
 	''')
+
+@given ('something really')
+def step(context):
+	context.execute_steps(u'''
+		Given  login as a dean
+		Given clicking on element with xpath //a[@href='/dean/questions/category/add']
+		Given waiting for amount of seconds 5
+	''')

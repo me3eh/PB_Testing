@@ -4,7 +4,7 @@ import PySimpleGUI as sg
 from services.object_collections_to_string import convert_collection_to_string_using_method
 
 
-def add_action(window, values, todo_actions, current_tags, saved_actions):
+def add_action(window, values, todo_actions, current_tags, saved_actions, last_site_saved):
     bdd_attribute = window['-BDD-ATTRIBUTE-'].get()
     type_of_action = values['-ACTIONS-CHOICE-']
     input_for_action = values['-HELPER-INPUT-']
@@ -20,7 +20,8 @@ def add_action(window, values, todo_actions, current_tags, saved_actions):
                                current_tags,
                                saved_action_selected=saved_actions_index,
                                saved_actions=saved_actions,
-                               xpath=xpath_of_element)
+                               xpath=xpath_of_element,
+                               last_site_saved=last_site_saved)
 
     if new_action is None:
         sg.popup_notify("Click on any of tags and after that click button 'Add new action'",

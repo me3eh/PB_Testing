@@ -10,7 +10,8 @@ def action_create(type_of_action,
                   current_tags,
                   saved_action_selected,
                   saved_actions,
-                  xpath):
+                  xpath,
+                  last_site_saved):
     if type_of_action in ['visiting site', 'assert url of site',
                           'assert title of site', 'waiting for amount of seconds']:
         return WebsiteTag(value_for_bdd=type_of_action,
@@ -35,4 +36,5 @@ def action_create(type_of_action,
     current_chosen.value_for_bdd = type_of_action
     current_chosen.attribute = input_for_action
     current_chosen.bdd_attribute = bdd_attribute
+    current_chosen.site_html = last_site_saved
     return current_chosen

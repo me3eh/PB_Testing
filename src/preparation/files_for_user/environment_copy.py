@@ -15,6 +15,7 @@ def before_feature(context, feature):
     # profile.install_addon("ublock_origin-1.42.4-an+fx.xpi", temporary=True)
 
     context.driver = profile
+    # context.driver.implicitly_wait(2)
 
 
 def after_feature(context, feature):
