@@ -30,6 +30,8 @@ given_when_actions = [
     ActionName('clicking button', attribute_needed=True),
     ActionName('clicking link', attribute_needed=True),
     ActionName('clicking input', attribute_needed=True),
+    ActionName('clicking submit input', attribute_needed=True),
+    ActionName('clicking submit button', attribute_needed=True),
     ActionName('clicking checkbox', attribute_needed=True),
     ActionName('clicking radio button', attribute_needed=True),
     ActionName('attaching file to file input', attribute_needed=True),
@@ -39,10 +41,10 @@ given_when_actions = [
 then_actions = [
     ActionName('assert url of site', attribute_needed=False),
     ActionName('assert title of site', attribute_needed=False),
-    ActionName('assert input is disabled', attribute_needed=False),
     ActionName('assert input is not visible', attribute_needed=False),
     ActionName('assert input is visible', attribute_needed=False),
-    ActionName('assert element has certain text', attribute_needed=False)
+    ActionName('assert element has certain text', attribute_needed=False),
+    ActionName('assert element contains text', attribute_needed=False)
 ]
 actions = given_when_actions
 
@@ -72,6 +74,7 @@ def save_todo_actions(todo_actions_copy):
     pickled = pickle.dumps(todo_actions_copy)
     with open(f'resources_for_testing/config.ini.pickle', 'wb') as f:
         f.write(pickled)
+
 
 def read_todo_actions(todo_actions_copy):
     try:
@@ -150,10 +153,10 @@ def create_step():
             actions_choice_select.show_saved_actions(values, event, window)
             choosing_action_selects.change(event=event, values=values, window=window)
         elif event == '-TAG-LIST-':
+            todo_actions_and_tag_listboxes.only_one_selected(event, window)
             tag_list_listbox.pick_tag_in_tags(window=window, current_tags=current_tags,
                                               last_used_html=site_info.get_last_used_html(),
                                               todo_actions=todo_actions)
-            todo_actions_and_tag_listboxes.only_one_selected(event, window)
         elif event == '-SAVE-CONFIGURATION-':
             save_configuration_button.save_configuration(window, values, event, todo_actions)
         elif event == '-LOAD-CONFIGURATION-':
@@ -179,7 +182,8 @@ def create_step():
             tag_list_listbox.pick_tag_in_tags(window=window, current_tags=current_tags,
                                               last_used_html=site_info.get_last_used_html(),
                                               todo_actions=todo_actions)
-            # todo_actions_and_tag_listboxes.only_one_selected(event, window)
+        elif event == '-SAVE-CHANGED-XPATH-':
+            save_changed_xpath_button.save_changed(window=window, todo_actions=todo_actions)
         elif event == '-XPATH-EXISTS-':
             xpath_viewer_input.check_if_xpath_unique(last_used_html=site_info.get_last_used_html(), window=window,
                                                      todo_actions=todo_actions)

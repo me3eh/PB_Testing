@@ -12,14 +12,9 @@ from selenium.webdriver.support.ui import Select
 @given('visiting site {url}')
 @when('visiting site {url}')
 def step(context, url):
-    print("kekw")
-    print(url)
-
     if "https://" in url or 'http://' in url:
-        print("drugie lol")
         context.driver.get(url)
     else:
-        print("rzecie")
         context.driver.get(f'https://{url}')
 
 
@@ -74,7 +69,14 @@ def step(context, xpath):
 def step(context, xpath, text):
     element = context.driver.find_element(by=By.XPATH, value=xpath)
 
-    assert element.text == text, f"Current element with name:{xpath}"
+    assert element.text == text
+
+
+@then('element with xpath {xpath} contains text {text}')
+def step(context, xpath, text):
+    element = context.driver.find_element(by=By.XPATH, value=xpath)
+
+    assert text in element.text
 
 
 @then('input with name {input_name} should not be visible')

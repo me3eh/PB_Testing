@@ -3,7 +3,7 @@ from setuptools import find_packages, setup
 setup(
     name='pb_testing',
     packages=find_packages(include=['pb_testing']),
-    version='0.1.6.8.7.2',
+    version='0.2',
     scripts=['bin/prepare',
              'bin/extra_modules_for_pb_testing.py',
              'bin/pb_configuration',

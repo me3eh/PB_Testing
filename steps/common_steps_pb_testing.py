@@ -69,7 +69,14 @@ def step(context, xpath):
 def step(context, xpath, text):
     element = context.driver.find_element(by=By.XPATH, value=xpath)
 
-    assert element.text == text, f"Current element with name:{xpath}"
+    assert element.text == text
+
+
+@then('element with xpath {xpath} contains text {text}')
+def step(context, xpath, text):
+    element = context.driver.find_element(by=By.XPATH, value=xpath)
+
+    assert text in element.text
 
 
 @then('input with name {input_name} should not be visible')

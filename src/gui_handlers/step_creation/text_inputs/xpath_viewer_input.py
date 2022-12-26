@@ -20,7 +20,6 @@ def check_if_xpath_unique(last_used_html, window, todo_actions):
         sg.popup_notify("Fix it and try again", title="Xpath is not correct", icon=ERROR_PNG)
         return
     else:
-        print("patrzenie")
         window['-XPATH-INPUT-'].update(background_color='#ff3e19')
 
     window['-XPATH-ELEMENTS-'].update(f"Found {matches_number} tags matching this xpath")

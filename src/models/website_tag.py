@@ -39,7 +39,7 @@ class WebsiteTag:
 
     def _text_inside(self):
         if self.text is not None:
-            return f"text = {self.text.strip()}"
+            return f", text = '{self.text.strip()}'"
         return ""
 
     def attributes_to_html(self):
@@ -62,7 +62,8 @@ class WebsiteTag:
 
     def get_attribute_from_gui(self):
         if self.value_for_bdd in ['clicking button', 'clicking link', 'clicking input', 'clicking checkbox',
-                                  'clicking radio button'] or self.this_is_saved_action is True:
+                                  'clicking radio button', 'clicking submit input',
+                                  'clicking submit button'] or self.this_is_saved_action is True:
             return ''
         elif self.value_for_bdd in ['visiting site']:
             return f' with url={self.attribute}'
@@ -78,7 +79,7 @@ class WebsiteTag:
         elif self.value_for_bdd == 'filling input':
             return f'{self.bdd_attribute} filling input with xpath {self.xpath} with text {self.attribute}'
         elif self.value_for_bdd in ['clicking button', 'clicking link', 'clicking input', 'clicking checkbox',
-                                    'clicking radio button']:
+                                    'clicking radio button', 'clicking submit button', 'clicking submit input']:
             return f'{self.bdd_attribute} clicking on element with xpath {self.xpath}'
         elif self.value_for_bdd == 'waiting for amount of seconds':
             return f'{self.bdd_attribute} waiting for amount of seconds {self.attribute}'
@@ -98,6 +99,8 @@ class WebsiteTag:
             return f'{self.bdd_attribute} {self.value_for_bdd}'
         elif self.value_for_bdd == 'assert element has certain text':
             return f'{self.bdd_attribute} element with xpath {self.xpath} should have text {self.attribute}'
+        elif self.value_for_bdd == 'assert element contains text':
+            return f'{self.bdd_attribute} element with xpath {self.xpath} contains text {self.attribute}'
         elif self.value_for_bdd == 'attaching file to file input':
             return f'{self.bdd_attribute} attaching file input with xpath {self.xpath} with file {self.attribute}'
 

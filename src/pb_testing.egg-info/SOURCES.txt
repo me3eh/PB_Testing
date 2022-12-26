@@ -36,8 +36,10 @@ src/gui_handlers/step_creation/buttons/reload_actions_button.py
 src/gui_handlers/step_creation/buttons/reset_saved_htmls_button.py
 src/gui_handlers/step_creation/buttons/save_action_button.py
 src/gui_handlers/step_creation/buttons/save_action_buttons.py
+src/gui_handlers/step_creation/buttons/save_changed_xpath_button.py
 src/gui_handlers/step_creation/buttons/save_configuration_button.py
 src/gui_handlers/step_creation/buttons/show_html_button.py
+src/gui_handlers/step_creation/buttons/tag_positions_buttons_check_tag.py
 src/gui_handlers/step_creation/listboxes/__init__.py
 src/gui_handlers/step_creation/listboxes/tag_list_listbox.py
 src/gui_handlers/step_creation/listboxes/todo_actions_and_tag_listboxes.py

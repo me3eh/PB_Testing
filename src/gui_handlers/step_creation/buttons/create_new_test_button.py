@@ -3,7 +3,8 @@ from services.object_collections_to_string import convert_collection_to_string_u
 
 
 def create(window, todo_actions):
-    message = 'Are you sure you want to create new test?\nEverything that you have done already, will be lost'
+    message = 'Are you sure you want to create new plan?\nEverything that you have done already, will be lost\n' \
+              'Consider saving it, to use it later'
     answer_from_popup = sg.popup_yes_no(message, title="Are you sure?", image=sg.EMOJI_BASE64_YIKES, keep_on_top=True)
 
     if answer_from_popup == 'no':

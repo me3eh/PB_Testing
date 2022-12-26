@@ -40,6 +40,12 @@ def find_all_selections(window, values, event, site_info, current_tags):
     elif values[event] == 'clicking checkbox':
         tag = 'input'
         tag_attributes = {'type': 'checkbox'}
+    elif values[event] == 'clicking submit input':
+        tag = 'input'
+        tag_attributes = {'type': 'submit'}
+    elif values[event] == 'clicking submit button':
+        tag = 'button'
+        tag_attributes = {'type': 'submit'}
     elif values[event] == 'clicking radio button':
         tag = 'input'
         tag_attributes = {'type': 'radio'}

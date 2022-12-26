@@ -1,13 +1,13 @@
 [main]
 actual_plan_name = Something
-domain = http://localhost:3000
+domain = http://127.0.0.1:8000/
 username_field = username
 password_field = password
-username_value = jar
-password_value = jarjarjar
-last_site = /
+username_value = huhi
+password_value = huhihuhi
+last_site = /dean/questions/category/add
 login_path = /login
 logged_in = False
-project_path = /home/me3eh/PycharmProjects/inzynierka
+project_path = /home
 program_for_opening_html = code
 

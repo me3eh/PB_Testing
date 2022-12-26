@@ -167,7 +167,7 @@ def get_layout(domain,
                     sg.Button("Erase saved htmls", key='-RESET-SAVED-HTMLS-', button_color='black')
                 ],
                 [
-                    sg.Button("Create new test", key='-CREATE-NEW-TEST-', button_color='red')
+                    sg.Button("Create new plan", key='-CREATE-NEW-TEST-', button_color='red')
                 ]
             ])
         ],
@@ -223,7 +223,7 @@ def get_layout(domain,
                         sg.Text("Xpath of element:", key='-XPATH-INFO-')
                     ],
                     [
-                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 15), enable_events=True),
+                        sg.Multiline("", key='-XPATH-INPUT-', size=(40, 15)),
                         sg.Column(
                             [
                                 [
@@ -233,8 +233,7 @@ def get_layout(domain,
                                     sg.Column(
                                         [
                                             [
-                                                sg.Button('Copy html of element', button_color=('black', 'yellow'),
-                                                          key='-COPY-HTML-ELEMENT-'),
+                                                sg.Button('Copy html of element', key='-COPY-HTML-ELEMENT-'),
                                                 sg.Button('Copy html of whole site', button_color='green',
                                                           key='-COPY-HTML-'),
                                             ]
@@ -246,7 +245,7 @@ def get_layout(domain,
                                               key='-XPATH-EXISTS-')
                                 ],
                                 [
-                                    sg.pin(sg.Button("Save changed xpath", k='-DELETE-ACTION-', visible=False))
+                                    sg.Button("Save changed xpath", k='-SAVE-CHANGED-XPATH-')
                                 ]
                             ]
                         )

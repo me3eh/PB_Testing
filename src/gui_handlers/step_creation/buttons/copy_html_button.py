@@ -9,6 +9,13 @@ def copy_html_to_clipboard(html_to_copy):
 
 
 def copy_element_html_to_clipboard(window):
-    element_html = window['-TAG-DESCRIPTION-'].get()
-    pyperclip.copy(element_html)
+    window['-TAG-DESCRIPTION-'].Widget.selection_own()
+
+    try:
+        element_html_selected = window['-TAG-DESCRIPTION-'].Widget.selection_get()
+    except sg.tk.TclError:
+        element_html_selected = window['-TAG-DESCRIPTION-'].get()
+
+    print(element_html_selected)
+    pyperclip.copy(element_html_selected)
     sg.popup_notify('Copied to clipboard html of element', icon=OK_PNG, title='Copied')
