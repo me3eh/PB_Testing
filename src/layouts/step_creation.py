@@ -245,7 +245,7 @@ def get_layout(domain,
                                               key='-XPATH-EXISTS-')
                                 ],
                                 [
-                                    sg.Button("Save changed xpath", k='-SAVE-CHANGED-XPATH-')
+                                    sg.Button("Save xpath or info for input", k='-SAVE-CHANGED-XPATH-')
                                 ]
                             ]
                         )

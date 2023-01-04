@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: pb-testing
-Version: 0.2
+Version: 0.2.1
 Summary: Library for bdd testing
 Home-page: https://github.com/me3eh/POM_BiDiDi
 Author: Me
@@ -9,8 +9,8 @@ License: MIT
 Project-URL: Bug Tracker, https://github.com/me3eh/POM_BiDiDi/issues
 Classifier: Programming Language :: Python :: 3
 Classifier: License :: OSI Approved :: MIT License
-Classifier: Operating System :: OS Independent
-Requires-Python: >=2.6
+Classifier: Operating System :: Unix
+Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 
@@ -79,3 +79,6 @@ This gui is responsible for creating tests, using scanning urls and
 ## OK, application is fine, but how to do testing?
 
 Testing in this application is based on BDD. This means
+
+Invocing tests
+Use command behave <name_of_feature_file> -D headless
