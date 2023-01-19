@@ -8,8 +8,6 @@ def move(window):
         sg.popup("Not checked anything in scanned_urls section")
     else:
         urls = window['-USER-URLS-'].get_list_values()
-        # print(urls)
-        # print(checked_url)
         if checked_url[0] in urls:
             sg.popup("Url already exists")
         else:

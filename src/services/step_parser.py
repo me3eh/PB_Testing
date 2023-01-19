@@ -29,10 +29,5 @@ def _get_string_between_two_characters(whole_string, start, end):
         str_found = re.search(regex_pattern, whole_string).group(1)
         return str_found
     except AttributeError:
-        str_found = 'Nothing found between two markers'
+        # str_found = 'Nothing found between two markers'
         return None
-
-# kk = import_actions()
-# for k in kk:
-#     print('bdd atrybut', k.bdd_attribute)
-#     print('nazwa atrybutu', k.action_name)

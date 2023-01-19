@@ -14,7 +14,9 @@ def copy_common_steps():
 def create_new_action_file():
     with open(f'{os.getcwd()}/steps/new_actions.py', "w") as f:
         f.write('from behave import *\n')
-    print("Created new action file!")
+    with open(f'{os.getcwd()}/steps/new_steps.py', "w") as f:
+        f.write('from behave import *\n')
+    print("Created files for generating actions and plans :D!")
 
 
 def copy_behave_environment_file():

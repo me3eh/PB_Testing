@@ -1,0 +1,13 @@
+[main]
+actual_plan_name = creating questions category
+domain = http://127.0.0.1:8000/
+username_field = username
+password_field = password
+username_value = huhi
+password_value = huhihuhi
+last_site = /dean/questions/category/add
+login_path = /login
+logged_in = True
+project_path = /home
+program_for_opening_html = code
+

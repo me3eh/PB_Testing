@@ -4,9 +4,12 @@ import pickle
 
 def save_configuration(window, values, event, todo_actions):
     config = ConfigParser()
+    config.read('resources_for_testing/config.ini')
+
     if 'main' not in config:
         config.add_section('main')
 
+    actual_plan_name = window['-TITLE-OF-TEST-'].get()
     domain = window['-DOMAIN-'].get()
     username_field = window['-USERNAME-FIELD-'].get()
     username_value = window['-USERNAME-VALUE-'].get()
@@ -16,6 +19,7 @@ def save_configuration(window, values, event, todo_actions):
     last_site = window['-LAST-SITE-'].get()
     logged_in_checkbox_checked = window['-LOGGED-IN-'].get()
 
+    config.set('main', 'actual_plan_name', actual_plan_name)
     config.set('main', 'domain', domain)
     config.set('main', 'username_field', username_field)
     config.set('main', 'password_field', password_field)
@@ -26,11 +30,10 @@ def save_configuration(window, values, event, todo_actions):
     config.set('main', 'logged_in', repr(logged_in_checkbox_checked))
     with open(values[event], 'w') as f:
         config.write(f)
+
     with open('resources_for_testing/config.ini', 'w') as f:
         config.write(f)
 
     pickled = pickle.dumps(todo_actions)
     with open(f'{values[event]}.pickle', 'wb') as f:
         f.write(pickled)
-    # unpickled = pickle.loads(pickled)
-    # unpickled.foo

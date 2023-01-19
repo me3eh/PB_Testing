@@ -1,6 +1,7 @@
 from models.website_tag import WebsiteTag
 from shared_info.constants import ERROR_PNG
 import PySimpleGUI as sg
+import copy
 
 
 def action_create(type_of_action,
@@ -10,8 +11,8 @@ def action_create(type_of_action,
                   current_tags,
                   saved_action_selected,
                   saved_actions,
-                  xpath):
-    # print("huhi")
+                  xpath,
+                  last_site_saved):
     if type_of_action in ['visiting site', 'assert url of site',
                           'assert title of site', 'waiting for amount of seconds']:
         return WebsiteTag(value_for_bdd=type_of_action,
@@ -30,10 +31,11 @@ def action_create(type_of_action,
 
     if len(selected_tag) == 0:
         return None
+    current_chosen = copy.deepcopy(current_tags[selected_tag[0]])
 
-    current_chosen = current_tags[selected_tag[0]]
     current_chosen.xpath = xpath
     current_chosen.value_for_bdd = type_of_action
     current_chosen.attribute = input_for_action
     current_chosen.bdd_attribute = bdd_attribute
+    current_chosen.site_html = last_site_saved
     return current_chosen

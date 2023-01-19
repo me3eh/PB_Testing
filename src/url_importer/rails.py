@@ -20,7 +20,6 @@ def import_urls():
 
     urls = _execute_command(command, cwd=project_path)
 
-    # print(urls)
     save_urls(urls)
 
     return True

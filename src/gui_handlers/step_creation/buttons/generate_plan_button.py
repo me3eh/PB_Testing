@@ -6,6 +6,7 @@ from services.save_steps_to_file import check_if_step_is_already_defined, save_p
 
 def generate_plan(window, todo_actions, plan_is_an_action):
     test_title = window['-TITLE-OF-TEST-'].get()
+    test_title = test_title.replace("'", "`")
     bdd_attribute = window['-ACTION-BDD-ATTRIBUTE-'].get()
 
     index_found, file_of_found_index = check_if_step_is_already_defined(bdd_attribute.lower(), test_title)

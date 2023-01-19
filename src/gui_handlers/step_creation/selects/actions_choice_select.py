@@ -1,6 +1,7 @@
-from gui_handlers.step_creation.buttons import save_action_buttons
 import PySimpleGUI as sg
 from shared_info.constants import ERROR_PNG
+from services.helper_methods import get_full_url
+
 
 def show_saved_actions(values, event, window):
     visibility = values[event] == 'use saved actions'
@@ -18,10 +19,7 @@ def find_all_selections(window, values, event, site_info, current_tags):
     login_path = window['-LOGIN-PATH-'].get()
     target_site = window['-LAST-SITE-'].get()
 
-    if domain.endswith('/') and target_site.startswith('/'):
-        site = domain + target_site[1:]
-    else:
-        site = domain + target_site
+    site = get_full_url(domain, target_site)
 
     window['-XPATH-INPUT-'].update('', background_color='white')
     window['-TAG-DESCRIPTION-'].update('')
@@ -34,7 +32,6 @@ def find_all_selections(window, values, event, site_info, current_tags):
     if values[event] in ['visiting site', 'waiting for amount of seconds', 'use saved actions',
                          'assert url of site', 'assert title of site']:
         tags_found = []
-        save_action_buttons.enable_save_buttons(window)
         need_to_search_for_tags = False
 
     elif values[event] in ['filling input', 'clicking input', 'assert input is not visible', 'assert input is disabled']:
@@ -42,6 +39,12 @@ def find_all_selections(window, values, event, site_info, current_tags):
     elif values[event] == 'clicking checkbox':
         tag = 'input'
         tag_attributes = {'type': 'checkbox'}
+    elif values[event] == 'clicking submit input':
+        tag = 'input'
+        tag_attributes = {'type': 'submit'}
+    elif values[event] == 'clicking submit button':
+        tag = 'button'
+        tag_attributes = {'type': 'submit'}
     elif values[event] == 'clicking radio button':
         tag = 'input'
         tag_attributes = {'type': 'radio'}
@@ -66,23 +69,10 @@ def find_all_selections(window, values, event, site_info, current_tags):
         else:
             tags_found, thrown_exception = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
     if thrown_exception is True:
-        sg.popup_notify("No connection to the server with given path. " +
-                        "Try to start local server or check if path is available, then try again.", icon=ERROR_PNG,
-                        title='No connection')
+        sg.popup_notify(tags_found, icon=ERROR_PNG, title='No connection')
         return
 
     current_tags.clear()
     current_tags.extend(tags_found)
     listed = list(map(lambda obj: obj.format_for_listbox_with_available_actions(), tags_found))
     window['-TAG-LIST-'].update(listed)
-
-# def search_for_tags(site, username_field, username_value, password_field, password_value, login_path, domain, tag,
-#                     tag_attributes, site_info, values):
-#     tags_found = []
-#     if values['-LOGGED-IN-']:
-#         tags_found = site_info.get_tag_logged_in(site, username_field, username_value, password_field,
-#                                                  password_value, login_path, domain=domain,
-#                                                  tag=tag, tag_attributes=tag_attributes)
-#     else:
-#         tags_found = site_info.get_tag_anonymous(site, tag=tag, tag_attributes=tag_attributes)
-#     return tags_found
