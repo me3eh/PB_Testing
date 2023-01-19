@@ -34,8 +34,6 @@ src/gui_handlers/step_creation/buttons/load_configuration_button.py
 src/gui_handlers/step_creation/buttons/move_action_arrows_buttons.py
 src/gui_handlers/step_creation/buttons/reload_actions_button.py
 src/gui_handlers/step_creation/buttons/reset_saved_htmls_button.py
-src/gui_handlers/step_creation/buttons/save_action_button.py
-src/gui_handlers/step_creation/buttons/save_action_buttons.py
 src/gui_handlers/step_creation/buttons/save_changed_xpath_button.py
 src/gui_handlers/step_creation/buttons/save_configuration_button.py
 src/gui_handlers/step_creation/buttons/show_html_button.py
