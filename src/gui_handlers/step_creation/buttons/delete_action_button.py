@@ -5,10 +5,10 @@ def delete_action(window, plan):
         return False
     plan.pop(selected_action[0])
     window['-ACTION-LIST-'].update(list(map(lambda obj: obj.format_for_todo_listbox(), plan)))
-    remain_selection_of_action(index=selected_action[0], plan=plan, window=window)
+    _remain_selection_of_action(index=selected_action[0], plan=plan, window=window)
 
 
-def remain_selection_of_action(index, plan, window):
+def _remain_selection_of_action(index, plan, window):
     if len(plan) != 0:
         if len(plan) - 1 >= index:
             window['-ACTION-LIST-'].widget.selection_set(index)

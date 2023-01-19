@@ -6,10 +6,30 @@ This application is experimental and is used mainly for Engineer's Thesis.
 
 It will be maintained for errors and probably in near future might get some new features.
 ## Before using
-You will need Geckodriver for running tests using behave (which is based on selenium)
-https://github.com/mozilla/geckodriver/releases - link for geckodriver browsing.
 
-Probably you will need also to put it into /usr/local/bin/ (as for linux)
+Before creating any tests, you need geckodriver.
+It's crucial, because selenium, which is responsible for initializing the browser and doing actions,
+need this driver to work.
+Link for geckodriver: https://github.com/mozilla/geckodriver/releases.
+
+There are several ways for preparing driver to coopearte with library, depending on Operating System.
+On each of systems: Microsoft Windows, macOS and Linux it looks a bit different.
+I was using Linux, so I will describe it here, but here are links for other OS:
+
+Windows: http://www.learningaboutelectronics.com/Articles/How-to-install-geckodriver-Python-windows.php
+
+macOS: https://medium.com/dropout-analytics/selenium-and-geckodriver-on-mac-b411dbfe61bc
+
+On Linux you need to:
+- download driver,
+- unpack it with any tool,
+- set execute rights for user __chmod <file> 700__,
+- put library on path __/usr/local/bin__. It can be done by moving it to location(mv),
+copying to location(cp) or linking to directory(ln). Each command will work
+__<command> <geckodriver_name> /usr/local/bin__
+
+It's worth mentioning that is not only working way to put geckodriver to work with selenium.
+
 ## Commands
 All commands are typed into terminal, using venv
 

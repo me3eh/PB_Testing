@@ -1,5 +1,4 @@
 from services import xpath_check
-from gui_handlers.step_creation.buttons import save_action_buttons
 import PySimpleGUI as sg
 from shared_info.constants import ERROR_PNG
 
@@ -24,7 +23,3 @@ def check_if_xpath_unique(last_used_html, window, todo_actions):
 
     window['-XPATH-ELEMENTS-'].update(f"Found {matches_number} tags matching this xpath")
 
-    # if matches_number == 1:
-    #     save_action_buttons.enable_save_buttons(window)
-    # else:
-    #     save_action_buttons.disable_save_buttons(window)

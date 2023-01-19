@@ -14,7 +14,7 @@ def save_changed(window, todo_actions):
     todo_action = todo_actions[index[0]]
 
     if todo_action.element_html is None:
-        sg.popup_notify('Selected action doesn\' include xpath', icon=ERROR_PNG, title='Not permitted')
+        sg.popup_notify('Selected action doesn\'t include xpath', icon=ERROR_PNG, title='Not permitted')
 
     todo_action.xpath = new_xpath
     todo_action.attribute = new_attribute

@@ -1,7 +1,7 @@
-from gui_handlers.step_creation.buttons import save_action_buttons
 import PySimpleGUI as sg
 from shared_info.constants import ERROR_PNG
 from services.helper_methods import get_full_url
+
 
 def show_saved_actions(values, event, window):
     visibility = values[event] == 'use saved actions'
@@ -32,7 +32,6 @@ def find_all_selections(window, values, event, site_info, current_tags):
     if values[event] in ['visiting site', 'waiting for amount of seconds', 'use saved actions',
                          'assert url of site', 'assert title of site']:
         tags_found = []
-        save_action_buttons.enable_save_buttons(window)
         need_to_search_for_tags = False
 
     elif values[event] in ['filling input', 'clicking input', 'assert input is not visible', 'assert input is disabled']:

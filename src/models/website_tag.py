@@ -19,13 +19,6 @@ class WebsiteTag:
         self.value_for_bdd = value_for_bdd
         self.attribute = attribute
         self.site_html = site_html
-    # def set_whole_html(self, element_html):
-    #     self.attrs = element_html.attrs
-    #     self.id = self.attrs['id'] if 'id' in self.attrs else None
-    #     self.css_class = self.attrs['class'] if 'class' in self.attrs else None
-    #     self.text = element_html.text if element_html.text != '' else None
-    #     self.element_html = element_html
-    #     print(self.element_html)
 
     def _id(self):
         if 'id' in self.attrs:
