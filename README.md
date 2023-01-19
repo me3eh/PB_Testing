@@ -82,7 +82,60 @@ step_creator
 This gui is responsible for creating tests, using scanning urls and 
 ## OK, application is fine, but how to do testing?
 
-Testing in this application is based on BDD. This means
+Testing in this application is based on BDD.
+This means you need to write scenarios with them
+If you generate plan of actions, you will have an implementation of that keyword,
+but you also need to have scenario on which it will be executing tests.
+Example:
+scenario:
+```gherkin
+Feature: login as admin
+  Scenario: with correct passes
+    When logging in with username and password for admin
+    Then user will be logged as admin and redirected to /admin
+```
+will be implemented by this code below, generated in app
+```python
+from behave import *
 
-Invocing tests
-Use command behave <name_of_feature_file> -D headless
+@when ('logging in with username and password for admin')
+def step(context):
+	context.execute_steps(u'''
+		When visiting site http://localhost:8000/
+		When filling input with xpath
+		 //input[@class='form-control' and @id='user-name'
+		 and @name='username' and @type='text']
+		 with text jar
+		When filling input with xpath
+		 //input[@class='form-control' and @id='user-password'
+		 and @name='password' and @type='password']
+		 with text jarjarjar
+		When clicking on element with xpath
+		 //input[@class='btn btn-xs btn-primary' and
+		 @type='submit' and @value='Zaloguj']
+	''')
+
+@then ('user will be logged as admin and redirected to /admin')
+def step(context):
+	context.execute_steps(u'''
+		Then it should have an url http://localhost:8000/admin/
+	''')
+```
+
+Little story of usage step_creator
+![1.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/1.step_creator_visiting_url.png)
+![2.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/2.step_creator_filling_inputs.png)
+![3.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/3.step_creator_clicking_submit_input.png)
+you can save and load plans in application for later usage
+![4.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/4.step_creator_saving_plan_of_action_for_future_usage.png)
+application give opportunity to generate plans and later use it in plan as normal action
+![5.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/5.step_creator_generating_as_action_for_later_usage.png)
+![6.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/6.step_creator_can_be_used_once_again.png)
+![7.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/7.step_creator_creating_new_plan.png)
+![8.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/8.step_creator_generating_action_then.png)
+![9.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/9.pb_testing_execution_of_test_in_web_browser.png)
+![10.png](https://raw.githubusercontent.com/me3eh/PB_Testing/production/hosting_for_images/wip_files_for_readme/10.step_creator_exectution_in_cli.png)
+
+
+Invoking tests
+Use command behave <name_of_feature_file>
